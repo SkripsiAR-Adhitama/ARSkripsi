@@ -1,0 +1,61 @@
+.end-screen {
+  text-align: center;
+}
+
+.end-screen__trophy {
+  font-size: 10rem;
+  margin: 1rem;
+}
+
+.end-screen__stat {
+  margin: 1rem;
+}
+
+.end-screen__stat-label {
+  font-size: 3rem;
+  font-style: italic;
+}
+
+.end-screen__stat-value {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.end-screen__button {
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
+  background-color: white ;
+}
+.end-screen__player-name {
+  font-size: 24px;
+  margin: 20px 0;
+  color: #4CAF50;
+}
+.end-screen__game-over {
+  margin: 20px 0;
+}
+
+.end-screen__skull {
+  font-size: 80px;
+  animation: shake 0.5s;
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { 
+    transform: translateX(0); 
+  }
+  25% { 
+    transform: translateX(-10px); 
+  }
+  75% { 
+    transform: translateX(10px); 
+  }
+}

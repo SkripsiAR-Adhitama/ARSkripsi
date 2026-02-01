@@ -1,0 +1,64 @@
+.trivia-item__question {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #03254c;
+}
+
+.trivia-item__answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 1rem;
+}
+
+.trivia-item__button {
+  font-family: "Comic Neue";
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem 1.5rem;
+  cursor: none;
+  background: #fff684;
+  color: #03254c;
+  font-size: 1.4rem;
+  font-weight: 400;
+  border-radius: 999px;
+  outline: none;
+  border: 8px solid #89C7E7;
+  transition: background 0.15s, transform 0.15s, border-color 0.15s;
+}
+
+.trivia-item__next-button {
+  background: #f19292;
+  margin: 1rem auto;
+  width: 25%;
+}
+
+.trivia-item__button.trivia-item__button--disabled {
+  background: #f5f5dc;
+}
+
+.trivia-item__button.trivia-item__button--correct {
+  background: #27bd26;
+}
+
+.trivia-item__button.trivia-item__button--incorrect {
+  background: #FF0000;
+}
+
+.trivia-item__button:hover {
+  transform: rotate(1deg) scale(1.01);
+}
+
+.trivia-item__button:active {
+  background: #fff684;
+  transform: rotate(2deg) scale(1.02);
+}
+
+.trivia-item__button:focus {
+  border-color: #89C7E7;
+}

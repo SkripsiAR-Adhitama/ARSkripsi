@@ -7,11 +7,10 @@ import Footer from '../Components/Footer'
 function Home() {
   return (
    <>
-   <Header/>
    <Search/>
    <IntroPost/>
    <Blog/>
-   <Footer/>
+   {/* <Footer/>  */}
    </>
   )
 }
