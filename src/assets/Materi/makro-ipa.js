@@ -2,32 +2,25 @@ import he from "he";
 
 let makroIpa = [
     {
-    category: "Entertainment: Board Games",
-    name: "multiple",
-    description: "How many dice are used in the game of Yahtzee?",
+    category: "Pencernaan",
+    name: "Organ Pencernaan",
+    description: "Lambung, Hati, Pankreas, Usus",
     url_ar: "Five",
+    image: "pencernaan-makro.jpg",
   },
     {
-    category: "Entertainment: Board Games",
-    name: "multiple",
-    description: "How many dice are used in the game of Yahtzee?",
+    category: "Pernapasan",
+    name: "Organ Pernapasan",
+    description: "Trakea, Paru-Paru, Alvelous",
     url_ar: "Five",
+    image: "pernapasan-makro.jpg",
   },
     {
-    category: "Entertainment: Board Games",
-    name: "multiple",
-    description: "How many dice are used in the game of Yahtzee?",
+    category: "Peredaran Darah",
+    name: "Organ Peredaran Darah",
+    description: "Jantung, Kiri, Kanan, Vena",
     url_ar: "Five",
+    image: "peredaran-makro.jpg",
   },
 ];
-
-// This operation should be done when we retrieve our trivia data from the server.
-makroIpa = makroIpa.map((item) => {
-  return {
-    ...item,
-    question: he.decode(item.question),
-    correct_answer: he.decode(item.correct_answer),
-  };
-});
-  
 export default makroIpa;

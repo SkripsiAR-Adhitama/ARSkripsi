@@ -6,6 +6,7 @@ import Home from './Pages/Home'
 import Header from './Components/Header'
 import { Route, Routes } from 'react-router-dom'
 import BlogDetail from './Pages/BlogDetail'
+import IntroDetail from './Pages/IntroDetail'
 import MateriPembelajaran from './Pages/MateriPembelajaran'
 import PetunjukPenggunaan from './Pages/PetunjukPenggunaan'
 import Kuis from './Pages/Kuis'
@@ -21,7 +22,8 @@ function App() {
     <Header/>
     <Routes>
       <Route path='/' element={<Home />}></Route>
-      <Route path='/blog-detail' element={<BlogDetail />}></Route>
+      <Route path='/blog-detail/:name' element={<BlogDetail />}></Route>
+       <Route path="/intro-detail/:name" element={<IntroDetail />} />
       <Route path='/materi-pembelajaran' element={<MateriPembelajaran/>}></Route>
       <Route path='/petunjuk-penggunaan' element={<PetunjukPenggunaan/>}></Route>
       <Route path='/tentang-aplikasi' element={<TentangAplikasi/>}></Route>
