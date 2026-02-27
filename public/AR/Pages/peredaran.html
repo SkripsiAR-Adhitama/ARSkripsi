@@ -1,11 +1,64 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/chenzlabs/aframe-ar@master/dist/aframe-ar.min.js"></script>
-  </head>
-  <body>
-    <a-scene ar>
-   <a-box color="red" scale="0.2 0.2 0.2"></a-box>
-    </a-scene>
-  </body>
+<head>
+  <meta charset="utf-8">
+ <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+</head>
+<body>
+
+<a-scene
+  renderer="colorManagement: true;"
+  xr-mode-ui="enabled: true"
+  webxr="requiredFeatures: hit-test, local-floor"
+>
+
+  <a-camera></a-camera>
+
+  <a-entity
+    id="box"
+    geometry="primitive: box"
+    material="color: red"
+    visible="false">
+  </a-entity>
+
+</a-scene>
+
+<script>
+AFRAME.registerComponent('ar-hit-test', {
+  init: function () {
+    const sceneEl = this.el.sceneEl;
+    const box = document.querySelector('#box');
+
+    sceneEl.addEventListener('enter-vr', async () => {
+      const session = sceneEl.xrSession;
+      const refSpace = await session.requestReferenceSpace('viewer');
+      const hitTestSource = await session.requestHitTestSource({ space: refSpace });
+
+      sceneEl.renderer.xr.setReferenceSpaceType('local-floor');
+
+      session.requestAnimationFrame(function onFrame(t, frame) {
+        const referenceSpace = sceneEl.renderer.xr.getReferenceSpace();
+        const hitTestResults = frame.getHitTestResults(hitTestSource);
+
+        if (hitTestResults.length > 0) {
+          const pose = hitTestResults[0].getPose(referenceSpace);
+          box.object3D.position.set(
+            pose.transform.position.x,
+            pose.transform.position.y,
+            pose.transform.position.z
+          );
+          box.setAttribute('visible', true);
+        }
+
+        session.requestAnimationFrame(onFrame);
+      });
+    });
+  }
+});
+
+document.querySelector('a-scene').setAttribute('ar-hit-test', '');
+
+</script>
+
+</body>
 </html>
