@@ -90,7 +90,7 @@ let triviaData = [
   },
 ];
 
-// This operation should be done when we retrieve our trivia data from the server.
+
 triviaData = triviaData.map((item) => {
   return {
     ...item,

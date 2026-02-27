@@ -15,7 +15,7 @@ function IntroPost({ selectedCategory = 'All' }) {
   };
 
   const openARPage = (url_ar) => {
-    window.location.href = `/AR/${url_ar}.html`;
+    window.location.href = `/AR/Pages/${url_ar}.html`;
   };
 
 
