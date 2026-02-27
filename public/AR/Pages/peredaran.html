@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
- <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+<meta charset="utf-8">
+<title>Simple AR Hit Test</title>
+<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 </head>
-<body>
+
+<body style="margin:0">
 
 <a-scene
   renderer="colorManagement: true;"
@@ -14,50 +16,57 @@
 
   <a-camera></a-camera>
 
-  <a-entity
+  <a-box
     id="box"
-    geometry="primitive: box"
-    material="color: red"
+    color="red"
+    scale="0.2 0.2 0.2"
     visible="false">
-  </a-entity>
+  </a-box>
 
 </a-scene>
 
 <script>
 AFRAME.registerComponent('ar-hit-test', {
   init: function () {
-    const sceneEl = this.el.sceneEl;
+    const sceneEl = this.el;
     const box = document.querySelector('#box');
 
     sceneEl.addEventListener('enter-vr', async () => {
-      const session = sceneEl.xrSession;
-      const refSpace = await session.requestReferenceSpace('viewer');
-      const hitTestSource = await session.requestHitTestSource({ space: refSpace });
 
-      sceneEl.renderer.xr.setReferenceSpaceType('local-floor');
+      const session = sceneEl.renderer.xr.getSession();
+      const referenceSpace = await session.requestReferenceSpace('viewer');
+      const hitTestSource = await session.requestHitTestSource({
+        space: referenceSpace
+      });
 
-      session.requestAnimationFrame(function onFrame(t, frame) {
-        const referenceSpace = sceneEl.renderer.xr.getReferenceSpace();
+      const localSpace = await session.requestReferenceSpace('local-floor');
+
+      session.requestAnimationFrame(function onXRFrame(time, frame) {
+
         const hitTestResults = frame.getHitTestResults(hitTestSource);
 
         if (hitTestResults.length > 0) {
-          const pose = hitTestResults[0].getPose(referenceSpace);
+          const pose = hitTestResults[0].getPose(localSpace);
+
           box.object3D.position.set(
             pose.transform.position.x,
             pose.transform.position.y,
             pose.transform.position.z
           );
+
           box.setAttribute('visible', true);
         }
 
-        session.requestAnimationFrame(onFrame);
+        session.requestAnimationFrame(onXRFrame);
       });
+
     });
   }
 });
 
-document.querySelector('a-scene').setAttribute('ar-hit-test', '');
-
+document.querySelector('a-scene').addEventListener('loaded', function () {
+  this.setAttribute('ar-hit-test', '');
+});
 </script>
 
 </body>
