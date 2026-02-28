@@ -653,10 +653,7 @@ scaleSlider.addEventListener('input', e => {
   scaleValue.textContent = currentScale.toFixed(1);
 
   if (modelPlaced) {
-    const s = 7 * currentScale;
-    modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
-      el.setAttribute('scale', `${s} ${s} ${s}`);
-    });
+    modelGroup.object3D.scale.set(currentScale, currentScale, currentScale);
   }
 });
 
