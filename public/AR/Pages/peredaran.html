@@ -269,15 +269,15 @@
   </div>
 
   <!-- A-Frame Scene -->
- <a-scene
-  id="scene"
-  embedded
-  renderer="colorManagement: true; physicallyCorrectLights: true;"
-  xr-mode-ui="enabled: true"
-  webxr="optionalFeatures: hit-test; local-floor, dom-overlay"
->
+  <a-scene
+    id="scene"
+    embedded
+    renderer="colorManagement: true; physicallyCorrectLights: true; precision: medium;"
+    xr-mode-ui="enabled: true; XRMode: ar"
+    vr-mode-ui="enabled: false"
+  >
     <!-- Camera -->
-    <a-camera id="camera" position="0 1.6 0"></a-camera>
+    <a-camera id="camera" position="0 1.6 0" look-controls="enabled: false"></a-camera>
     
     <!-- Lighting -->
     <a-light type="ambient" intensity="0.6"></a-light>
