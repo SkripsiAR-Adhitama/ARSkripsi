@@ -538,70 +538,7 @@ function initARSession(session) {
 
   }, { once: true });
 }
-  showARUI();
-  setMode('placement');
 
-  if (!session) return;
-
-  // Request hit-test
-  session.requestReferenceSpace('viewer').then(viewerSpace => {
-    session.requestHitTestSource({ space: viewerSpace })
-      .then(src => {
-        hitTestSource = src;
-        console.log('[AR] hit-test ready ✓');
-      })
-      .catch(e => {
-        console.warn('[AR] hit-test unavailable, fallback mode:', e);
-        // Tanpa hit-test, langsung tempatkan di depan kamera saat tap
-      });
-  });
-
-  session.requestReferenceSpace('local-floor').then(ref => {
-    xrRefSpace = ref;
-  });
-
-  // ── XR FRAME LOOP ──
-  // Ini yang update posisi reticle setiap frame
-    scene.renderer.setAnimationLoop((time, frame) => {
-      if (!frame || !isARActive) return;
-
-      // Mode placement: update reticle lewat hit-test
-      if (MODE === 'placement' && hitTestSource && xrRefSpace) {
-        const hits = frame.getHitTestResults(hitTestSource);
-        if (hits.length > 0) {
-          const pose = hits[0].getPose(xrRefSpace);
-          if (pose) {
-            // Pecah matrix jadi position + quaternion
-            const mat4 = new T.Matrix4().fromArray(pose.transform.matrix);
-            const pos  = new T.Vector3();
-            const quat = new T.Quaternion();
-            const scl  = new T.Vector3();
-            mat4.decompose(pos, quat, scl);
-
-            lastHitPos  = pos.clone();
-            lastHitQuat = quat.clone();
-
-            // Posisikan reticle
-            reticleEl.object3D.position.copy(pos);
-            reticleEl.object3D.quaternion.copy(quat);
-            reticleEl.object3D.visible = true;
-
-            // Update hint warna
-            infoDesc.textContent = '✅ Permukaan terdeteksi! Ketuk untuk menempatkan organ.';
-          }
-        } else {
-          reticleEl.object3D.visible = false;
-          if (!modelPlaced)
-            infoDesc.textContent = '🔍 Arahkan ke permukaan datar...';
-        }
-      }
-
-      // Mode cursor: raycast ke organ dari tengah layar tiap frame
-      if (MODE === 'cursor') {
-        doCursorRaycast(frame);
-      }
-    });
-}
 
 function showARUI() {
   arUI.style.display = 'block';
