@@ -439,6 +439,7 @@ const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
           count++;
         }
       });
+      alert(title + ': ' + count + ' meshes'); // SEMENTARA
       console.log(`[AR] Mapped ${count} meshes → "${title}"`);
     };
 
@@ -448,9 +449,12 @@ const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
     if (aEntity.object3D && aEntity.object3D.children.length > 0) mapMeshes();
   }
 
-  scene.addEventListener('loaded', () => {
-  document.querySelectorAll('.organ').forEach(el => registerOrgan(el));
+  document.querySelectorAll('.organ').forEach(el => {
+  el.addEventListener('model-loaded', () => {
+    registerOrgan(el);
   });
+});
+
 
   setTimeout(() => {
   console.log('Map size:', meshToOrgan.size);
