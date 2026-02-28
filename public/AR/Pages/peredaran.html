@@ -585,8 +585,11 @@ function setMode(mode) {
     modeBadge.classList.add('show');
     htmlCursor.classList.add('active');
     placementHint.classList.add('hidden');
-    reticleEl.object3D.visible = false;
-    setTimeout(() => modeBadge.classList.remove('show'), 3000);
+    
+    reticleEl.object3D.visible = true;
+    reticleEl.object3D.position.set(0, 0, -1);
+    reticleEl.object3D.quaternion.set(0, 0, 0, 1);
+    document.getElementById('main-cam').object3D.add(reticleEl.object3D);
     infoTitle.textContent = '🫀 Organ Jantung';
     infoDesc.textContent  = 'Arahkan crosshair ke organ, lalu ketuk untuk info.';
   }
@@ -611,8 +614,10 @@ scaleSlider.addEventListener('input', e => {
   scaleValue.textContent = currentScale.toFixed(1);
 
   if (modelPlaced) {
-    modelGroup.object3D.position.y =
-      baseModelY + (currentScale - 1) * 0.15;
+    const s = 7 * currentScale;
+    modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
+      el.setAttribute('scale', `${s} ${s} ${s}`);
+    });
   }
 });
 
@@ -666,7 +671,7 @@ function doCursorRaycast(frame) {
     if (child.isMesh) meshes.push(child);
   });
 
-  const hits = raycaster.intersectObjects(meshes, false);
+  const hits = raycaster.intersectObjects(meshes, true);
 
   if (hits.length > 0) {
     // Temukan parent entity dengan data-title
@@ -807,7 +812,7 @@ function tapRaycast(touch) {
   const meshes = [];
   modelGroup.object3D.traverse(child => { if (child.isMesh) meshes.push(child); });
 
-  const hits = raycaster.intersectObjects(meshes, false);
+  const hits = raycaster.intersectObjects(meshes, true);
   if (hits.length > 0) {
     const info = findOrganInfo(hits[0].object);
     if (info) showInfo(info.title, info.desc);
