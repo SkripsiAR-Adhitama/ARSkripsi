@@ -324,8 +324,8 @@
     let session;
     try {
       session = await navigator.xr.requestSession('immersive-ar', {
-        requiredFeatures: ['local'],
-        optionalFeatures: ['hit-test', 'dom-overlay', 'local-floor'],
+        requiredFeatures: ['hit-test'],
+        optionalFeatures: ['dom-overlay', 'local-floor'],
         domOverlay: { root: arUI }
       });
     } catch(e) { alert('Gagal mulai AR: ' + e.message); return; }
@@ -342,9 +342,11 @@
   }
 
   // ─── Hit-test setup ─────────────────────────────────
-  async function setupHitTest(session) {
-    try      { xrRefSpace = await session.requestReferenceSpace('local-floor'); }
-    catch(_) { xrRefSpace = await session.requestReferenceSpace('local').catch(()=>null); }
+try { xrRefSpace = await session.requestReferenceSpace('local-floor'); }
+catch(_) {
+  try { xrRefSpace = await session.requestReferenceSpace('local'); }
+  catch(e) { console.warn('refSpace gagal:', e); }
+}
 
     try {
       const vs = await session.requestReferenceSpace('viewer');
