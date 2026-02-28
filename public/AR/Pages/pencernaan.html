@@ -3,7 +3,11 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene ar>
+    <a-scene
+    embedded
+    xr-mode-ui="enabled: true"
+    webxr="optionalFeatures: hit-test"
+    >
 
   <a-gltf-model 
   id="lambung" 
