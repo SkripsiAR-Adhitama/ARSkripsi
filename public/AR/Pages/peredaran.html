@@ -439,7 +439,6 @@ const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
           count++;
         }
       });
-      alert(title + ': ' + count + ' meshes'); // SEMENTARA
       console.log(`[AR] Mapped ${count} meshes → "${title}"`);
     };
 
@@ -849,9 +848,11 @@ function tapRaycast(touch) {
   const meshes = [];
   modelGroup.object3D.traverse(child => { if (child.isMesh) meshes.push(child); });
 
-  const hits = raycaster.intersectObjects(meshes, false);
-   for (const hit of hits) {
+    const hits = raycaster.intersectObjects(meshes, false);
+  alert('total hits: ' + hits.length + ', map size: ' + meshToOrgan.size);
+  for (const hit of hits) {
     const info = meshToOrgan.get(hit.object);
+    alert('hit: ' + hit.object.uuid + ' → ' + (info ? info.title : 'NOT IN MAP'));
     if (info) { showInfo(info.title, info.desc); break; }
   }
 }
