@@ -653,12 +653,8 @@ scaleSlider.addEventListener('input', e => {
   scaleValue.textContent = currentScale.toFixed(1);
 
   if (modelPlaced) {
-    const savedPos = modelGroup.object3D.position.clone();
-    const savedRot = modelGroup.object3D.rotation.clone();
-    
     modelGroup.object3D.scale.set(currentScale, currentScale, currentScale);
-    modelGroup.object3D.position.copy(savedPos);
-    modelGroup.object3D.rotation.copy(savedRot);
+    modelGroup.object3D.updateMatrix();
   }
 });
 
@@ -670,7 +666,10 @@ rotSlider.addEventListener('input', e => {
   e.stopPropagation();
   currentRotY = parseInt(rotSlider.value);
   rotDisplay.textContent = currentRotY + '°';
-  if (modelPlaced) modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+  if (modelPlaced) {
+    modelGroup.object3D.rotation.set(0, currentRotY * Math.PI / 180, 0);
+    modelGroup.object3D.updateMatrix();
+  }
 });
 
 document.getElementById('btn-reset-rot').addEventListener('click', e => {
@@ -813,9 +812,10 @@ function placeModel() {
 
 
   modelGroup.setAttribute('visible', 'true');
-  modelGroup.setAttribute('scale', '1 1 1');
+  modelGroup.object3D.matrixAutoUpdate = false;
+  modelGroup.object3D.updateMatrix();
 
-  
+
   modelGroup.object3D.position.copy(pos);
   modelGroup.object3D.quaternion.identity();
   modelGroup.object3D.rotateY(currentRotY * Math.PI / 180);
