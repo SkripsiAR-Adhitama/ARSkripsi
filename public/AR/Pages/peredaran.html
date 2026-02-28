@@ -654,6 +654,10 @@ scaleSlider.addEventListener('input', e => {
 
   if (modelPlaced) {
     modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+    // TARUH DI SINI ↓
+    alert(modelGroup.object3D.position.x + ',' + 
+          modelGroup.object3D.position.y + ',' + 
+          modelGroup.object3D.position.z);
   }
 });
 
