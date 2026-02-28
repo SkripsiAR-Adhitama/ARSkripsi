@@ -3,8 +3,11 @@
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene>
-
+    <a-scene
+    embedded
+    xr-mode-ui="enabled: true"
+    webxr="optionalFeatures: hit-test"
+    >
   <a-gltf-model 
   id="diafragma" 
   src="/AR/Models/Pernapasan/diafragma.glb"
