@@ -810,11 +810,9 @@ function placeModel() {
   modelGroup.setAttribute('visible', 'true');
 
   modelGroup.object3D.position.copy(pos);
-  modelGroup.object3D.quaternion.copy(quat);
-
-  // 🔥 TAMBAHKAN INI supaya tidak menghadap belakang
-  modelGroup.object3D.rotateY(Math.PI);
-
+  modelGroup.object3D.quaternion.identity();
+  modelGroup.object3D.rotateY(currentRotY * Math.PI / 180);
+  
   // scale tetap normal
   const s = 7 * currentScale;
   modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
