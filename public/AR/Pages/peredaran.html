@@ -11,7 +11,7 @@
     body { font-family: 'Exo 2', sans-serif; background: #000; overflow: hidden; }
     a-scene { width: 100vw; height: 100vh; display: block; }
 
-    /* ─── LANDING ─── */
+    /* LANDING */
     #landing {
       position: fixed; inset: 0;
       background: radial-gradient(ellipse at 30% 20%, #0d1f3c 0%, #070d1a 60%, #000 100%);
@@ -21,193 +21,139 @@
     }
     #landing.hidden { display: none; }
     .landing-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(22px, 6vw, 36px); font-weight: 900;
+      font-family: 'Orbitron', sans-serif; font-size: clamp(22px,6vw,36px); font-weight: 900;
       color: #fff; text-align: center;
-      text-shadow: 0 0 30px #00f7ff, 0 0 60px #00f7ff44;
-      letter-spacing: 2px; line-height: 1.2;
+      text-shadow: 0 0 30px #00f7ff, 0 0 60px #00f7ff44; letter-spacing: 2px; line-height: 1.2;
     }
     .landing-sub { font-size: 13px; color: #7ab8d4; text-align: center; max-width: 320px; line-height: 1.6; }
     .heart-icon { font-size: 60px; animation: pulse 1.4s ease-in-out infinite; }
     @keyframes pulse {
-      0%,100% { transform: scale(1); filter: drop-shadow(0 0 8px #ff4466); }
-      50%      { transform: scale(1.12); filter: drop-shadow(0 0 22px #ff4466); }
+      0%,100% { transform:scale(1); filter:drop-shadow(0 0 8px #ff4466); }
+      50%      { transform:scale(1.12); filter:drop-shadow(0 0 22px #ff4466); }
     }
     .btn-main {
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      border: none; border-radius: 12px; padding: 14px 32px;
-      color: #fff; font-family: 'Orbitron', sans-serif;
-      font-size: 14px; font-weight: 700; letter-spacing: 2px;
-      cursor: pointer; box-shadow: 0 0 24px #0072ff88;
-      transition: all 0.3s; text-transform: uppercase;
+      background: linear-gradient(135deg,#00c6ff,#0072ff); border: none; border-radius: 12px;
+      padding: 14px 32px; color: #fff; font-family: 'Orbitron',sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 2px; cursor: pointer;
+      box-shadow: 0 0 24px #0072ff88; transition: all .3s; text-transform: uppercase;
       width: 100%; max-width: 300px;
     }
-    .btn-main:active { transform: scale(0.97); }
-    .btn-vr { background: linear-gradient(135deg, #7c3aed, #4f46e5); box-shadow: 0 0 24px #7c3aed88; }
+    .btn-main:active { transform:scale(.97); }
+    .btn-vr { background:linear-gradient(135deg,#7c3aed,#4f46e5); box-shadow:0 0 24px #7c3aed88; }
     .organ-list {
-      width: 100%; max-width: 360px;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; padding: 14px 16px;
+      width:100%; max-width:360px; background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:14px 16px;
     }
-    .organ-list h3 { font-family: 'Orbitron', sans-serif; font-size: 9px; color: #00f7ff; letter-spacing: 3px; margin-bottom: 10px; }
-    .organ-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: 5px; }
-    .organ-list li { font-size: 10px; color: #aaccee; background: rgba(0,150,255,0.12); border: 1px solid rgba(0,150,255,0.25); border-radius: 6px; padding: 3px 8px; }
+    .organ-list h3 { font-family:'Orbitron',sans-serif; font-size:9px; color:#00f7ff; letter-spacing:3px; margin-bottom:10px; }
+    .organ-list ul { list-style:none; display:flex; flex-wrap:wrap; gap:5px; }
+    .organ-list li { font-size:10px; color:#aaccee; background:rgba(0,150,255,.12); border:1px solid rgba(0,150,255,.25); border-radius:6px; padding:3px 8px; }
 
-    /* ─── AR OVERLAY UI ─── */
+    /* AR UI */
     #ar-ui {
-      display: none;
-      position: fixed; inset: 0;
-      pointer-events: none;
-      z-index: 9999;
+      display:none; position:fixed; inset:0;
+      pointer-events:none; z-index:9999;
     }
-    .corner { position: absolute; width: 22px; height: 22px; pointer-events: none; }
-    .corner.tl { top:8px; left:8px;   border-top:2px solid #00f7ff88; border-left:2px solid #00f7ff88; }
-    .corner.tr { top:8px; right:8px;  border-top:2px solid #00f7ff88; border-right:2px solid #00f7ff88; }
-    .corner.bl { bottom:8px; left:8px;   border-bottom:2px solid #00f7ff88; border-left:2px solid #00f7ff88; }
-    .corner.br { bottom:8px; right:8px;  border-bottom:2px solid #00f7ff88; border-right:2px solid #00f7ff88; }
+    .corner { position:absolute; width:22px; height:22px; pointer-events:none; }
+    .corner.tl { top:8px;left:8px;   border-top:2px solid #00f7ff88; border-left:2px solid #00f7ff88; }
+    .corner.tr { top:8px;right:8px;  border-top:2px solid #00f7ff88; border-right:2px solid #00f7ff88; }
+    .corner.bl { bottom:8px;left:8px;   border-bottom:2px solid #00f7ff88; border-left:2px solid #00f7ff88; }
+    .corner.br { bottom:8px;right:8px;  border-bottom:2px solid #00f7ff88; border-right:2px solid #00f7ff88; }
 
-    /* PINK back button */
     #btn-back {
-      position: absolute; top: 16px; left: 16px;
-      pointer-events: all;
-      background: linear-gradient(135deg, #ff4fa3, #ff85c8);
-      border: 2px solid #fff; border-radius: 10px;
-      padding: 10px 18px; color: #fff;
-      font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 1px; cursor: pointer;
-      box-shadow: 0 0 16px #ff4fa388; text-transform: uppercase;
+      position:absolute; top:16px; left:16px; pointer-events:all;
+      background:linear-gradient(135deg,#ff4fa3,#ff85c8);
+      border:2px solid #fff; border-radius:10px; padding:10px 18px; color:#fff;
+      font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700;
+      letter-spacing:1px; cursor:pointer; box-shadow:0 0 16px #ff4fa388; text-transform:uppercase;
     }
-    #btn-back:active { transform: scale(0.96); }
+    #btn-back:active { transform:scale(.96); }
 
-    /* SCALE slider (vertikal kanan) */
     #scale-panel {
-      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      pointer-events: all;
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      pointer-events:all; display:flex; flex-direction:column; align-items:center; gap:6px;
     }
-    #scale-value { color: #00f7ff; font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 700; text-shadow: 0 0 10px #00f7ff; }
+    #scale-value { color:#00f7ff; font-family:'Orbitron',sans-serif; font-size:15px; font-weight:700; text-shadow:0 0 10px #00f7ff; }
     #scale-slider {
-      writing-mode: vertical-lr; direction: rtl;
-      -webkit-appearance: slider-vertical; appearance: slider-vertical;
-      width: 32px; height: 200px; accent-color: #00f7ff; cursor: pointer;
+      writing-mode:vertical-lr; direction:rtl;
+      -webkit-appearance:slider-vertical; appearance:slider-vertical;
+      width:32px; height:200px; accent-color:#00f7ff; cursor:pointer;
     }
-    #scale-label { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 8px; letter-spacing: 3px; writing-mode: vertical-lr; text-transform: uppercase; opacity: 0.7; text-shadow: 0 0 8px #00f7ff; }
+    #scale-label { color:#fff; font-family:'Orbitron',sans-serif; font-size:8px; letter-spacing:3px; writing-mode:vertical-lr; text-transform:uppercase; opacity:.7; text-shadow:0 0 8px #00f7ff; }
 
-    /* ROTATION red box */
     #rotation-panel {
-      position: absolute; bottom: 110px; right: 14px;
-      pointer-events: all;
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
-      border: 2px solid #ff3333; border-radius: 10px;
-      padding: 10px; background: rgba(180,0,0,0.15);
-      backdrop-filter: blur(6px); min-width: 62px;
+      position:absolute; bottom:110px; right:14px; pointer-events:all;
+      display:flex; flex-direction:column; align-items:center; gap:5px;
+      border:2px solid #ff3333; border-radius:10px; padding:10px;
+      background:rgba(180,0,0,.15); backdrop-filter:blur(6px); min-width:62px;
     }
-    #rotation-panel label { color: #ff6666; font-family: 'Orbitron', sans-serif; font-size: 8px; letter-spacing: 2px; text-shadow: 0 0 8px #ff3333; }
-    #rotation-display { color: #ff5555; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; text-shadow: 0 0 10px #ff3333; }
+    #rotation-panel label { color:#ff6666; font-family:'Orbitron',sans-serif; font-size:8px; letter-spacing:2px; text-shadow:0 0 8px #ff3333; }
+    #rotation-display { color:#ff5555; font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700; text-shadow:0 0 10px #ff3333; }
     #rotation-slider {
-      writing-mode: vertical-lr; direction: rtl;
-      -webkit-appearance: slider-vertical; appearance: slider-vertical;
-      width: 32px; height: 110px; accent-color: #ff3333; cursor: pointer;
+      writing-mode:vertical-lr; direction:rtl;
+      -webkit-appearance:slider-vertical; appearance:slider-vertical;
+      width:32px; height:110px; accent-color:#ff3333; cursor:pointer;
     }
     #btn-reset-rot {
-      pointer-events: all;
-      background: rgba(255,50,50,0.2); border: 1px solid #ff3333;
-      border-radius: 6px; color: #ff6666; font-size: 16px;
-      width: 32px; height: 32px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      pointer-events:all; background:rgba(255,50,50,.2); border:1px solid #ff3333;
+      border-radius:6px; color:#ff6666; font-size:16px;
+      width:32px; height:32px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
     }
 
-    /* INFO PANEL blue */
     #info-panel {
-      position: absolute; bottom: 14px; left: 14px; right: 86px;
-      pointer-events: all;
-      border: 2px solid #3399ff; border-radius: 14px;
-      padding: 12px 16px; background: rgba(5,20,60,0.82);
-      backdrop-filter: blur(14px); box-shadow: 0 0 20px #3399ff44;
-      min-height: 80px; display: flex; flex-direction: column; justify-content: center;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      position:absolute; bottom:14px; left:14px; right:86px; pointer-events:all;
+      border:2px solid #3399ff; border-radius:14px; padding:12px 16px;
+      background:rgba(5,20,60,.82); backdrop-filter:blur(14px); box-shadow:0 0 20px #3399ff44;
+      min-height:80px; display:flex; flex-direction:column; justify-content:center;
+      transition:border-color .3s, box-shadow .3s;
     }
-    #info-panel.flash { border-color: #00aaff; box-shadow: 0 0 32px #3399ffaa; }
-    #info-title { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: #00aaff; text-shadow: 0 0 10px #0088ff; margin-bottom: 5px; }
-    #info-desc { font-size: 11px; color: #cce4ff; line-height: 1.5; font-weight: 300; }
+    #info-panel.flash { border-color:#00aaff; box-shadow:0 0 32px #3399ffaa; }
+    #info-title { font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700; color:#00aaff; text-shadow:0 0 10px #0088ff; margin-bottom:5px; }
+    #info-desc { font-size:11px; color:#cce4ff; line-height:1.5; font-weight:300; }
 
-    /* PLACEMENT HINT */
     #placement-hint {
-      position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
-      text-align: center; pointer-events: none;
-      transition: opacity 0.4s;
+      position:absolute; top:42%; left:50%; transform:translate(-50%,-50%);
+      text-align:center; pointer-events:none; transition:opacity .4s;
     }
-    #placement-hint.hidden { opacity: 0; pointer-events: none; }
+    #placement-hint.hidden { opacity:0; }
     #placement-hint p {
-      color: rgba(255,255,255,0.92); font-size: 13px; line-height: 1.8;
-      background: rgba(0,0,0,0.55); padding: 12px 20px;
-      border-radius: 12px; backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.15);
+      color:rgba(255,255,255,.92); font-size:13px; line-height:1.8;
+      background:rgba(0,0,0,.55); padding:12px 20px; border-radius:12px;
+      backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.15);
     }
 
-    /* HTML CURSOR (center screen, mode cursor) */
     #html-cursor {
-      display: none;
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 9998;
+      display:none; position:fixed; top:50%; left:50%;
+      transform:translate(-50%,-50%); pointer-events:none; z-index:9998;
+      width:60px; height:60px;
     }
-    #html-cursor.active { display: block; }
-    .hcursor-outer {
-      width: 48px; height: 48px;
-      border: 2px solid rgba(0,247,255,0.7);
-      border-radius: 50%;
-      animation: spin 2.5s linear infinite;
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    }
-    .hcursor-inner {
-      width: 28px; height: 28px;
-      border: 1.5px solid rgba(255,255,255,0.5);
-      border-radius: 50%;
-      animation: spin-rev 2s linear infinite;
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    }
-    .hcursor-dot {
-      width: 6px; height: 6px;
-      background: #00f7ff;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #00f7ff;
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    }
-    /* Gap on outer ring for "aiming" look */
-    .hcursor-outer::before, .hcursor-outer::after {
-      content: ''; position: absolute;
-      background: rgba(0,247,255,0.8);
-    }
-    @keyframes spin     { from { transform: translate(-50%,-50%) rotate(0deg); }   to { transform: translate(-50%,-50%) rotate(360deg); } }
-    @keyframes spin-rev { from { transform: translate(-50%,-50%) rotate(0deg); }   to { transform: translate(-50%,-50%) rotate(-360deg); } }
+    #html-cursor.active { display:block; }
+    #html-cursor svg { width:60px; height:60px; }
+    .cur-outer { animation:spin 2.5s linear infinite; transform-origin:30px 30px; }
+    .cur-inner { animation:spin-rev 1.8s linear infinite; transform-origin:30px 30px; }
+    @keyframes spin     { to { transform:rotate(360deg);  } }
+    @keyframes spin-rev { to { transform:rotate(-360deg); } }
+    #html-cursor.hit .cur-outer-circle { stroke:#ffcc00; filter:drop-shadow(0 0 4px #ffcc00); }
+    #html-cursor.hit .cur-dot          { fill:#ffcc00; filter:drop-shadow(0 0 6px #ffcc00); }
 
-    /* Cursor hit flash */
-    #html-cursor.hit .hcursor-outer { border-color: #ffcc00; box-shadow: 0 0 16px #ffcc0088; }
-    #html-cursor.hit .hcursor-dot   { background: #ffcc00; box-shadow: 0 0 12px #ffcc00; }
-
-    /* Mode indicator badge */
     #mode-badge {
-      position: absolute; top: 72px; left: 50%; transform: translateX(-50%);
-      pointer-events: none;
-      background: rgba(0,0,0,0.55); border: 1px solid rgba(0,247,255,0.4);
-      border-radius: 20px; padding: 4px 14px;
-      font-family: 'Orbitron', sans-serif; font-size: 9px; letter-spacing: 2px;
-      color: #00f7ff; backdrop-filter: blur(6px);
-      opacity: 0; transition: opacity 0.4s;
+      position:absolute; top:72px; left:50%; transform:translateX(-50%);
+      pointer-events:none; background:rgba(0,0,0,.55);
+      border:1px solid rgba(0,247,255,.4); border-radius:20px; padding:4px 14px;
+      font-family:'Orbitron',sans-serif; font-size:9px; letter-spacing:2px;
+      color:#00f7ff; backdrop-filter:blur(6px); opacity:0; transition:opacity .4s;
+      white-space:nowrap;
     }
-    #mode-badge.show { opacity: 1; }
+    #mode-badge.show { opacity:1; }
   </style>
 </head>
 <body>
 
-<!-- ═══ LANDING ═══ -->
+<!-- LANDING -->
 <div id="landing">
   <div class="heart-icon">🫀</div>
   <div class="landing-title">AR JANTUNG<br/>MANUSIA</div>
-  <p class="landing-sub">Jelajahi anatomi jantung dalam Augmented Reality. Ring akan mendeteksi permukaan, ketuk untuk menempatkan organ.</p>
+  <p class="landing-sub">Ring mendeteksi permukaan → ketuk untuk menempatkan → arahkan cursor ke organ dan ketuk untuk info.</p>
   <div class="organ-list">
     <h3>📦 ORGAN DALAM SCENE</h3>
     <ul>
@@ -221,645 +167,413 @@
   <button class="btn-main btn-vr" id="btn-enter-vr">🕶️ Masuk VR</button>
 </div>
 
-<!-- ═══ AR OVERLAY UI ═══ -->
+<!-- AR OVERLAY -->
 <div id="ar-ui">
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
-
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
   <button id="btn-back">← Kembali</button>
-  <div id="mode-badge">MODE PENEMPATAN</div>
-
+  <div id="mode-badge">🎯 MODE PENEMPATAN</div>
   <div id="placement-hint">
-    <p>🔍 Arahkan ke permukaan datar<br/>Ring akan muncul → lalu <strong>Ketuk</strong></p>
+    <p>🔍 Arahkan ke permukaan datar<br/>Tunggu ring muncul → lalu <strong>Ketuk</strong></p>
   </div>
-
   <div id="scale-panel">
     <div id="scale-value">1</div>
     <input type="range" id="scale-slider" min="1" max="5" step="0.1" value="1"/>
     <div id="scale-label">S C A L E</div>
   </div>
-
   <div id="rotation-panel">
     <label>ROT Y</label>
     <div id="rotation-display">0°</div>
     <input type="range" id="rotation-slider" min="0" max="360" step="1" value="0"/>
     <button id="btn-reset-rot">↺</button>
   </div>
-
   <div id="info-panel">
     <div id="info-title">🫀 AR Jantung Manusia</div>
-    <div id="info-desc">Ring mendeteksi permukaan... Arahkan ke lantai atau meja.</div>
+    <div id="info-desc">Mendeteksi permukaan... arahkan kamera ke lantai atau meja.</div>
   </div>
 </div>
 
-<!-- HTML Cursor (muncul setelah placement) -->
+<!-- HTML CURSOR -->
 <div id="html-cursor">
-  <div class="hcursor-outer"></div>
-  <div class="hcursor-inner"></div>
-  <div class="hcursor-dot"></div>
+  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="cur-outer">
+      <circle class="cur-outer-circle" cx="30" cy="30" r="26"
+        stroke="#00f7ff" stroke-width="1.5"
+        stroke-dasharray="30 10 30 10" stroke-linecap="round"/>
+    </g>
+    <g class="cur-inner">
+      <circle cx="30" cy="30" r="16"
+        stroke="rgba(255,255,255,0.55)" stroke-width="1"
+        stroke-dasharray="18 8 18 8"/>
+    </g>
+    <line x1="30" y1="2"  x2="30" y2="10" stroke="#00f7ff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="30" y1="50" x2="30" y2="58" stroke="#00f7ff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="2"  y1="30" x2="10" y2="30" stroke="#00f7ff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="30" x2="58" y2="30" stroke="#00f7ff" stroke-width="1.5" stroke-linecap="round"/>
+    <circle class="cur-dot" cx="30" cy="30" r="2.5" fill="#00f7ff"/>
+  </svg>
 </div>
 
-<!-- ═══ A-FRAME SCENE ═══ -->
+<!-- A-FRAME SCENE -->
 <a-scene
   id="scene"
   embedded
-  vr-mode-ui="enabled: false"
+  vr-mode-ui="enabled:false"
   renderer="antialias:true; colorManagement:true; alpha:true"
-  background="color: transparent; transparent: true"
-  webxr="requiredFeatures: hit-test; optionalFeatures: local-floor, dom-overlay; overlayElement: #ar-ui;"
+  background="transparent:true"
 >
-
-  <!-- SEMUA ORGAN JANTUNG -->
-  <a-entity id="model-group" visible="false" position="0 0 0">
-
-    <a-gltf-model class="organ" id="bilikTutup"
-      src="../Models/Peredaran/bilikTutup.glb" scale="7 7 7"
-      data-title="Bilik Tutup"
-      data-description="Bagian penutup bilik jantung. Berperan penting menjaga tekanan darah saat jantung berkontraksi kuat.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="venaKecil"
-      src="../Models/Peredaran/vena_kecil.glb" scale="7 7 7"
-      data-title="Vena Kecil"
-      data-description="Pembuluh vena kecil yang mengalirkan darah dari jaringan menuju vena lebih besar lalu kembali ke jantung.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="serambiKiri"
-      src="../Models/Peredaran/serambiKiri.glb" scale="7 7 7"
-      data-title="Serambi Kiri (Atrium Kiri)"
-      data-description="Ruang atas kiri jantung. Menerima darah kaya oksigen dari paru-paru via vena pulmonalis, lalu memompanya ke bilik kiri.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="venaPulmonalis"
-      src="../Models/Peredaran/vena_pulmonalis.glb" scale="7 7 7"
-      data-title="Vena Pulmonalis"
-      data-description="Membawa darah kaya oksigen dari paru-paru ke serambi kiri. Satu-satunya vena yang membawa darah bersih (teroksigenasi).">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="katupBikuspid"
-      src="../Models/Peredaran/katup_bikuspid.glb" scale="7 7 7"
-      data-title="Katup Bikuspid (Mitral)"
-      data-description="Katup dua daun antara serambi kiri dan bilik kiri. Mencegah aliran balik darah dari bilik ke serambi.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="aorta"
-      src="../Models/Peredaran/aorta.glb" scale="7 7 7"
-      data-title="Aorta"
-      data-description="Arteri terbesar dalam tubuh. Membawa darah kaya oksigen dari bilik kiri ke seluruh tubuh melalui peredaran sistemik.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="bilikKiri"
-      src="../Models/Peredaran/bilikKiri.glb" scale="7 7 7"
-      data-title="Bilik Kiri (Ventrikel Kiri)"
-      data-description="Ruang bawah kiri jantung. Memompa darah ke seluruh tubuh lewat aorta. Dinding paling tebal karena tekanan pompa tertinggi.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="arteriPulmonalis"
-      src="../Models/Peredaran/arteri_pulmonalis.glb" scale="7 7 7"
-      data-title="Arteri Pulmonalis"
-      data-description="Membawa darah miskin oksigen dari bilik kanan ke paru-paru. Satu-satunya arteri yang membawa darah kotor (deoksigenasi).">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="aurikelKiri"
-      src="../Models/Peredaran/aurikel_kiri.glb" scale="7 7 7"
-      data-title="Aurikel Kiri"
-      data-description="Kantung berbentuk telinga pada serambi kiri. Berfungsi sebagai reservoir tambahan saat volume darah meningkat.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="bilikKananDalam"
-      src="../Models/Peredaran/bilikKananDalam.glb" scale="7 7 7"
-      data-title="Bilik Kanan Dalam (Ventrikel Kanan)"
-      data-description="Memompa darah miskin oksigen ke paru-paru melalui arteri pulmonalis untuk proses oksigenasi darah.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="serambiKanan"
-      src="../Models/Peredaran/serambiKanan.glb" scale="7 7 7"
-      data-title="Serambi Kanan (Atrium Kanan)"
-      data-description="Ruang atas kanan jantung. Menerima darah miskin oksigen dari seluruh tubuh melalui vena kava superior dan inferior.">
-    </a-gltf-model>
-
-    <a-gltf-model class="organ" id="aurikelKanan"
-      src="../Models/Peredaran/aurikel_kanan.glb" scale="7 7 7"
-      data-title="Aurikel Kanan"
-      data-description="Kantung berbentuk telinga pada serambi kanan. Membantu menampung darah dari vena kava sebelum dipompa ke bilik kanan.">
-    </a-gltf-model>
-
+  <a-entity id="model-group" visible="false" position="0 0 0" rotation="0 0 0" scale="1 1 1">
+    <a-gltf-model class="organ" id="bilikTutup"      src="../Models/Peredaran/bilikTutup.glb"         scale="7 7 7" data-title="Bilik Tutup"                       data-description="Bagian penutup bilik jantung. Berperan penting menjaga tekanan darah saat jantung berkontraksi kuat."></a-gltf-model>
+    <a-gltf-model class="organ" id="venaKecil"       src="../Models/Peredaran/vena_kecil.glb"         scale="7 7 7" data-title="Vena Kecil"                        data-description="Pembuluh vena kecil yang mengalirkan darah dari jaringan ke vena lebih besar, lalu kembali ke jantung."></a-gltf-model>
+    <a-gltf-model class="organ" id="serambiKiri"     src="../Models/Peredaran/serambiKiri.glb"        scale="7 7 7" data-title="Serambi Kiri (Atrium Kiri)"        data-description="Ruang atas kiri jantung. Menerima darah kaya oksigen dari paru-paru via vena pulmonalis, lalu memompanya ke bilik kiri."></a-gltf-model>
+    <a-gltf-model class="organ" id="venaPulmonalis"  src="../Models/Peredaran/vena_pulmonalis.glb"    scale="7 7 7" data-title="Vena Pulmonalis"                   data-description="Membawa darah kaya oksigen dari paru-paru ke serambi kiri. Satu-satunya vena yang membawa darah bersih."></a-gltf-model>
+    <a-gltf-model class="organ" id="katupBikuspid"   src="../Models/Peredaran/katup_bikuspid.glb"     scale="7 7 7" data-title="Katup Bikuspid (Mitral)"           data-description="Katup dua daun antara serambi kiri dan bilik kiri. Mencegah aliran balik darah dari bilik ke serambi."></a-gltf-model>
+    <a-gltf-model class="organ" id="aorta"           src="../Models/Peredaran/aorta.glb"              scale="7 7 7" data-title="Aorta"                             data-description="Arteri terbesar dalam tubuh. Membawa darah kaya oksigen dari bilik kiri ke seluruh tubuh."></a-gltf-model>
+    <a-gltf-model class="organ" id="bilikKiri"       src="../Models/Peredaran/bilikKiri.glb"          scale="7 7 7" data-title="Bilik Kiri (Ventrikel Kiri)"       data-description="Ruang bawah kiri jantung. Memompa darah ke seluruh tubuh lewat aorta. Dinding paling tebal karena tekanan pompa tertinggi."></a-gltf-model>
+    <a-gltf-model class="organ" id="arteriPulmonalis" src="../Models/Peredaran/arteri_pulmonalis.glb" scale="7 7 7" data-title="Arteri Pulmonalis"                 data-description="Membawa darah miskin oksigen dari bilik kanan ke paru-paru. Satu-satunya arteri yang membawa darah kotor."></a-gltf-model>
+    <a-gltf-model class="organ" id="aurikelKiri"     src="../Models/Peredaran/aurikel_kiri.glb"       scale="7 7 7" data-title="Aurikel Kiri"                      data-description="Kantung berbentuk telinga pada serambi kiri. Berfungsi sebagai reservoir tambahan saat volume darah meningkat."></a-gltf-model>
+    <a-gltf-model class="organ" id="bilikKananDalam" src="../Models/Peredaran/bilikKananDalam.glb"    scale="7 7 7" data-title="Bilik Kanan Dalam (Ventrikel Kanan)" data-description="Memompa darah miskin oksigen ke paru-paru melalui arteri pulmonalis untuk proses oksigenasi."></a-gltf-model>
+    <a-gltf-model class="organ" id="serambiKanan"    src="../Models/Peredaran/serambiKanan.glb"       scale="7 7 7" data-title="Serambi Kanan (Atrium Kanan)"      data-description="Ruang atas kanan jantung. Menerima darah miskin oksigen dari seluruh tubuh melalui vena kava."></a-gltf-model>
+    <a-gltf-model class="organ" id="aurikelKanan"    src="../Models/Peredaran/aurikel_kanan.glb"      scale="7 7 7" data-title="Aurikel Kanan"                     data-description="Kantung berbentuk telinga pada serambi kanan. Membantu menampung darah dari vena kava sebelum dipompa ke bilik kanan."></a-gltf-model>
   </a-entity>
 
-  <!-- RETICLE — ring penanda hit-test, diposisikan via JS setiap frame -->
   <a-entity id="reticle" visible="false">
-    <!-- Lingkaran luar (berputar) -->
     <a-torus color="#00f7ff" radius="0.12" radius-tubular="0.006" opacity="0.95"
-      rotation="-90 0 0"
-      animation="property:rotation; to:-90 360 0; loop:true; dur:1600; easing:linear">
-    </a-torus>
-    <!-- Lingkaran tengah (berlawanan) -->
-    <a-torus color="#ffffff" radius="0.08" radius-tubular="0.004" opacity="0.6"
-      rotation="-90 0 0"
-      animation="property:rotation; to:-90 -360 0; loop:true; dur:2400; easing:linear">
-    </a-torus>
-    <!-- Titik tengah -->
-    <a-circle color="#00f7ff" radius="0.018" opacity="1" rotation="-90 0 0"
-      material="shader:flat; color:#00f7ff">
-    </a-circle>
-    <!-- 4 strip kecil arah mata angin -->
-    <a-box color="#00f7ff" width="0.005" height="0.001" depth="0.04"
-      position="0.16 0 0" rotation="-90 0 0" material="shader:flat"></a-box>
-    <a-box color="#00f7ff" width="0.005" height="0.001" depth="0.04"
-      position="-0.16 0 0" rotation="-90 0 0" material="shader:flat"></a-box>
-    <a-box color="#00f7ff" width="0.04" height="0.001" depth="0.005"
-      position="0 0 0.16" rotation="-90 0 0" material="shader:flat"></a-box>
-    <a-box color="#00f7ff" width="0.04" height="0.001" depth="0.005"
-      position="0 0 -0.16" rotation="-90 0 0" material="shader:flat"></a-box>
+      rotation="-90 0 0" animation="property:rotation; to:-90 360 0; loop:true; dur:1600; easing:linear"></a-torus>
+    <a-torus color="#ffffff" radius="0.075" radius-tubular="0.003" opacity="0.55"
+      rotation="-90 0 0" animation="property:rotation; to:-90 -360 0; loop:true; dur:2400; easing:linear"></a-torus>
+    <a-circle radius="0.018" rotation="-90 0 0" material="shader:flat; color:#00f7ff; opacity:1"></a-circle>
+    <a-box width="0.005" height="0.001" depth="0.035" position=" 0.155 0 0" rotation="-90 0 0" material="shader:flat;color:#00f7ff"></a-box>
+    <a-box width="0.005" height="0.001" depth="0.035" position="-0.155 0 0" rotation="-90 0 0" material="shader:flat;color:#00f7ff"></a-box>
+    <a-box width="0.035" height="0.001" depth="0.005" position="0 0  0.155" rotation="-90 0 0" material="shader:flat;color:#00f7ff"></a-box>
+    <a-box width="0.035" height="0.001" depth="0.005" position="0 0 -0.155" rotation="-90 0 0" material="shader:flat;color:#00f7ff"></a-box>
   </a-entity>
 
-  <!-- Camera -->
   <a-entity id="cam-rig">
-    <a-camera id="main-cam" look-controls wasd-controls="enabled:false">
-    </a-camera>
+    <a-camera id="main-cam" look-controls wasd-controls="enabled:false"></a-camera>
   </a-entity>
-
-  <!-- Lights -->
-  <a-light type="ambient"     intensity="0.8" color="#ffffff"></a-light>
-  <a-light type="directional" intensity="0.9" color="#ffffff" position="1 2 1"></a-light>
+  <a-light type="ambient"     intensity="0.8"></a-light>
+  <a-light type="directional" intensity="0.9" position="1 2 1"></a-light>
   <a-light type="point"       intensity="0.4" color="#66aaff" position="-1 1.5 0"></a-light>
-
 </a-scene>
 
 <script>
-// ════════════════════════════════════════════
-//  CONSTANTS & STATE
-// ════════════════════════════════════════════
-const T = AFRAME.THREE;   // Three.js dari A-Frame
+(function () {
+  const T = AFRAME.THREE;
 
-// Modes: 'placement' | 'cursor'
-let MODE          = 'placement';
-let baseModelY = 0;
-let isARActive    = false;
-let modelPlaced   = false;
-let currentScale  = 1;
-let currentRotY   = 0;
-let hitTestSource = null;
-let xrRefSpace    = null;
-let lastHitPos    = null;   // THREE.Vector3 posisi hit terbaru
-let lastHitQuat   = null;   // THREE.Quaternion orientasi hit
-let activeSession = null;
+  // ─── State ──────────────────────────────────────────
+  let MODE          = 'placement';
+  let isARActive    = false;
+  let modelPlaced   = false;
+  let currentScale  = 1;
+  let currentRotY   = 0;
+  let hitTestSource = null;
+  let xrRefSpace    = null;
+  let lastHitPos    = null;
+  let activeSession = null;
 
-// DOM refs
-const scene         = document.getElementById('scene');
-const modelGroup    = document.getElementById('model-group');
-const reticleEl     = document.getElementById('reticle');
-const arUI          = document.getElementById('ar-ui');
-const landing       = document.getElementById('landing');
-const placementHint = document.getElementById('placement-hint');
-const htmlCursor    = document.getElementById('html-cursor');
-const modeBadge     = document.getElementById('mode-badge');
-const infoPanel     = document.getElementById('info-panel');
-const infoTitle     = document.getElementById('info-title');
-const infoDesc      = document.getElementById('info-desc');
-const scaleSlider   = document.getElementById('scale-slider');
-const scaleValue    = document.getElementById('scale-value');
-const rotSlider     = document.getElementById('rotation-slider');
-const rotDisplay    = document.getElementById('rotation-display');
+  // ─── DOM ────────────────────────────────────────────
+  const scene         = document.getElementById('scene');
+  const modelGroup    = document.getElementById('model-group');
+  const reticleEl     = document.getElementById('reticle');
+  const arUI          = document.getElementById('ar-ui');
+  const landing       = document.getElementById('landing');
+  const placementHint = document.getElementById('placement-hint');
+  const htmlCursor    = document.getElementById('html-cursor');
+  const modeBadge     = document.getElementById('mode-badge');
+  const infoPanel     = document.getElementById('info-panel');
+  const infoTitle     = document.getElementById('info-title');
+  const infoDesc      = document.getElementById('info-desc');
+  const scaleSlider   = document.getElementById('scale-slider');
+  const scaleValue    = document.getElementById('scale-value');
+  const rotSlider     = document.getElementById('rotation-slider');
+  const rotDisplay    = document.getElementById('rotation-display');
 
-const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
+  // ─── Mesh → Organ Map ───────────────────────────────
+  // Daftarkan tiap mesh ke map saat model-loaded
+  // Ini satu-satunya cara andal karena semua origin (0,0,0) di Blender
+  const meshToOrgan = new Map();
 
   function registerOrgan(aEntity) {
     const title = aEntity.dataset.title;
     const desc  = aEntity.dataset.description;
     if (!title) return;
-
-    const mapMeshes = () => {
-      let count = 0;
-      aEntity.object3D.traverse(child => {
-        if (child.isMesh) {
-          meshToOrgan.set(child, { title, desc });
-          count++;
-        }
-      });
-      console.log(`[AR] Mapped ${count} meshes → "${title}"`);
-    };
-
-    // model-loaded fired setelah GLB selesai diparse
-    aEntity.addEventListener('model-loaded', mapMeshes, { once: true });
-    // Safety: kalau sudah loaded sebelum listener terpasang
-    if (aEntity.object3D && aEntity.object3D.children.length > 0) mapMeshes();
+    aEntity.object3D.traverse(child => {
+      if (child.isMesh) meshToOrgan.set(child, { title, desc });
+    });
   }
 
+  // Daftarkan saat tiap model selesai load
   document.querySelectorAll('.organ').forEach(el => {
-  el.addEventListener('model-loaded', () => {
-    registerOrgan(el);
+    el.addEventListener('model-loaded', () => registerOrgan(el));
   });
-});
 
+  // ─── Landing ────────────────────────────────────────
+  document.getElementById('btn-enter-ar').addEventListener('click', startAR);
+  document.getElementById('btn-enter-vr').addEventListener('click', () => {
+    scene.addEventListener('enter-vr', () => { showARUI(); }, { once: true });
+    scene.enterVR();
+  });
 
-  setTimeout(() => {
-  console.log('Map size:', meshToOrgan.size);
-  meshToOrgan.forEach((v, k) => console.log(k.name, '→', v.title));
-}, 5000);
+  // ─── Start AR ───────────────────────────────────────
+  async function startAR() {
+    if (!navigator.xr) { alert('WebXR tidak tersedia.'); return; }
+    const ok = await navigator.xr.isSessionSupported('immersive-ar').catch(() => false);
+    if (!ok) { alert('AR tidak didukung. Pastikan ARCore terinstall.'); return; }
 
+    let session;
+    try {
+      session = await navigator.xr.requestSession('immersive-ar', {
+        requiredFeatures: ['local'],
+        optionalFeatures: ['hit-test', 'dom-overlay', 'local-floor'],
+        domOverlay: { root: arUI }
+      });
+    } catch(e) { alert('Gagal mulai AR: ' + e.message); return; }
 
-// ════════════════════════════════════════════
-//  LANDING
-// ════════════════════════════════════════════
-document.getElementById('btn-enter-ar').addEventListener('click', startAR);
-document.getElementById('btn-enter-vr').addEventListener('click', () => {
-  scene.addEventListener('enter-vr', showARUI, { once: true });
-  scene.enterVR();
-});
-
-async function startAR() {
-  if (!navigator.xr) { alert('WebXR tidak tersedia. Gunakan Chrome terbaru di Android.'); return; }
-  const ok = await navigator.xr.isSessionSupported('immersive-ar').catch(() => false);
-  if (!ok) { alert('AR tidak didukung perangkat ini. Pastikan ARCore terinstall.'); return; }
-
-  const init = {
-    requiredFeatures: ['hit-test'],
-    optionalFeatures: ['dom-overlay', 'local-floor'],
-    domOverlay: { root: arUI }
-  };
-
-  try {
-    const session = await navigator.xr.requestSession('immersive-ar', init);
     activeSession = session;
     session.addEventListener('end', onSessionEnd);
     scene.renderer.xr.enabled = true;
-    await scene.renderer.xr.setSession(session);
-    initARSession(session);
-  } catch (e) {
-    console.error('[AR] requestSession failed:', e);
-    // A-Frame fallback
-    scene.addEventListener('enter-vr', () => initARSession(null), { once: true });
-    scene.enterAR();
+    try { await scene.renderer.xr.setSession(session); }
+    catch(e) { session.end(); return; }
+
+    showARUI();
+    await setupHitTest(session);
+    initFrameLoop();
   }
-}
 
-// ════════════════════════════════════════════
-//  AR SESSION INIT
-// ════════════════════════════════════════════
-function initARSession(session) {
-  showARUI();
-  setMode('placement');
+  // ─── Hit-test setup ─────────────────────────────────
+  async function setupHitTest(session) {
+    try      { xrRefSpace = await session.requestReferenceSpace('local-floor'); }
+    catch(_) { xrRefSpace = await session.requestReferenceSpace('local').catch(()=>null); }
 
-  if (!session) return;
+    try {
+      const vs = await session.requestReferenceSpace('viewer');
+      hitTestSource = await session.requestHitTestSource({ space: vs });
+    } catch(e) { console.warn('[AR] hit-test tidak tersedia:', e); }
+  }
 
-  // Reference space untuk hit-test
-  session.requestReferenceSpace('viewer').then(viewerSpace => {
-    session.requestHitTestSource({ space: viewerSpace })
-      .then(src => {
-        hitTestSource = src;
-        console.log('[AR] hit-test ready ✓');
-      })
-      .catch(e => {
-        console.warn('[AR] hit-test unavailable:', e);
-      });
-  });
+  // ─── Frame loop ─────────────────────────────────────
+  let loopStarted = false;
+  function initFrameLoop() {
+    if (loopStarted) return;
+    loopStarted = true;
 
-  session.requestReferenceSpace('local-floor').then(ref => {
-    xrRefSpace = ref;
-  });
+    scene.renderer.setAnimationLoop((ts, frame) => {
+      if (!frame || !isARActive) return;
 
-  // ⚠️ FIX PENTING UNTUK A-FRAME 1.4.2
-  scene.addEventListener('renderstart', () => {
-
-    scene.renderer.setAnimationLoop((time, frame) => {
-
-      if (!frame || !isARActive || !scene.renderer.xr.isPresenting) return;
-
-      // ===== MODE PLACEMENT =====
+      // MODE PLACEMENT: update reticle via hit-test
       if (MODE === 'placement' && hitTestSource && xrRefSpace) {
-
         const hits = frame.getHitTestResults(hitTestSource);
-
         if (hits.length > 0) {
-
           const pose = hits[0].getPose(xrRefSpace);
-
           if (pose) {
-
-            const mat4 = new T.Matrix4().fromArray(pose.transform.matrix);
-            const pos  = new T.Vector3();
-            const quat = new T.Quaternion();
-            const scl  = new T.Vector3();
-            mat4.decompose(pos, quat, scl);
-
-            lastHitPos  = pos.clone();
-            lastHitQuat = quat.clone();
-
-            reticleEl.object3D.position.copy(pos);
+            const m = pose.transform.matrix;
+            lastHitPos = new T.Vector3(m[12], m[13], m[14]);
+            const mat  = new T.Matrix4().fromArray(m);
+            const quat = new T.Quaternion().setFromRotationMatrix(mat);
+            reticleEl.object3D.position.copy(lastHitPos);
             reticleEl.object3D.quaternion.copy(quat);
             reticleEl.object3D.visible = true;
-
-            infoDesc.textContent =
-              '✅ Permukaan terdeteksi! Ketuk untuk menempatkan organ.';
-
+            infoDesc.textContent = '✅ Permukaan terdeteksi! Ketuk untuk menempatkan.';
           }
-
         } else {
-
           reticleEl.object3D.visible = false;
-
-          if (!modelPlaced)
-            infoDesc.textContent = '🔍 Arahkan ke permukaan datar...';
-
+          infoDesc.textContent = '🔍 Arahkan ke permukaan datar...';
         }
       }
 
-      // ===== MODE CURSOR =====
-      if (MODE === 'cursor') {
-        doCursorRaycast(frame);
-      }
-
+      // MODE CURSOR: hover detection tiap frame
+      if (MODE === 'cursor') doCursorHover();
     });
+  }
 
-  }, { once: true });
-}
+  // ─── Show AR UI ─────────────────────────────────────
+  function showARUI() {
+    isARActive = true;
+    arUI.style.display = 'block';
+    landing.classList.add('hidden');
+    setMode('placement');
+  }
 
-
-function showARUI() {
-  arUI.style.display = 'block';
-  landing.classList.add('hidden');
-  isARActive = true;
-}
-
-function onSessionEnd() {
-  isARActive    = false;
-  modelPlaced   = false;
-  hitTestSource = null;
-  xrRefSpace    = null;
-  lastHitPos    = null;
-  activeSession = null;
-  arUI.style.display = 'none';
-  htmlCursor.classList.remove('active');
-  landing.classList.remove('hidden');
-  modelGroup.setAttribute('visible', 'false');
-  reticleEl.object3D.visible = false;
-  placementHint.classList.remove('hidden');
-  setMode('placement');
-
-  setTimeout(() => {
-  console.log('Map size:', meshToOrgan.size);
-  meshToOrgan.forEach((v, k) => console.log(k.name, '→', v.title));
-}, 5000);
-  currentScale = 1; scaleSlider.value = 1; scaleValue.textContent = '1';
-  currentRotY  = 0; rotSlider.value  = 0; rotDisplay.textContent = '0°';
-}
-
-scene.addEventListener('exit-vr', () => { if (isARActive) onSessionEnd(); });
-
-// ════════════════════════════════════════════
-//  MODE SWITCHING
-// ════════════════════════════════════════════
-function setMode(mode) {
-  MODE = mode;
-  if (mode === 'placement') {
-    modeBadge.textContent = '🎯 MODE PENEMPATAN';
-    modeBadge.classList.add('show');
+  // ─── Session end ────────────────────────────────────
+  function onSessionEnd() {
+    isARActive = false; modelPlaced = false;
+    hitTestSource = null; xrRefSpace = null;
+    lastHitPos = null; activeSession = null; loopStarted = false;
+    arUI.style.display = 'none';
     htmlCursor.classList.remove('active');
+    landing.classList.remove('hidden');
+    reticleEl.setAttribute('visible', 'false');
+    modelGroup.setAttribute('visible', 'false');
+    modelGroup.setAttribute('position', '0 0 0');
+    modelGroup.setAttribute('rotation', '0 0 0');
+    modelGroup.setAttribute('scale', '1 1 1');
     placementHint.classList.remove('hidden');
-    reticleEl.object3D.visible = true;
-    setTimeout(() => modeBadge.classList.remove('show'), 2500);
-  } else {
-    // cursor mode
-    modeBadge.textContent = '👆 KETUK ORGAN UNTUK INFO';
-    modeBadge.classList.add('show');
-    htmlCursor.classList.add('active');
-    placementHint.classList.add('hidden');
-    reticleEl.object3D.visible = false;
-    setTimeout(() => modeBadge.classList.remove('show'), 3000);
-    infoTitle.textContent = '🫀 Organ Jantung';
-    infoDesc.textContent  = 'Arahkan crosshair ke organ, lalu ketuk untuk info.';
-  }
-}
-
-// ════════════════════════════════════════════
-//  BACK BUTTON
-// ════════════════════════════════════════════
-document.getElementById('btn-back').addEventListener('click', e => {
-  e.stopPropagation();
-  if (activeSession) activeSession.end();
-  else { scene.exitVR(); onSessionEnd(); }
-});
-
-// ════════════════════════════════════════════
-//  SCALE
-// ════════════════════════════════════════════
-scaleSlider.addEventListener('input', e => {
-  e.stopPropagation();
-
-  currentScale = parseFloat(scaleSlider.value);
-  scaleValue.textContent = currentScale.toFixed(1);
-
-  if (modelPlaced) {
-    modelGroup.object3D.scale.set(currentScale, currentScale, currentScale);
-    modelGroup.object3D.updateMatrix();
-  }
-});
-
-
-// ════════════════════════════════════════════
-//  ROTATION
-// ════════════════════════════════════════════
-rotSlider.addEventListener('input', e => {
-  e.stopPropagation();
-  currentRotY = parseInt(rotSlider.value);
-  rotDisplay.textContent = currentRotY + '°';
-  if (modelPlaced) {
-    modelGroup.object3D.rotation.set(0, currentRotY * Math.PI / 180, 0);
-    modelGroup.object3D.updateMatrix();
-  }
-});
-
-document.getElementById('btn-reset-rot').addEventListener('click', e => {
-  e.stopPropagation();
-  currentRotY = 0; rotSlider.value = 0; rotDisplay.textContent = '0°';
-  if (modelPlaced) modelGroup.setAttribute('rotation', '0 0 0');
-});
-
-// ════════════════════════════════════════════
-//  INFO PANEL
-// ════════════════════════════════════════════
-function showInfo(title, desc) {
-  infoTitle.textContent = title;
-  infoDesc.textContent  = desc;
-  infoPanel.classList.add('flash');
-  setTimeout(() => infoPanel.classList.remove('flash'), 600);
-}
-
-// ════════════════════════════════════════════
-//  CURSOR RAYCAST (tiap frame, tengah layar)
-//  — Cast ray dari center screen ke organ
-//  — Highlight jika kena, update info saat tap
-// ════════════════════════════════════════════
-let hoveredOrgan  = null;
-let lastHoverInfo = null;
-
-function doCursorRaycast(frame) {
-  const cam = scene.renderer.xr.isPresenting
-    ? scene.renderer.xr.getCamera()
-    : document.getElementById('main-cam').object3D;
-  if (!cam) return;
-
-  const raycaster = new T.Raycaster();
-
-  // Ray dari tengah screen (NDC 0,0)
-  raycaster.setFromCamera({ x: 0, y: 0 }, cam);
-
-  const meshes = [];
-  modelGroup.object3D.traverse(child => {
-    if (child.isMesh) meshes.push(child);
-  });
-
-  const hits = raycaster.intersectObjects(meshes, false);
-
-  let info = null;
-  for (const hit of hits) {
-    info = meshToOrgan.get(hit.object);
-    if (info) break;
+    currentScale = 1; scaleSlider.value = 1; scaleValue.textContent = '1';
+    currentRotY  = 0; rotSlider.value  = 0; rotDisplay.textContent = '0°';
+    infoTitle.textContent = '🫀 AR Jantung Manusia';
+    infoDesc.textContent  = 'Mendeteksi permukaan...';
   }
 
-  if (info) {
-    if (info.title !== lastHoverInfo) {
-      lastHoverInfo = info.title;
-      hoveredOrgan  = info;
-      htmlCursor.classList.add('hit');
-    }
-  } else {
-    if (lastHoverInfo !== null) {
-      lastHoverInfo = null;
-      hoveredOrgan  = null;
-      htmlCursor.classList.remove('hit');
-    }
-  }
-}
+  scene.addEventListener('exit-vr', () => { if (isARActive) onSessionEnd(); });
 
-// function findOrganInfo(threeObject) {
-//   let obj = threeObject;
-//   while (obj) {
-//     if (obj.el && obj.el.dataset && obj.el.dataset.title) {
-//       return { title: obj.el.dataset.title, desc: obj.el.dataset.description };
-//     }
-//     obj = obj.parent;
-//   }
-//   return null;
-// }
-
-// ════════════════════════════════════════════
-//  TOUCH HANDLER
-//  Mode placement: letakkan model
-//  Mode cursor:    tampilkan info organ yg di-hover
-// ════════════════════════════════════════════
-
-// Blokir propagasi touch di elemen UI
-arUI.querySelectorAll('input, button').forEach(el => {
-  ['touchstart','touchend','pointerdown','pointerup'].forEach(ev =>
-    el.addEventListener(ev, e => e.stopPropagation(), { passive: false })
-  );
-});
-
-document.addEventListener('touchend', handleTouch, { passive: false });
-
-function handleTouch(evt) {
-  if (!isARActive) return;
-
-  // Abaikan sentuhan di UI
-  const touch = evt.changedTouches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  if (target && arUI.contains(target)) return;
-
-  evt.preventDefault();
-
-  if (MODE === 'placement') {
-    placeModel();
-  } else {
-    // Mode cursor: konfirmasi info organ yang sedang di-hover cursor
-    if (hoveredOrgan) {
-      showInfo(hoveredOrgan.title, hoveredOrgan.desc);
-      // Flash cursor
-      htmlCursor.classList.remove('hit');
-      setTimeout(() => { if (hoveredOrgan) htmlCursor.classList.add('hit'); }, 100);
+  // ─── Mode switching ──────────────────────────────────
+  function setMode(mode) {
+    MODE = mode;
+    if (mode === 'placement') {
+      modeBadge.textContent = '🎯 MODE PENEMPATAN';
+      modeBadge.classList.add('show');
+      htmlCursor.classList.remove('active');
+      placementHint.classList.remove('hidden');
+      setTimeout(() => modeBadge.classList.remove('show'), 2500);
     } else {
-      // Tap di area kosong: coba raycast dari titik tap juga
-      tapRaycast(touch);
+      modeBadge.textContent = '👆 ARAHKAN & KETUK ORGAN';
+      modeBadge.classList.add('show');
+      htmlCursor.classList.add('active');
+      placementHint.classList.add('hidden');
+      reticleEl.object3D.visible = false;
+      infoTitle.textContent = '🫀 Organ Jantung';
+      infoDesc.textContent  = 'Arahkan crosshair ke organ lalu ketuk.';
+      setTimeout(() => modeBadge.classList.remove('show'), 3000);
     }
   }
-}
 
-// ════════════════════════════════════════════
-//  PLACE MODEL
-// ════════════════════════════════════════════
-function placeModel() {
-
-  let pos, quat;
-
-  if (lastHitPos) {
-    pos  = lastHitPos.clone();
-    quat = lastHitQuat ? lastHitQuat.clone() : new T.Quaternion();
-  } else {
-    const camObj = document.getElementById('main-cam').object3D;
-    const worldPos = new T.Vector3();
-    const worldQuat = new T.Quaternion();
-    camObj.getWorldPosition(worldPos);
-    camObj.getWorldQuaternion(worldQuat);
-
-    const forward = new T.Vector3(0, 0, -1.2).applyQuaternion(worldQuat);
-    pos = worldPos.clone().add(forward);
-    pos.y -= 0.2;
-    quat = new T.Quaternion();
-  }
-
-
-  modelGroup.setAttribute('visible', 'true');
-  modelGroup.object3D.matrixAutoUpdate = false;
-  modelGroup.object3D.updateMatrix();
-
-
-  modelGroup.object3D.position.copy(pos);
-  modelGroup.object3D.quaternion.identity();
-  modelGroup.object3D.rotateY(currentRotY * Math.PI / 180);
-  
-  // scale tetap normal
-  const s = 7 * currentScale;
-  modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
-    el.setAttribute('scale', `${s} ${s} ${s}`);
+  // ─── Back ────────────────────────────────────────────
+  document.getElementById('btn-back').addEventListener('click', e => {
+    e.stopPropagation();
+    if (activeSession) activeSession.end();
+    else { scene.exitVR(); onSessionEnd(); }
   });
 
-  modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+  // ─── Scale ───────────────────────────────────────────
+  scaleSlider.addEventListener('input', e => {
+    e.stopPropagation();
+    currentScale = parseFloat(scaleSlider.value);
+    scaleValue.textContent = currentScale.toFixed(1);
+    if (modelPlaced) {
+      modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+    }
+  });
 
-  modelPlaced = true;
+  // ─── Rotation ────────────────────────────────────────
+  rotSlider.addEventListener('input', e => {
+    e.stopPropagation();
+    currentRotY = parseInt(rotSlider.value);
+    rotDisplay.textContent = currentRotY + '°';
+    if (modelPlaced) modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+  });
+  document.getElementById('btn-reset-rot').addEventListener('click', e => {
+    e.stopPropagation();
+    currentRotY = 0; rotSlider.value = 0; rotDisplay.textContent = '0°';
+    if (modelPlaced) modelGroup.setAttribute('rotation', '0 0 0');
+  });
 
-  reticleEl.object3D.visible = false;
+  // ─── Info panel ──────────────────────────────────────
+  function showInfo(title, desc) {
+    infoTitle.textContent = title;
+    infoDesc.textContent  = desc;
+    infoPanel.classList.add('flash');
+    setTimeout(() => infoPanel.classList.remove('flash'), 600);
+  }
 
-  setTimeout(() => setMode('cursor'), 300);
-}
+  // ─── Raycast helper ──────────────────────────────────
+  // Gunakan meshToOrgan map — bukan traverse parent
+  function raycastOrgan(ndcX, ndcY) {
+    if (meshToOrgan.size === 0) return null;
+    const cam = scene.renderer.xr.isPresenting
+      ? scene.renderer.xr.getCamera()
+      : document.getElementById('main-cam').object3D;
+    if (!cam) return null;
+    const ray = new T.Raycaster();
+    ray.setFromCamera({ x: ndcX, y: ndcY }, cam);
+    const hits = ray.intersectObjects(Array.from(meshToOrgan.keys()), false);
+    for (const hit of hits) {
+      const info = meshToOrgan.get(hit.object);
+      if (info) return info;
+    }
+    return null;
+  }
 
-// ════════════════════════════════════════════
-//  TAP RAYCAST (saat cursor tidak hover tapi user tap)
-// ════════════════════════════════════════════
-function tapRaycast(touch) {
-  const cam = scene.renderer.xr.isPresenting
-    ? scene.renderer.xr.getCamera()
-    : document.getElementById('main-cam').object3D;
-  if (!cam) return;
+  // ─── Cursor hover (tiap frame) ───────────────────────
+  let hoveredOrgan = null;
+  function doCursorHover() {
+    const info = raycastOrgan(0, 0);
+    if (info) {
+      if (!hoveredOrgan || hoveredOrgan.title !== info.title) {
+        hoveredOrgan = info;
+        htmlCursor.classList.add('hit');
+      }
+    } else {
+      if (hoveredOrgan) { hoveredOrgan = null; htmlCursor.classList.remove('hit'); }
+    }
+  }
 
-  const ndcX = (touch.clientX / window.innerWidth)  * 2 - 1;
-  const ndcY = -(touch.clientY / window.innerHeight) * 2 + 1;
+  // ─── Touch handler ───────────────────────────────────
+  arUI.querySelectorAll('input,button').forEach(el => {
+    ['touchstart','touchend','pointerdown','pointerup'].forEach(ev =>
+      el.addEventListener(ev, e => e.stopPropagation(), { passive: false })
+    );
+  });
 
-  const raycaster = new T.Raycaster();
-  raycaster.setFromCamera({ x: ndcX, y: ndcY }, cam);
+  document.addEventListener('touchend', onTouch, { passive: false });
 
-  const meshes = [];
-  modelGroup.object3D.traverse(child => { if (child.isMesh) meshes.push(child); });
+  function onTouch(evt) {
+    if (!isARActive) return;
+    const touch = evt.changedTouches[0];
+    const hitEl = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (hitEl && arUI.contains(hitEl)) return;
+    evt.preventDefault();
 
-    const hits = raycaster.intersectObjects(meshes, false);
-for (const hit of hits) {
-  const info = meshToOrgan.get(hit.object);
-  if (info) { showInfo(info.title, info.desc); break; }
-}
-}
+    if (MODE === 'placement') {
+      doPlace();
+    } else {
+      if (hoveredOrgan) {
+        showInfo(hoveredOrgan.title, hoveredOrgan.desc);
+        htmlCursor.classList.remove('hit');
+        setTimeout(() => { if (hoveredOrgan) htmlCursor.classList.add('hit'); }, 120);
+      } else {
+        // Tap langsung dari posisi sentuh
+        const nx = (touch.clientX / window.innerWidth)  * 2 - 1;
+        const ny = -(touch.clientY / window.innerHeight) * 2 + 1;
+        const info = raycastOrgan(nx, ny);
+        if (info) showInfo(info.title, info.desc);
+      }
+    }
+  }
+
+  // ─── Place model ─────────────────────────────────────
+  // Pakai setAttribute semua — konsisten, tidak konflik dengan object3D
+  function doPlace() {
+    let px, py, pz;
+
+    if (lastHitPos) {
+      px = lastHitPos.x;
+      py = lastHitPos.y;
+      pz = lastHitPos.z;
+    } else {
+      // Fallback: 1.5m depan kamera
+      const camObj = document.getElementById('main-cam').object3D;
+      const wp = new T.Vector3();
+      const wq = new T.Quaternion();
+      camObj.getWorldPosition(wp);
+      camObj.getWorldQuaternion(wq);
+      const fwd = new T.Vector3(0, 0, -1.5).applyQuaternion(wq);
+      const p = wp.clone().add(fwd);
+      px = p.x; py = p.y - 0.3; pz = p.z;
+    }
+
+    // Semua pakai setAttribute — tidak ada object3D manual
+    modelGroup.setAttribute('visible', 'true');
+    modelGroup.setAttribute('position', `${px} ${py} ${pz}`);
+    modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+    modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+    modelPlaced = true;
+
+    reticleEl.object3D.visible = false;
+    setTimeout(() => setMode('cursor'), 200);
+  }
+
+})();
 </script>
-
 </body>
 </html>
