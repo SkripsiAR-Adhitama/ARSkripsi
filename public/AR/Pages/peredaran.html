@@ -655,16 +655,20 @@ function showInfo(title, desc) {
 let hoveredOrgan  = null;
 let lastHoverInfo = null;
 
-function doCursorRaycast(frame) {
-  const cam = scene.renderer.xr.isPresenting
-    ? scene.renderer.xr.getCamera()
-    : document.getElementById('main-cam').object3D;
-  if (!cam) return;
+function doCursorRaycast() {
 
-  const raycaster = new T.Raycaster();
+  if (!modelPlaced) return;
 
-  // Ray dari tengah screen (NDC 0,0)
-  raycaster.setFromCamera({ x: 0, y: 0 }, cam);
+  const camObj = document.getElementById('main-cam').object3D;
+  if (!camObj) return;
+
+  const origin = new T.Vector3();
+  const direction = new T.Vector3(0, 0, -1);
+
+  camObj.getWorldPosition(origin);
+  direction.applyQuaternion(camObj.getWorldQuaternion(new T.Quaternion()));
+
+  const raycaster = new T.Raycaster(origin, direction.normalize());
 
   const meshes = [];
   modelGroup.object3D.traverse(child => {
@@ -674,20 +678,20 @@ function doCursorRaycast(frame) {
   const hits = raycaster.intersectObjects(meshes, true);
 
   if (hits.length > 0) {
-    // Temukan parent entity dengan data-title
+
     const info = findOrganInfo(hits[0].object);
+
     if (info) {
       if (info.title !== lastHoverInfo) {
         lastHoverInfo = info.title;
         hoveredOrgan  = info;
-        // Cursor berubah warna jika hover organ
+        
         htmlCursor.classList.add('hit');
       }
       return;
     }
   }
-
-  // Tidak ada yang kena
+  
   if (lastHoverInfo !== null) {
     lastHoverInfo = null;
     hoveredOrgan  = null;
@@ -742,7 +746,7 @@ function handleTouch(evt) {
       setTimeout(() => { if (hoveredOrgan) htmlCursor.classList.add('hit'); }, 100);
     } else {
       // Tap di area kosong: coba raycast dari titik tap juga
-      tapRaycast(touch);
+      tapRaycast();
     }
   }
 }
@@ -797,22 +801,28 @@ function placeModel() {
 // ════════════════════════════════════════════
 //  TAP RAYCAST (saat cursor tidak hover tapi user tap)
 // ════════════════════════════════════════════
-function tapRaycast(touch) {
-  const cam = scene.renderer.xr.isPresenting
-    ? scene.renderer.xr.getCamera()
-    : document.getElementById('main-cam').object3D;
-  if (!cam) return;
+function tapRaycast() {
 
-  const ndcX = (touch.clientX / window.innerWidth)  * 2 - 1;
-  const ndcY = -(touch.clientY / window.innerHeight) * 2 + 1;
+  if (!modelPlaced) return;
 
-  const raycaster = new T.Raycaster();
-  raycaster.setFromCamera({ x: ndcX, y: ndcY }, cam);
+  const camObj = document.getElementById('main-cam').object3D;
+  if (!camObj) return;
+
+  const origin = new T.Vector3();
+  const direction = new T.Vector3(0, 0, -1);
+
+  camObj.getWorldPosition(origin);
+  direction.applyQuaternion(camObj.getWorldQuaternion(new T.Quaternion()));
+
+  const raycaster = new T.Raycaster(origin, direction.normalize());
 
   const meshes = [];
-  modelGroup.object3D.traverse(child => { if (child.isMesh) meshes.push(child); });
+  modelGroup.object3D.traverse(child => {
+    if (child.isMesh) meshes.push(child);
+  });
 
   const hits = raycaster.intersectObjects(meshes, true);
+
   if (hits.length > 0) {
     const info = findOrganInfo(hits[0].object);
     if (info) showInfo(info.title, info.desc);
