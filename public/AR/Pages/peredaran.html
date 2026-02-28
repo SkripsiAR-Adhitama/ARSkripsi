@@ -463,8 +463,11 @@ scaleSlider.addEventListener('input', e => {
   currentScale = parseFloat(scaleSlider.value);
   scaleValue.textContent = currentScale.toFixed(1);
   if (modelPlaced) {
-    // Scale group parent — semua organ ikut, tidak bergerak
+    const pos = modelGroup.getAttribute('position');
+    const rot = modelGroup.getAttribute('rotation');
     modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+    modelGroup.setAttribute('position', pos);
+    modelGroup.setAttribute('rotation', rot);
   }
 });
 
