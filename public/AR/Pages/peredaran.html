@@ -745,14 +745,13 @@ function handleTouch(evt) {
 //  PLACE MODEL
 // ════════════════════════════════════════════
 function placeModel() {
+
   let pos, quat;
 
-  if (lastHitPos) {
-    // Gunakan posisi hit-test terakhir
+    if (lastHitPos) {
     pos  = lastHitPos.clone();
     quat = lastHitQuat ? lastHitQuat.clone() : new T.Quaternion();
-  } else {
-    // Fallback: 1.2m di depan kamera
+    } else {
     const camObj = document.getElementById('main-cam').object3D;
     const worldPos = new T.Vector3();
     const worldQuat = new T.Quaternion();
@@ -765,16 +764,24 @@ function placeModel() {
     quat = new T.Quaternion();
   }
 
-  // Posisikan model group
+  // 🔥 FIX PENTING
+  modelGroup.setAttribute('visible', 'true');
+
   modelGroup.object3D.position.copy(pos);
   modelGroup.object3D.quaternion.copy(quat);
-  // Terapkan rotasi Y user
+
+  // Pastikan scale langsung diset saat pertama muncul
+  const s = 7 * currentScale;
+  modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
+    el.setAttribute('scale', `${s} ${s} ${s}`);
+  });
+
   modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
-  modelGroup.setAttribute('visible', 'true');
+
   modelPlaced = true;
 
-  // Reticle hilang, cursor muncul
-  reticleEl.object3D.visible = false;
+ reticleEl.object3D.visible = false;
+
   setTimeout(() => setMode('cursor'), 300);
 }
 
