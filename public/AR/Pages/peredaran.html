@@ -1,140 +1,211 @@
-
+<!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  </head>
-  <body>
-   <a-scene
-    embedded
-    xr-mode-ui="enabled: true"
-    webxr="optionalFeatures: hit-test"
-    >
+<head>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <style>
+    body { margin:0; overflow:hidden; font-family:sans-serif; }
 
-  <a-gltf-model 
-  id="bilikTutup" 
-  src="../Models/Peredaran/bilikTutup.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Bilik Tutup"
-  data-description="Bagian penutup bilik jantung, Berperan penting dalam menjaga tekanan darah saat jantung mengencang."
-  ></a-gltf-model>
- 
-   <a-gltf-model 
-  src="../Models/Peredaran/vena_kecil.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  ></a-gltf-model>
- 
-  <a-gltf-model 
-  id="serambiKiri" 
-  src="../Models/Peredaran/serambiKiri.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Serambi Kiri (Atrium Kiri)"
-  data-description="Ruang atas kiri jantung yang menerima darah kaya oksigen dari paru-paru melalui vena pulmonalis, kemudian memompanya ke bilik kiri."
-  ></a-gltf-model>
+    #overlay {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 15px;
+    }
 
-  <a-gltf-model 
-  id="venaPulmonalis" 
-  src="../Models/Peredaran/vena_pulmonalis.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Vena Pulmonalis"
-  data-description="Pembuluh darah yang membawa darah kaya oksigen dari paru-paru ke serambi kiri jantung. Merupakan satu-satunya vena yang membawa darah bersih."
-  ></a-gltf-model>
+    #controls {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:10px;
+    }
 
-   <a-gltf-model 
-  id="katupBikuspid" 
-  src="../Models/Peredaran/katup_bikuspid.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Katup Bikuspid (Mitral)"
-  data-description="Katup dengan dua daun yang terletak antara serambi kiri dan bilik kiri. Mencegah aliran balik darah dari bilik ke serambi."
-  ></a-gltf-model>
+    #infoBox {
+      background:white;
+      color:black;
+      padding:10px;
+      border-radius:10px;
+      max-height:120px;
+      overflow:auto;
+    }
 
-     <a-gltf-model 
-  id="aorta" 
-  src="../Models/Peredaran/aorta.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Aorta"
-  data-description="Pembuluh arteri terbesar dalam tubuh yang membawa darah kaya oksigen dari bilik kiri ke seluruh tubuh melalui sistem peredaran darah besar."
-  ></a-gltf-model>
+    #rings {
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+
+    .ring {
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      border:2px solid white;
+      text-align:center;
+      line-height:26px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<a-scene
+  embedded
+  xr-mode-ui="enabled: true"
+  webxr="optionalFeatures: hit-test, dom-overlay; overlayElement: #overlay"
+  one-time-hit-test
+>
+
+  <!-- Anchor untuk menjaga posisi -->
+  <a-entity id="placementAnchor">
 
     <a-gltf-model 
-  id="bilikKiri" 
-  src="../Models/Peredaran/bilikKiri.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Bilik Kiri (Ventrikel Kiri)"
-  data-description="Ruang bawah kiri jantung yang memompa darah kaya oksigen ke seluruh tubuh melalui aorta. Memiliki dinding paling tebal karena harus memompa dengan tekanan tinggi."
-  ></a-gltf-model>
+      id="bilikTutup"
+      src="../Models/Peredaran/bilikTutup.glb"
+      scale="3 3 3"
+      visible="false"
+      data-title="Bilik Tutup"
+      data-description="Bagian penutup bilik jantung.">
+    </a-gltf-model>
 
     <a-gltf-model 
-  id="arteriPulmonalis" 
-  src="../Models/Peredaran/arteri_pulmonalis.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Arteri Pulmonalis"
-  data-description="Pembuluh arteri yang membawa darah miskin oksigen dari bilik kanan ke paru-paru untuk dibersihkan. Merupakan satu-satunya arteri yang membawa darah kotor."
-  ></a-gltf-model>
+      id="serambiKiri"
+      src="../Models/Peredaran/serambiKiri.glb"
+      scale="3 3 3"
+      visible="false"
+      data-title="Serambi Kiri"
+      data-description="Menerima darah kaya oksigen dari paru-paru.">
+    </a-gltf-model>
 
-    <a-gltf-model 
-  id="aurikelKiri" 
-  src="../Models/Peredaran/aurikel_kiri.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Aurikel Kiri"
-  data-description="Kantung berbentuk telinga pada serambi kiri jantung yang berfungsi sebagai reservoir tambahan untuk menampung darah."
-  ></a-gltf-model>
-
-    <a-gltf-model 
-  id="bilikKananDalam" 
-  src="../Models/Peredaran/bilikKananDalam.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Bilik Kanan Dalam (Ventrikel Kanan)"
-  data-description="Bagian dalam bilik kanan yang memompa darah miskin oksigen ke paru-paru melalui arteri pulmonalis untuk proses oksigenasi."
-  ></a-gltf-model>
-
-    <a-gltf-model 
-  id="serambiKanan" 
-  src="../Models/Peredaran/serambiKanan.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Serambi Kanan (Atrium Kanan)"
-  data-description="Ruang atas kanan jantung yang menerima darah miskin oksigen dari seluruh tubuh melalui vena kava, kemudian memompanya ke bilik kanan."
-  ></a-gltf-model>
-
-    <a-gltf-model 
-  id="aurikel_kanan" 
-  src="../Models/Peredaran/aurikel_kanan.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  data-title="Aurikel Kanan"
-  data-description="Kantung berbentuk telinga pada serambi kanan jantung yang membantu menampung darah yang masuk dari vena kava sebelum dipompa ke bilik kanan."
-  ></a-gltf-model>
-
-    <a-gltf-model 
-  src="../Models/Peredaran/.glb"
-  color="#FF0000"
-  position="0 0.5 -2"
-  scale="7 7 7"
-  ></a-gltf-model>
+  </a-entity>
 
 </a-scene>
-  </body>
+
+
+<!-- ================= DOM OVERLAY ================= -->
+<div id="overlay">
+
+  <div id="controls">
+    Rotasi (360° Horizontal):
+    <input type="range" min="0" max="360" value="0" id="rotateSlider">
+
+    Scale (1–5):
+    <input type="range" min="1" max="5" value="3" id="scaleSlider">
+  </div>
+
+  <div id="infoBox">
+    Tap permukaan untuk menempatkan objek, lalu pilih bagian.
+  </div>
+
+  <div id="rings">
+    <div class="ring" data-target="bilikTutup">1</div>
+    <div class="ring" data-target="serambiKiri">2</div>
+  </div>
+
+</div>
+
+
+<script>
+
+// ================= HIT TEST SEKALI =================
+AFRAME.registerComponent('one-time-hit-test', {
+  init: function () {
+    const sceneEl = this.el;
+    const anchor = document.querySelector('#placementAnchor');
+    let placed = false;
+    let hitTestSource = null;
+    let referenceSpace = null;
+
+    sceneEl.addEventListener('enter-vr', async () => {
+
+      const session = sceneEl.renderer.xr.getSession();
+
+      referenceSpace = await session.requestReferenceSpace('viewer');
+      hitTestSource = await session.requestHitTestSource({
+        space: referenceSpace
+      });
+
+      session.addEventListener('select', () => {
+        if (placed) return;
+
+        const frame = sceneEl.renderer.xr.getFrame();
+        const refSpace = sceneEl.renderer.xr.getReferenceSpace();
+        const hitTestResults = frame.getHitTestResults(hitTestSource);
+
+        if (hitTestResults.length > 0) {
+          const pose = hitTestResults[0].getPose(refSpace);
+
+          anchor.object3D.position.set(
+            pose.transform.position.x,
+            pose.transform.position.y,
+            pose.transform.position.z
+          );
+
+          placed = true;
+          hitTestSource.cancel();
+          document.getElementById("infoBox").innerHTML =
+            "Objek berhasil ditempatkan. Pilih bagian untuk melihat informasi.";
+        }
+      });
+    });
+  }
+});
+
+
+// ================= INTERAKSI =================
+let currentObject = null;
+
+document.querySelectorAll('.ring').forEach(ring => {
+  ring.addEventListener('click', () => {
+
+    const targetId = ring.dataset.target;
+    const object = document.querySelector('#' + targetId);
+
+    if (!object) return;
+
+    document.querySelectorAll('a-gltf-model').forEach(m => {
+      m.setAttribute('visible', false);
+    });
+
+    object.setAttribute('visible', true);
+    currentObject = object;
+
+    document.getElementById('infoBox').innerHTML =
+      "<b>" + object.dataset.title + "</b><br>" +
+      object.dataset.description;
+  });
+});
+
+
+// ================= ROTASI HORIZONTAL =================
+document.getElementById('rotateSlider').addEventListener('input', (e) => {
+  if (!currentObject) return;
+
+  currentObject.setAttribute('rotation', {
+    x: 0,
+    y: e.target.value,
+    z: 0
+  });
+});
+
+
+// ================= SCALE 1–5 =================
+document.getElementById('scaleSlider').addEventListener('input', (e) => {
+  if (!currentObject) return;
+
+  const s = e.target.value;
+
+  currentObject.setAttribute('scale', {
+    x: s,
+    y: s,
+    z: s
+  });
+});
+
+</script>
+
+</body>
 </html>
-```
