@@ -849,12 +849,10 @@ function tapRaycast(touch) {
   modelGroup.object3D.traverse(child => { if (child.isMesh) meshes.push(child); });
 
     const hits = raycaster.intersectObjects(meshes, false);
-  alert('total hits: ' + hits.length + ', map size: ' + meshToOrgan.size);
-  for (const hit of hits) {
-    const info = meshToOrgan.get(hit.object);
-    alert('hit: ' + hit.object.uuid + ' → ' + (info ? info.title : 'NOT IN MAP'));
-    if (info) { showInfo(info.title, info.desc); break; }
-  }
+for (const hit of hits) {
+  const info = meshToOrgan.get(hit.object);
+  if (info) { showInfo(info.title, info.desc); break; }
+}
 }
 </script>
 
