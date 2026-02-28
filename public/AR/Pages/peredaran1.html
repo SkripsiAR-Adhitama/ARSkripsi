@@ -1,805 +1,642 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>AR Jantung - Sistem Peredaran Darah</title>
-  
-  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  
   <style>
-    body { 
-      margin: 0; 
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+   
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Exo 2', sans-serif; background: #000; overflow: hidden; }
+    a-scene { width: 100vw; height: 100vh; }
+
+    /* ─── LANDING ─── */
+    #landing {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, #0d1f3c 0%, #070d1a 60%, #000 100%);
+      z-index: 3000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px; padding: 30px;
     }
-    
-    /* ========================================
-       UI OVERLAY (Tetap muncul di AR mode)
-       ======================================== */
-    
-    .ui-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    #landing.hidden { display: none; }
+    .landing-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(22px, 6vw, 36px); font-weight: 900;
+      color: #fff; text-align: center;
+      text-shadow: 0 0 30px #00f7ff, 0 0 60px #00f7ff44;
+      letter-spacing: 2px; line-height: 1.2;
+    }
+    .landing-sub { font-size: 13px; color: #7ab8d4; text-align: center; max-width: 320px; line-height: 1.6; }
+    .heart-icon { font-size: 60px; animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); filter: drop-shadow(0 0 8px #ff4466); }
+      50%      { transform: scale(1.12); filter: drop-shadow(0 0 22px #ff4466); }
+    }
+    .btn-main {
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      border: none; border-radius: 12px; padding: 14px 32px;
+      color: #fff; font-family: 'Orbitron', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; box-shadow: 0 0 24px #0072ff88;
+      transition: all 0.3s; text-transform: uppercase;
+      width: 100%; max-width: 300px;
+    }
+    .btn-main:active { transform: scale(0.97); }
+    .btn-vr { background: linear-gradient(135deg, #7c3aed, #4f46e5); box-shadow: 0 0 24px #7c3aed88; }
+    .organ-list {
+      width: 100%; max-width: 360px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 14px 16px;
+    }
+    .organ-list h3 { font-family: 'Orbitron', sans-serif; font-size: 9px; color: #00f7ff; letter-spacing: 3px; margin-bottom: 10px; }
+    .organ-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: 5px; }
+    .organ-list li { font-size: 10px; color: #aaccee; background: rgba(0,150,255,0.12); border: 1px solid rgba(0,150,255,0.25); border-radius: 6px; padding: 3px 8px; }
+
+    /* ─── AR OVERLAY UI ───
+       CRITICAL: position:fixed, z-index tinggi.
+       Didaftarkan sebagai domOverlay.root saat sesi XR diminta. */
+    #ar-ui {
+      display: none;
+      position: fixed; inset: 0;
       pointer-events: none;
       z-index: 9999;
     }
-    
-    /* Back Button */
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(239, 68, 68, 0.95);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
+    .corner { position: absolute; width: 22px; height: 22px; pointer-events: none; }
+    .corner.tl { top:8px; left:8px;   border-top:2px solid #00f7ff88; border-left:2px solid #00f7ff88; }
+    .corner.tr { top:8px; right:8px;  border-top:2px solid #00f7ff88; border-right:2px solid #00f7ff88; }
+    .corner.bl { bottom:8px; left:8px;   border-bottom:2px solid #00f7ff88; border-left:2px solid #00f7ff88; }
+    .corner.br { bottom:8px; right:8px;  border-bottom:2px solid #00f7ff88; border-right:2px solid #00f7ff88; }
+
+    /* PINK back */
+    #btn-back {
+      position: absolute; top: 16px; left: 16px;
       pointer-events: all;
-      z-index: 10002;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #ff4fa3, #ff85c8);
+      border: 2px solid #fff; border-radius: 10px;
+      padding: 10px 18px; color: #fff;
+      font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; cursor: pointer;
+      box-shadow: 0 0 16px #ff4fa388; transition: all 0.2s; text-transform: uppercase;
     }
-    
-    .back-btn:active {
-      transform: scale(0.95);
-      background: rgba(220, 38, 38, 0.95);
-    }
-    
-    /* Info Panel (Dynamic Text) */
-    .info-panel {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      left: 20px;
-      max-width: 400px;
-      background: rgba(0, 0, 0, 0.85);
-      color: white;
-      padding: 20px;
-      border-radius: 20px;
+    #btn-back:active { transform: scale(0.96); }
+
+    /* SCALE right */
+    #scale-panel {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
       pointer-events: all;
-      z-index: 10001;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
     }
-    
-    .info-panel h3 {
-      margin: 0 0 10px 0;
-      font-size: 20px;
-      color: #EF4444;
-      font-weight: bold;
+    #scale-value { color: #00f7ff; font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 700; text-shadow: 0 0 10px #00f7ff; }
+    #scale-slider {
+      writing-mode: vertical-lr; direction: rtl;
+      -webkit-appearance: slider-vertical; appearance: slider-vertical;
+      width: 32px; height: 200px; accent-color: #00f7ff; cursor: pointer;
     }
-    
-    .info-panel p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.9);
-    }
-    
-    /* Control Buttons */
-    .controls {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
+    #scale-label { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 8px; letter-spacing: 3px; writing-mode: vertical-lr; text-transform: uppercase; opacity: 0.7; text-shadow: 0 0 8px #00f7ff; }
+
+    /* ROTATION red box */
+    #rotation-panel {
+      position: absolute; bottom: 110px; right: 14px;
       pointer-events: all;
-      z-index: 10000;
-      max-width: 90%;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      border: 2px solid #ff3333; border-radius: 10px;
+      padding: 10px; background: rgba(180,0,0,0.15);
+      backdrop-filter: blur(6px); min-width: 62px;
     }
-    
-    .control-btn {
-      background: rgba(239, 68, 68, 0.95);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
+    #rotation-panel label { color: #ff6666; font-family: 'Orbitron', sans-serif; font-size: 8px; letter-spacing: 2px; text-shadow: 0 0 8px #ff3333; }
+    #rotation-display { color: #ff5555; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; text-shadow: 0 0 10px #ff3333; }
+    #rotation-slider {
+      writing-mode: vertical-lr; direction: rtl;
+      -webkit-appearance: slider-vertical; appearance: slider-vertical;
+      width: 32px; height: 110px; accent-color: #ff3333; cursor: pointer;
     }
-    
-    .control-btn:active {
-      transform: scale(0.95);
-    }
-    
-    .control-btn.active {
-      background: rgba(34, 197, 94, 0.95);
-    }
-    
-    .control-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    /* AR Start Instruction */
-    .ar-instruction {
-      position: fixed;
-      bottom: 120px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.85);
-      color: white;
-      padding: 15px 25px;
-      border-radius: 15px;
-      text-align: center;
+  
+    #btn-reset-rot {
       pointer-events: all;
-      z-index: 9998;
-      backdrop-filter: blur(10px);
-      max-width: 80%;
-      font-size: 14px;
-      line-height: 1.5;
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,50,50,0.2); border: 1px solid #ff3333;
+      border-radius: 6px; color: #ff6666; font-size: 16px;
+      width: 32px; height: 32px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+   
     }
-    
-    .hidden {
-      display: none;
+
+
+    /* INFO PANEL blue */
+    #info-panel {
+      position: absolute; bottom: 14px; left: 14px; right: 86px;
+      pointer-events: all;
+      border: 2px solid #3399ff; border-radius: 14px;
+      padding: 12px 16px; background: rgba(5,20,60,0.82);
+      backdrop-filter: blur(14px); box-shadow: 0 0 20px #3399ff44;
+      min-height: 78px; display: flex; flex-direction: column; justify-content: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-    
-    /* Loading indicator */
-    .loading {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.9);
-      color: white;
-      padding: 30px 40px;
-      border-radius: 20px;
-      text-align: center;
-      z-index: 10003;
-      backdrop-filter: blur(15px);
+    #info-panel.flash { border-color: #00aaff; box-shadow: 0 0 32px #3399ffaa; }
+    #info-title { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: #00aaff; text-shadow: 0 0 10px #0088ff; margin-bottom: 5px; }
+    #info-desc { font-size: 11px; color: #cce4ff; line-height: 1.5; font-weight: 300; }
+
+    /* PLACEMENT HINT */
+    #placement-hint {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      text-align: center; pointer-events: none;
     }
-    
-    .loading-spinner {
-      border: 4px solid rgba(255,255,255,0.1);
-      border-top: 4px solid #EF4444;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 15px;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      .info-panel {
-        top: 15px;
-        right: 15px;
-        left: 15px;
-        padding: 15px;
-      }
-      
-      .info-panel h3 {
-        font-size: 18px;
-      }
-      
-      .info-panel p {
-        font-size: 13px;
-      }
-      
-      .controls {
-        bottom: 20px;
-        gap: 8px;
-      }
-      
-      .control-btn {
-        padding: 10px 16px;
-        font-size: 13px;
-      }
+   
+    #placement-hint.hidden { display: none; }
+   
+    #placement-hint p {
+      color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.7;
+      text-shadow: 0 2px 10px #000;
+      background: rgba(0,0,0,0.5); padding: 12px 20px;
+      border-radius: 12px; backdrop-filter: blur(6px);
     }
   </style>
 </head>
 <body>
 
-  <!-- Loading Screen -->
-  <div id="loading" class="loading">
-    <div class="loading-spinner"></div>
-    <div>Memuat model 3D...</div>
+<!-- ═══ LANDING ═══ -->
+<div id="landing">
+  <div class="heart-icon">🫀</div>
+  <div class="landing-title">AR JANTUNG<br/>MANUSIA</div>
+  <p class="landing-sub">Jelajahi anatomi jantung dalam Augmented Reality. Arahkan ke permukaan datar lalu ketuk untuk menempatkan model.</p>
+  <div class="organ-list">
+    <h3>📦 ORGAN DALAM SCENE</h3>
+    <ul>
+      <li>Bilik Tutup</li><li>Vena Kecil</li><li>Serambi Kiri</li>
+      <li>Vena Pulmonalis</li><li>Katup Bikuspid</li><li>Aorta</li>
+      <li>Bilik Kiri</li><li>Arteri Pulmonalis</li><li>Aurikel Kiri</li>
+      <li>Bilik Kanan Dalam</li><li>Serambi Kanan</li><li>Aurikel Kanan</li>
+    </ul>
   </div>
+  <button class="btn-main" id="btn-enter-ar">🥽 Mulai AR</button>
+  <button class="btn-main btn-vr" id="btn-enter-vr">🕶️ Masuk VR</button>
+</div>
 
-  <!-- UI Overlay -->
-  <div class="ui-overlay">
-    
-    <!-- Back Button -->
-    <button class="back-btn" onclick="window.history.back()">
-      ← Kembali
-    </button>
-    
-    <!-- Info Panel (Dynamic Content) -->
-    <div class="info-panel" id="info-panel">
-      <h3 id="organ-title">Sistem Peredaran Darah</h3>
-      <p id="organ-description">
-        Tap pada bagian jantung untuk melihat informasi detail setiap organ. 
-        Gunakan kontrol di bawah untuk rotasi dan zoom.
-      </p>
-    </div>
-    
-    <!-- AR Instruction -->
-    <div class="ar-instruction" id="ar-instruction">
-      📱 Tap tombol "Start AR" untuk memulai pengalaman AR<br>
-      <small>Pastikan izin kamera sudah diberikan</small>
-    </div>
-    
-    <!-- Control Buttons -->
-    <div class="controls">
-      <button class="control-btn" id="rotate-btn" onclick="toggleRotation()">
-        🔄 <span id="rotate-text">Putar Auto</span>
-      </button>
-      
-      <button class="control-btn" onclick="zoomIn()">
-        🔍+ Zoom In
-      </button>
-      
-      <button class="control-btn" onclick="zoomOut()">
-        🔍- Zoom Out
-      </button>
-      
-      <button class="control-btn" onclick="resetView()">
-        🔁 Reset
-      </button>
-    </div>
-    
+<!-- ═══ AR OVERLAY — HARUS DI LUAR a-scene ═══ -->
+<div id="ar-ui">
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+ 
+  <button id="btn-back">← Kembali</button>
+ 
+  <div id="placement-hint">
+    <p>🔍 Arahkan kamera ke<br/>permukaan datar, lalu <strong>Ketuk</strong></p>
   </div>
+ 
+  <div id="scale-panel">
+    <div id="scale-value">1</div>
+    <input type="range" id="scale-slider" min="1" max="5" step="0.1" value="1"/>
+    <div id="scale-label">S C A L E</div>
+  </div>
+ 
+  <div id="rotation-panel">
+    <label>ROT Y</label>
+    <div id="rotation-display">0°</div>
+    <input type="range" id="rotation-slider" min="0" max="360" step="1" value="0"/>
+    <button id="btn-reset-rot">↺</button>
+  </div>
+  <div id="info-panel">
+    <div id="info-title">🫀 AR Jantung Manusia</div>
+    <div id="info-desc">Ketuk bagian organ untuk melihat informasi detail.</div>
+  </div>
+</div>
 
-  <!-- A-Frame Scene -->
-  <a-scene
-    id="scene"
-    embedded
-    renderer="colorManagement: true; physicallyCorrectLights: true; precision: medium;"
-    xr-mode-ui="enabled: true; XRMode: ar"
-    vr-mode-ui="enabled: false"
-  >
-    <!-- Camera -->
-    <a-camera id="camera" position="0 1.6 0" look-controls="enabled: false"></a-camera>
-    
-    <!-- Lighting -->
-    <a-light type="ambient" intensity="0.6"></a-light>
-    <a-light type="directional" position="2 4 1" intensity="0.8" cast-shadow="true"></a-light>
-    <a-light type="point" position="0 3 0" intensity="0.5" distance="10"></a-light>
-    
-    <!-- Container untuk semua organ (untuk kontrol grup) -->
-    <a-entity id="jantung-container" position="0 0 -2" visible="false">
-      
-      <!-- Ground indicator -->
-      <a-circle 
-        position="0 -0.5 0" 
-        rotation="-90 0 0" 
-        radius="1" 
-        color="#EF4444" 
-        opacity="0.3"
-      ></a-circle>
-      
-      <!-- Grup organ jantung -->
-      <a-entity id="organ-group" position="0 0.5 0" scale="7 7 7">
-        
-        <!-- Bilik Tutup -->
-        <a-gltf-model 
-          id="bilikTutup"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/bilikTutup.glb"
-          data-title="Bilik Tutup"
-          data-description="Bagian penutup bilik jantung yang melindungi ruang ventrikel. Berperan penting dalam menjaga tekanan darah saat jantung berkontraksi."
-        ></a-gltf-model>
-       
-        <!-- Vena Kecil -->
-        <a-gltf-model 
-          id="venaKecil"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/vena_kecil.glb"
-          data-title="Vena Kava"
-          data-description="Pembuluh darah vena besar yang membawa darah miskin oksigen dari seluruh tubuh kembali ke jantung, masuk ke serambi kanan."
-        ></a-gltf-model>
-       
-        <!-- Serambi Kiri -->
-        <a-gltf-model 
-          id="serambiKiri"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/serambiKiri.glb"
-          data-title="Serambi Kiri (Atrium Kiri)"
-          data-description="Ruang atas kiri jantung yang menerima darah kaya oksigen dari paru-paru melalui vena pulmonalis, kemudian memompanya ke bilik kiri."
-        ></a-gltf-model>
+<!-- ═══ A-FRAME SCENE ═══ -->
+<a-scene
+  id="scene"
+  embedded
+  vr-mode-ui="enabled: false"
+  renderer="antialias:true; colorManagement:true; alpha:true"
+  background="color: transparent; transparent: true"
+>
 
-        <!-- Vena Pulmonalis -->
-        <a-gltf-model 
-          id="venaPulmonalis"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/vena_pulmonalis.glb"
-          data-title="Vena Pulmonalis"
-          data-description="Pembuluh darah yang membawa darah kaya oksigen dari paru-paru ke serambi kiri jantung. Merupakan satu-satunya vena yang membawa darah bersih."
-        ></a-gltf-model>
+  <!-- SEMUA MODEL ORGAN -->
+  <a-entity id="model-group" visible="false" position="0 0 -1.5">
 
-        <!-- Katup Bikuspid -->
-        <a-gltf-model 
-          id="katupBikuspid"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/katup_bikuspid.glb"
-          data-title="Katup Bikuspid (Mitral)"
-          data-description="Katup dengan dua daun yang terletak antara serambi kiri dan bilik kiri. Mencegah aliran balik darah dari bilik ke serambi."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="bilikTutup"
+      src="../Models/Peredaran/bilikTutup.glb" position="0 0 0" scale="7 7 7"
+      data-title="Bilik Tutup"
+      data-description="Bagian penutup bilik jantung. Berperan penting menjaga tekanan darah saat jantung berkontraksi.">
+    </a-gltf-model>
 
-        <!-- Aorta -->
-        <a-gltf-model 
-          id="aorta"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/aorta.glb"
-          data-title="Aorta"
-          data-description="Pembuluh arteri terbesar dalam tubuh yang membawa darah kaya oksigen dari bilik kiri ke seluruh tubuh melalui sistem peredaran darah besar."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="venaKecil"
+      src="../Models/Peredaran/vena_kecil.glb" position="0 0 0" scale="7 7 7"
+      data-title="Vena Kecil"
+      data-description="Pembuluh vena kecil yang mengalirkan darah dari jaringan menuju vena lebih besar dan kembali ke jantung.">
+    </a-gltf-model>
 
-        <!-- Bilik Kiri -->
-        <a-gltf-model 
-          id="bilikKiri"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/bilikKiri.glb"
-          data-title="Bilik Kiri (Ventrikel Kiri)"
-          data-description="Ruang bawah kiri jantung yang memompa darah kaya oksigen ke seluruh tubuh melalui aorta. Memiliki dinding paling tebal karena harus memompa dengan tekanan tinggi."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="serambiKiri"
+      src="../Models/Peredaran/serambiKiri.glb" position="0 0 0" scale="7 7 7"
+      data-title="Serambi Kiri (Atrium Kiri)"
+      data-description="Ruang atas kiri jantung. Menerima darah kaya oksigen dari paru-paru via vena pulmonalis, lalu memompanya ke bilik kiri.">
+    </a-gltf-model>
 
-        <!-- Arteri Pulmonalis -->
-        <a-gltf-model 
-          id="arteriPulmonalis"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/arteri_pulmonalis.glb"
-          data-title="Arteri Pulmonalis"
-          data-description="Pembuluh arteri yang membawa darah miskin oksigen dari bilik kanan ke paru-paru untuk dibersihkan. Merupakan satu-satunya arteri yang membawa darah kotor."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="venaPulmonalis"
+      src="../Models/Peredaran/vena_pulmonalis.glb" position="0 0 0" scale="7 7 7"
+      data-title="Vena Pulmonalis"
+      data-description="Membawa darah kaya oksigen dari paru-paru ke serambi kiri. Satu-satunya vena yang membawa darah bersih (teroksigenasi).">
+    </a-gltf-model>
 
-        <!-- Aurikel Kiri -->
-        <a-gltf-model 
-          id="aurikelKiri"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/aurikel_kiri.glb"
-          data-title="Aurikel Kiri"
-          data-description="Kantung berbentuk telinga pada serambi kiri jantung yang berfungsi sebagai reservoir tambahan untuk menampung darah."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="katupBikuspid"
+      src="../Models/Peredaran/katup_bikuspid.glb" position="0 0 0" scale="7 7 7"
+      data-title="Katup Bikuspid (Mitral)"
+      data-description="Katup dua daun antara serambi kiri dan bilik kiri. Mencegah aliran balik darah dari bilik ke serambi kiri.">
+    </a-gltf-model>
 
-        <!-- Bilik Kanan Dalam -->
-        <a-gltf-model 
-          id="bilikKananDalam"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/bilikKananDalam.glb"
-          data-title="Bilik Kanan Dalam (Ventrikel Kanan)"
-          data-description="Bagian dalam bilik kanan yang memompa darah miskin oksigen ke paru-paru melalui arteri pulmonalis untuk proses oksigenasi."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="aorta"
+      src="../Models/Peredaran/aorta.glb" position="0 0 0" scale="7 7 7"
+      data-title="Aorta"
+      data-description="Arteri terbesar dalam tubuh. Membawa darah kaya oksigen dari bilik kiri ke seluruh tubuh melalui peredaran sistemik.">
+    </a-gltf-model>
 
-        <!-- Serambi Kanan -->
-        <a-gltf-model 
-          id="serambiKanan"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/serambiKanan.glb"
-          data-title="Serambi Kanan (Atrium Kanan)"
-          data-description="Ruang atas kanan jantung yang menerima darah miskin oksigen dari seluruh tubuh melalui vena kava, kemudian memompanya ke bilik kanan."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="bilikKiri"
+      src="../Models/Peredaran/bilikKiri.glb" position="0 0 0" scale="7 7 7"
+      data-title="Bilik Kiri (Ventrikel Kiri)"
+      data-description="Ruang bawah kiri jantung. Memompa darah ke seluruh tubuh lewat aorta. Dinding paling tebal karena tekanan pompa tertinggi.">
+    </a-gltf-model>
 
-        <!-- Aurikel Kanan -->
-        <a-gltf-model 
-          id="aurikel_kanan"
-          class="organ-part clickable"
-          src="/AR/Models/Peredaran/aurikel_kanan.glb"
-          data-title="Aurikel Kanan"
-          data-description="Kantung berbentuk telinga pada serambi kanan jantung yang membantu menampung darah yang masuk dari vena kava sebelum dipompa ke bilik kanan."
-        ></a-gltf-model>
+    <a-gltf-model class="clickable" id="arteriPulmonalis"
+      src="../Models/Peredaran/arteri_pulmonalis.glb" position="0 0 0" scale="7 7 7"
+      data-title="Arteri Pulmonalis"
+      data-description="Membawa darah miskin oksigen dari bilik kanan ke paru-paru. Satu-satunya arteri yang membawa darah kotor (deoksigenasi).">
+    </a-gltf-model>
 
-      </a-entity>
-    </a-entity>
-  </a-scene>
+    <a-gltf-model class="clickable" id="aurikelKiri"
+      src="../Models/Peredaran/aurikel_kiri.glb" position="0 0 0" scale="7 7 7"
+      data-title="Aurikel Kiri"
+      data-description="Kantung berbentuk telinga pada serambi kiri. Berfungsi sebagai reservoir tambahan saat volume darah meningkat.">
+    </a-gltf-model>
 
-  <script>
-    // ========================================
-    // VARIABLES & INITIALIZATION
-    // ========================================
-    
-    const scene = document.querySelector('#scene');
-    const camera = document.querySelector('#camera');
-    const jantungContainer = document.querySelector('#jantung-container');
-    const organGroup = document.querySelector('#organ-group');
-    const infoPanel = document.querySelector('#info-panel');
-    const organTitle = document.querySelector('#organ-title');
-    const organDescription = document.querySelector('#organ-description');
-    const arInstruction = document.querySelector('#ar-instruction');
-    const loading = document.querySelector('#loading');
-    const rotateBtn = document.querySelector('#rotate-btn');
-    const rotateText = document.querySelector('#rotate-text');
-    
-    let isARActive = false;
-    let isPlaced = false;
-    let isRotating = false;
-    let currentScale = 1;
-    let rotationSpeed = 0.5; // degrees per frame
-    let selectedOrgan = null;
-    
-    const MIN_SCALE = 0.5;
-    const MAX_SCALE = 2;
-    const SCALE_STEP = 0.2;
-    
-    // ========================================
-    // SCENE LOADED EVENT
-    // ========================================
-    
-    scene.addEventListener('loaded', () => {
-      console.log('✅ Scene loaded');
-      
-      // Hide loading
-      setTimeout(() => {
-        loading.style.display = 'none';
-      }, 1000);
-      
-      // Setup click handlers untuk semua organ
-      setupOrganClickHandlers();
-      
-      // Check AR support
-      checkARSupport();
-    });
-    
-    // ========================================
-    // AR SESSION EVENTS
-    // ========================================
-    
-    scene.addEventListener('enter-vr', () => {
-      console.log('🎯 AR Session Started');
-      isARActive = true;
-      
-      arInstruction.innerHTML = '📱 Tap layar untuk menempatkan model jantung<br><small>Arahkan ke permukaan datar</small>';
-      
-      // Show container after short delay
-      setTimeout(() => {
-        jantungContainer.setAttribute('visible', 'true');
-      }, 500);
-    });
-    
-    scene.addEventListener('exit-vr', () => {
-      console.log('⏹ AR Session Ended');
-      isARActive = false;
-      isPlaced = false;
-      jantungContainer.setAttribute('visible', 'false');
-      arInstruction.innerHTML = '📱 Tap tombol "Start AR" untuk memulai pengalaman AR';
-    });
-    
-    // ========================================
-    // AR PLACEMENT (Tap to Place)
-    // ========================================
-    
-    scene.addEventListener('click', (event) => {
-      if (isARActive && !isPlaced) {
-        placeModel();
-        isPlaced = true;
-        arInstruction.innerHTML = '✅ Model ditempatkan!<br><small>Tap organ untuk info detail • Gunakan kontrol untuk interaksi</small>';
-        
-        // Auto-hide instruction after 3 seconds
-        setTimeout(() => {
-          arInstruction.style.opacity = '0.7';
-        }, 3000);
-      }
-    });
-    
-    function placeModel() {
-      const cameraPos = camera.getAttribute('position');
-      const cameraRot = camera.getAttribute('rotation');
-      
-      // Calculate position 1.5 meters in front of camera at ground level
-      const distance = 1.5;
-      const radians = (cameraRot.y * Math.PI) / 180;
-      
-      const newPos = {
-        x: cameraPos.x - Math.sin(radians) * distance,
-        y: 0, // Ground level
-        z: cameraPos.z - Math.cos(radians) * distance
-      };
-      
-      jantungContainer.setAttribute('position', `${newPos.x} ${newPos.y} ${newPos.z}`);
-      
-      console.log('📍 Model placed at:', newPos);
-      
-      // Start auto-rotation by default
-      startRotation();
-    }
-    
-    // ========================================
-    // ORGAN CLICK DETECTION & INFO
-    // ========================================
-    
-    function setupOrganClickHandlers() {
-      const organs = document.querySelectorAll('.organ-part');
-      
-      organs.forEach(organ => {
-        organ.addEventListener('click', (event) => {
-          event.stopPropagation(); // Prevent scene click
-          handleOrganClick(organ);
-        });
-        
-        // Add cursor attribute for raycaster
-        organ.setAttribute('class', 'organ-part clickable');
-      });
-      
-      console.log(`✅ Setup ${organs.length} organ click handlers`);
-    }
-    
-    function handleOrganClick(organ) {
-      const title = organ.getAttribute('data-title');
-      const description = organ.getAttribute('data-description');
-      
-      console.log('🖱️ Organ clicked:', title);
-      
-      // Update info panel
-      organTitle.textContent = title;
-      organDescription.textContent = description;
-      
-      // Highlight effect
-      highlightOrgan(organ);
-      
-      // Camera focus to organ
-      focusCameraToOrgan(organ);
-      
-      // Update selected organ
-      selectedOrgan = organ;
-    }
-    
-    function highlightOrgan(organ) {
-      // Remove previous highlights
-      document.querySelectorAll('.organ-part').forEach(o => {
-        o.removeAttribute('animation__scale');
-      });
-      
-      // Add highlight animation
-      organ.setAttribute('animation__scale', {
-        property: 'scale',
-        from: '1 1 1',
-        to: '1.1 1.1 1.1',
-        dur: 300,
-        direction: 'alternate',
-        loop: 1,
-        easing: 'easeInOutQuad'
-      });
-    }
-    
-    // ========================================
-    // CAMERA FOCUS TO ORGAN
-    // ========================================
-    
-    function focusCameraToOrgan(organ) {
-      // Get organ world position
-      const organWorldPos = new THREE.Vector3();
-      organ.object3D.getWorldPosition(organWorldPos);
-      
-      // Get camera current position
-      const cameraObj = camera.object3D;
-      
-      // Calculate direction to organ
-      const direction = new THREE.Vector3();
-      direction.subVectors(organWorldPos, cameraObj.position).normalize();
-      
-      // Calculate rotation to look at organ
-      const targetRotation = new THREE.Euler();
-      targetRotation.y = Math.atan2(direction.x, direction.z);
-      targetRotation.x = Math.asin(-direction.y);
-      
-      // Convert to degrees
-      const targetRotDeg = {
-        x: THREE.MathUtils.radToDeg(targetRotation.x),
-        y: THREE.MathUtils.radToDeg(targetRotation.y),
-        z: 0
-      };
-      
-      // Animate camera rotation
-      camera.setAttribute('animation__rotate', {
-        property: 'rotation',
-        to: `${targetRotDeg.x} ${targetRotDeg.y} ${targetRotDeg.z}`,
-        dur: 800,
-        easing: 'easeInOutQuad'
-      });
-      
-      console.log('📸 Camera focused on organ');
-    }
-    
-    // ========================================
-    // ROTATION CONTROL
-    // ========================================
-    
-    function toggleRotation() {
-      isRotating = !isRotating;
-      
-      if (isRotating) {
-        startRotation();
-        rotateBtn.classList.add('active');
-        rotateText.textContent = 'Stop Rotasi';
-      } else {
-        stopRotation();
-        rotateBtn.classList.remove('active');
-        rotateText.textContent = 'Putar Auto';
-      }
-      
-      console.log('🔄 Rotation:', isRotating ? 'ON' : 'OFF');
-    }
-    
-    function startRotation() {
-      isRotating = true;
-      rotateBtn.classList.add('active');
-      rotateText.textContent = 'Stop Rotasi';
-      
-      // Use A-Frame animation
-      organGroup.setAttribute('animation__rotate', {
-        property: 'rotation',
-        to: '0 360 0',
-        loop: true,
-        dur: 20000,
-        easing: 'linear'
-      });
-    }
-    
-    function stopRotation() {
-      isRotating = false;
-      rotateBtn.classList.remove('active');
-      rotateText.textContent = 'Putar Auto';
-      
-      // Remove animation
-      organGroup.removeAttribute('animation__rotate');
-    }
-    
-    // ========================================
-    // ZOOM CONTROL (Scale)
-    // ========================================
-    
-    function zoomIn() {
-      if (currentScale < MAX_SCALE) {
-        currentScale = Math.min(currentScale + SCALE_STEP, MAX_SCALE);
-        applyScale();
-        console.log('🔍+ Zoom In:', currentScale);
-      } else {
-        console.log('⚠️ Maximum zoom reached');
-      }
-    }
-    
-    function zoomOut() {
-      if (currentScale > MIN_SCALE) {
-        currentScale = Math.max(currentScale - SCALE_STEP, MIN_SCALE);
-        applyScale();
-        console.log('🔍- Zoom Out:', currentScale);
-      } else {
-        console.log('⚠️ Minimum zoom reached');
-      }
-    }
-    
-    function applyScale() {
-      const baseScale = 7; // Original scale from HTML
-      const newScale = baseScale * currentScale;
-      
-      organGroup.setAttribute('animation__scale', {
-        property: 'scale',
-        to: `${newScale} ${newScale} ${newScale}`,
-        dur: 300,
-        easing: 'easeInOutQuad'
-      });
-    }
-    
-    // ========================================
-    // RESET VIEW
-    // ========================================
-    
-    function resetView() {
-      console.log('🔁 Resetting view...');
-      
-      // Reset scale
-      currentScale = 1;
-      organGroup.setAttribute('scale', '7 7 7');
-      
-      // Reset rotation
-      organGroup.setAttribute('rotation', '0 0 0');
-      
-      // Stop rotation if active
-      if (isRotating) {
-        toggleRotation();
-      }
-      
-      // Reset info panel
-      organTitle.textContent = 'Sistem Peredaran Darah';
-      organDescription.textContent = 'Tap pada bagian jantung untuk melihat informasi detail setiap organ. Gunakan kontrol di bawah untuk rotasi dan zoom.';
-      
-      // Reset camera
-      camera.setAttribute('rotation', '0 0 0');
-      camera.removeAttribute('animation__rotate');
-      
-      // Clear selected organ
-      selectedOrgan = null;
-      
-      // Remove all highlights
-      document.querySelectorAll('.organ-part').forEach(o => {
-        o.removeAttribute('animation__scale');
-      });
-      
-      // If in AR mode but not placed, reset placement
-      if (isARActive && isPlaced) {
-        isPlaced = false;
-        arInstruction.innerHTML = '📱 Tap layar untuk menempatkan model jantung lagi<br><small>Arahkan ke permukaan datar</small>';
-        arInstruction.style.opacity = '1';
-      }
-      
-      console.log('✅ View reset complete');
-    }
-    
-    // ========================================
-    // AR SUPPORT CHECK
-    // ========================================
-    
-    async function checkARSupport() {
-      if (!navigator.xr) {
-        arInstruction.innerHTML = '⚠️ Browser tidak support WebXR<br><small>Gunakan Chrome/Safari terbaru</small>';
-        console.warn('❌ WebXR not available');
-        return;
-      }
-      
-      try {
-        const supported = await navigator.xr.isSessionSupported('immersive-ar');
-        
-        if (supported) {
-          console.log('✅ AR supported on this device');
-        } else {
-          arInstruction.innerHTML = '⚠️ AR tidak support di device ini<br><small>Coba di smartphone yang lebih baru</small>';
-          console.warn('⚠️ AR not supported');
+    <a-gltf-model class="clickable" id="bilikKananDalam"
+      src="../Models/Peredaran/bilikKananDalam.glb" position="0 0 0" scale="7 7 7"
+      data-title="Bilik Kanan Dalam (Ventrikel Kanan)"
+      data-description="Memompa darah miskin oksigen ke paru-paru melalui arteri pulmonalis untuk proses oksigenasi darah.">
+    </a-gltf-model>
+
+    <a-gltf-model class="clickable" id="serambiKanan"
+      src="../Models/Peredaran/serambiKanan.glb" position="0 0 0" scale="7 7 7"
+      data-title="Serambi Kanan (Atrium Kanan)"
+      data-description="Ruang atas kanan jantung. Menerima darah miskin oksigen dari seluruh tubuh melalui vena kava superior dan inferior.">
+    </a-gltf-model>
+
+    <a-gltf-model class="clickable" id="aurikelKanan"
+      src="../Models/Peredaran/aurikel_kanan.glb" position="0 0 0" scale="7 7 7"
+      data-title="Aurikel Kanan"
+      data-description="Kantung berbentuk telinga pada serambi kanan. Membantu menampung darah dari vena kava sebelum dipompa ke bilik kanan.">
+    </a-gltf-model>
+
+  </a-entity>
+
+  <!-- RETICLE (ring cursor) -->
+  <a-entity id="reticle" visible="false">
+    <a-torus radius="0.08" radius-tubular="0.005" color="#00f7ff" opacity="0.95"
+      rotation="-90 0 0"
+      animation="property:rotation; to:-90 360 0; loop:true; dur:1800; easing:linear">
+    </a-torus>
+    <a-torus radius="0.05" radius-tubular="0.003" color="#ffffff" opacity="0.5"
+      rotation="-90 0 0"
+      animation="property:rotation; to:-90 -360 0; loop:true; dur:2800; easing:linear">
+    </a-torus>
+    <a-circle radius="0.014" color="#00f7ff" opacity="1" rotation="-90 0 0"></a-circle>
+  </a-entity>
+
+  <!-- CAMERA -->
+  <a-entity id="cam-rig">
+    <a-camera id="main-cam" look-controls wasd-controls="enabled:false">
+      <a-cursor fuse="false"
+        raycaster="objects:.clickable; far:20"
+        color="#00f7ff" opacity="0.8"
+        geometry="primitive:ring; radiusInner:0.01; radiusOuter:0.016"
+        material="color:#00f7ff; shader:flat">
+      </a-cursor>
+    </a-camera>
+  </a-entity>
+
+  <!-- LIGHTS -->
+  <a-light type="ambient"     intensity="0.8" color="#ffffff"></a-light>
+  <a-light type="directional" intensity="0.9" color="#ffffff" position="1 2 1"></a-light>
+  <a-light type="point"       intensity="0.4" color="#66aaff" position="-1 1.5 0"></a-light>
+
+</a-scene>
+
+<script>
+// ═══════════════════════════════════════════════
+//  GLOBALS
+// ═══════════════════════════════════════════════
+let isARActive    = false;
+let modelPlaced   = false;
+let currentScale  = 1;
+let currentRotY   = 0;
+let hitTestSource = null;
+let xrRefSpace    = null;
+let lastHitMatrix = null;
+let activeXRSession = null;
+
+const scene         = document.getElementById('scene');
+const modelGroup    = document.getElementById('model-group');
+const reticleEl     = document.getElementById('reticle');
+const arUI          = document.getElementById('ar-ui');
+const landing       = document.getElementById('landing');
+const placementHint = document.getElementById('placement-hint');
+const infoPanel     = document.getElementById('info-panel');
+const infoTitle     = document.getElementById('info-title');
+const infoDesc      = document.getElementById('info-desc');
+const scaleSlider   = document.getElementById('scale-slider');
+const scaleValue    = document.getElementById('scale-value');
+const rotSlider     = document.getElementById('rotation-slider');
+const rotDisplay    = document.getElementById('rotation-display');
+
+// ═══════════════════════════════════════════════
+//  LANDING BUTTONS
+// ═══════════════════════════════════════════════
+document.getElementById('btn-enter-ar').addEventListener('click', startAR);
+document.getElementById('btn-enter-vr').addEventListener('click', () => {
+  scene.enterVR();
+  showARUI();
+});
+
+async function startAR() {
+  if (!navigator.xr) {
+    alert('WebXR tidak tersedia. Buka di Chrome Android terbaru.');
+    return;
+  }
+  const ok = await navigator.xr.isSessionSupported('immersive-ar').catch(() => false);
+  if (!ok) {
+    alert('AR tidak didukung. Pastikan ARCore terinstall dan perangkat kompatibel.');
+    return;
+  }
+
+  /* ════════════════════════════════════════════
+     KUNCI UTAMA:
+     domOverlay: { root: arUI }
+     → membuat HTML #ar-ui tetap tampil di atas
+       kamera AR selama sesi berjalan.
+     Tanpa ini, semua elemen HTML hilang saat AR aktif.
+  ════════════════════════════════════════════ */
+  const sessionInit = {
+    requiredFeatures: ['local'],
+    optionalFeatures: ['hit-test', 'dom-overlay', 'local-floor'],
+    domOverlay: { root: arUI }
+  };
+
+  try {
+    const xrSession = await navigator.xr.requestSession('immersive-ar', sessionInit);
+    activeXRSession = xrSession;
+    xrSession.addEventListener('end', onAREnd);
+
+    // Sambungkan sesi ke renderer Three.js / A-Frame
+    scene.renderer.xr.enabled = true;
+    await scene.renderer.xr.setSession(xrSession);
+
+    onARStart(xrSession);
+  } catch (err) {
+    console.error('[AR] Session error:', err);
+    // Fallback ke enterAR() A-Frame (tanpa dom-overlay)
+    scene.addEventListener('enter-vr', showARUI, { once: true });
+    scene.enterAR();
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  SHOW / HIDE AR UI
+// ═══════════════════════════════════════════════
+function showARUI() {
+  arUI.style.display = 'block';
+  landing.classList.add('hidden');
+  if (!modelPlaced) placementHint.classList.remove('hidden');
+  reticleEl.setAttribute('visible', 'true');
+  isARActive = true;
+}
+
+function hideARUI() {
+  arUI.style.display = 'none';
+  landing.classList.remove('hidden');
+}
+
+// ═══════════════════════════════════════════════
+//  AR START
+// ═══════════════════════════════════════════════
+function onARStart(xrSession) {
+  showARUI();
+
+  // ─ Request hit-test reference spaces
+  xrSession.requestReferenceSpace('viewer').then(viewerSpace => {
+    xrSession.requestHitTestSource({ space: viewerSpace })
+      .then(src => { hitTestSource = src; })
+      .catch(e => console.warn('[AR] hit-test unavailable:', e));
+  });
+
+  xrSession.requestReferenceSpace('local').then(ref => { xrRefSpace = ref; });
+
+  // ─ XR frame loop: update reticle position
+  scene.renderer.setAnimationLoop((time, frame) => {
+    if (!frame) return;
+
+    if (!modelPlaced && hitTestSource && xrRefSpace) {
+      const hits = frame.getHitTestResults(hitTestSource);
+      if (hits.length > 0) {
+        const pose = hits[0].getPose(xrRefSpace);
+        if (pose) {
+          lastHitMatrix = pose.transform.matrix;
+          reticleEl.object3D.visible = true;
+          // Apply hit matrix to reticle
+          const m = new THREE.Matrix4().fromArray(lastHitMatrix);
+          const pos = new THREE.Vector3();
+          const quat = new THREE.Quaternion();
+          const scl = new THREE.Vector3();
+          m.decompose(pos, quat, scl);
+          reticleEl.object3D.position.copy(pos);
+          reticleEl.object3D.quaternion.copy(quat);
         }
-      } catch (err) {
-        console.error('❌ Error checking AR support:', err);
+      } else {
+        reticleEl.object3D.visible = false;
       }
     }
-    
-    // ========================================
-    // KEYBOARD SHORTCUTS (for desktop testing)
-    // ========================================
-    
-    document.addEventListener('keydown', (event) => {
-      switch(event.key) {
-        case 'r':
-        case 'R':
-          toggleRotation();
-          break;
-        case '+':
-        case '=':
-          zoomIn();
-          break;
-        case '-':
-        case '_':
-          zoomOut();
-          break;
-        case '0':
-          resetView();
-          break;
-        case ' ':
-          if (isARActive && !isPlaced) {
-            placeModel();
-            isPlaced = true;
-          }
-          break;
-      }
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  AR END
+// ═══════════════════════════════════════════════
+function onAREnd() {
+  isARActive      = false;
+  modelPlaced     = false;
+  hitTestSource   = null;
+  xrRefSpace      = null;
+  lastHitMatrix   = null;
+  activeXRSession = null;
+
+  hideARUI();
+  modelGroup.setAttribute('visible', 'false');
+  reticleEl.setAttribute('visible', 'false');
+  placementHint.classList.remove('hidden');
+  currentScale = 1; scaleSlider.value = 1; scaleValue.textContent = '1';
+  currentRotY  = 0; rotSlider.value  = 0; rotDisplay.textContent = '0°';
+  infoTitle.textContent = '🫀 AR Jantung Manusia';
+  infoDesc.textContent  = 'Ketuk bagian organ untuk melihat informasi detail.';
+}
+
+// A-Frame fallback
+scene.addEventListener('exit-vr', () => { if (isARActive) onAREnd(); });
+
+// ═══════════════════════════════════════════════
+//  BACK BUTTON
+// ═══════════════════════════════════════════════
+document.getElementById('btn-back').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (activeXRSession) {
+    activeXRSession.end();
+  } else {
+    scene.exitVR();
+    onAREnd();
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  SCALE SLIDER
+// ═══════════════════════════════════════════════
+scaleSlider.addEventListener('input', (e) => {
+  e.stopPropagation();
+  currentScale = parseFloat(scaleSlider.value);
+  scaleValue.textContent = currentScale.toFixed(1);
+  if (modelPlaced) {
+    const s = 7 * currentScale;
+    modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
+      el.setAttribute('scale', `${s} ${s} ${s}`);
     });
-    
-    console.log('✅ Keyboard shortcuts enabled: R(rotate) +/-(zoom) 0(reset) Space(place)');
-    
-  </script>
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  ROTATION
+// ═══════════════════════════════════════════════
+rotSlider.addEventListener('input', (e) => {
+  e.stopPropagation();
+  currentRotY = parseInt(rotSlider.value);
+  rotDisplay.textContent = currentRotY + '°';
+  if (modelPlaced) modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+});
+
+document.getElementById('btn-reset-rot').addEventListener('click', (e) => {
+  e.stopPropagation();
+  currentRotY = 0; rotSlider.value = 0; rotDisplay.textContent = '0°';
+  if (modelPlaced) modelGroup.setAttribute('rotation', '0 0 0');
+});
+
+// ═══════════════════════════════════════════════
+//  INFO PANEL
+// ═══════════════════════════════════════════════
+function showInfo(title, desc) {
+  infoTitle.textContent = title;
+  infoDesc.textContent  = desc;
+  infoPanel.classList.add('flash');
+  setTimeout(() => infoPanel.classList.remove('flash'), 600);
+}
+
+// Desktop click (raycaster)
+document.querySelectorAll('.clickable').forEach(el => {
+  el.addEventListener('click', () => {
+    const t = el.getAttribute('data-title');
+    const d = el.getAttribute('data-description');
+    if (t) showInfo(t, d);
+  });
+});
+
+// ═══════════════════════════════════════════════
+//  TOUCH HANDLER (AR mobile)
+//  — Blokir propagasi di elemen UI
+//  — Tap 1: tempatkan model
+//  — Tap selanjutnya: raycast ke organ
+// ═══════════════════════════════════════════════
+arUI.querySelectorAll('input, button').forEach(el => {
+  ['touchstart','touchend','touchmove','pointerdown','pointerup'].forEach(ev => {
+    el.addEventListener(ev, e => e.stopPropagation(), { passive: false });
+  });
+});
+
+document.addEventListener('touchend', handleARTouch, { passive: true });
+
+function handleARTouch(evt) {
+  if (!isARActive) return;
+
+  // Abaikan sentuhan di UI
+  const touch = evt.changedTouches[0];
+  const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+  if (targetEl && (arUI.contains(targetEl))) return;
+
+  if (!modelPlaced) {
+    placeModel(touch);
+    return;
+  }
+
+  // Raycast ke organ
+  raycastOrgan(touch);
+}
+
+function placeModel(touch) {
+  const THREE = window.THREE || scene.renderer.domElement.__three;
+  let pos;
+
+  if (lastHitMatrix) {
+    // Gunakan posisi hit-test
+    const m = new (window.THREE || AFRAME.THREE).Matrix4().fromArray(lastHitMatrix);
+    pos = new (window.THREE || AFRAME.THREE).Vector3().setFromMatrixPosition(m);
+  } else {
+    // Fallback: depan kamera
+    const camObj = document.getElementById('main-cam').object3D;
+    const T = window.THREE || AFRAME.THREE;
+    pos = new T.Vector3(0, 0, -1.5).applyMatrix4(camObj.matrixWorld);
+  }
+
+  modelGroup.object3D.position.copy(pos);
+  modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+  modelGroup.setAttribute('visible', 'true');
+  modelPlaced = true;
+  reticleEl.setAttribute('visible', 'false');
+  reticleEl.object3D.visible = false;
+  placementHint.classList.add('hidden');
+  showInfo('🫀 Model Ditempatkan!', 'Ketuk bagian organ untuk melihat informasi detail.');
+}
+
+function raycastOrgan(touch) {
+  const T = window.THREE || AFRAME.THREE;
+  const xr = scene.renderer.xr;
+  const camera = xr.isPresenting ? xr.getCamera() : scene.camera;
+  if (!camera) return;
+
+  const ndcX = (touch.clientX / window.innerWidth)  * 2 - 1;
+  const ndcY = -(touch.clientY / window.innerHeight) * 2 + 1;
+
+  const raycaster = new T.Raycaster();
+  raycaster.setFromCamera({ x: ndcX, y: ndcY }, camera);
+
+  const meshes = [];
+  modelGroup.object3D.traverse(child => {
+    if (child.isMesh) meshes.push(child);
+  });
+
+  const hits = raycaster.intersectObjects(meshes, false);
+  if (hits.length === 0) return;
+
+  // Traverse up to find A-Frame entity with data-title
+  let obj = hits[0].object;
+  while (obj) {
+    if (obj.el && obj.el.dataset && obj.el.dataset.title) {
+      showInfo(obj.el.dataset.title, obj.el.dataset.description);
+      return;
+    }
+    obj = obj.parent;
+  }
+
+  // Jika mesh tidak punya el langsung, cari parent entity
+  const aEntities = Array.from(document.querySelectorAll('.clickable'));
+  // Closest by mesh traversal already done; show generic
+  showInfo('🫀 Organ Jantung', 'Ketuk langsung pada bagian yang lebih spesifik.');
+}
+</script>
+
 </body>
 </html>
