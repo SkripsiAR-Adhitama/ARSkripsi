@@ -396,6 +396,7 @@ const T = AFRAME.THREE;   // Three.js dari A-Frame
 
 // Modes: 'placement' | 'cursor'
 let MODE          = 'placement';
+let baseModelY = 0;
 let isARActive    = false;
 let modelPlaced   = false;
 let currentScale  = 1;
@@ -605,13 +606,13 @@ document.getElementById('btn-back').addEventListener('click', e => {
 // ════════════════════════════════════════════
 scaleSlider.addEventListener('input', e => {
   e.stopPropagation();
+
   currentScale = parseFloat(scaleSlider.value);
   scaleValue.textContent = currentScale.toFixed(1);
+
   if (modelPlaced) {
-    const s = 7 * currentScale;
-    modelGroup.querySelectorAll('a-gltf-model').forEach(el =>
-      el.setAttribute('scale', `${s} ${s} ${s}`)
-    );
+    modelGroup.object3D.position.y =
+      baseModelY + (currentScale - 1) * 0.15;
   }
 });
 
@@ -748,10 +749,10 @@ function placeModel() {
 
   let pos, quat;
 
-    if (lastHitPos) {
+  if (lastHitPos) {
     pos  = lastHitPos.clone();
     quat = lastHitQuat ? lastHitQuat.clone() : new T.Quaternion();
-    } else {
+  } else {
     const camObj = document.getElementById('main-cam').object3D;
     const worldPos = new T.Vector3();
     const worldQuat = new T.Quaternion();
@@ -764,13 +765,16 @@ function placeModel() {
     quat = new T.Quaternion();
   }
 
-  // 🔥 FIX PENTING
+
   modelGroup.setAttribute('visible', 'true');
 
   modelGroup.object3D.position.copy(pos);
   modelGroup.object3D.quaternion.copy(quat);
 
-  // Pastikan scale langsung diset saat pertama muncul
+  // 🔥 TAMBAHKAN INI supaya tidak menghadap belakang
+  modelGroup.object3D.rotateY(Math.PI);
+
+  // scale tetap normal
   const s = 7 * currentScale;
   modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
     el.setAttribute('scale', `${s} ${s} ${s}`);
@@ -780,7 +784,7 @@ function placeModel() {
 
   modelPlaced = true;
 
- reticleEl.object3D.visible = false;
+  reticleEl.object3D.visible = false;
 
   setTimeout(() => setMode('cursor'), 300);
 }
