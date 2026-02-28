@@ -424,6 +424,31 @@ const scaleValue    = document.getElementById('scale-value');
 const rotSlider     = document.getElementById('rotation-slider');
 const rotDisplay    = document.getElementById('rotation-display');
 
+const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
+
+  function registerOrgan(aEntity) {
+    const title = aEntity.dataset.title;
+    const desc  = aEntity.dataset.description;
+    if (!title) return;
+
+    const mapMeshes = () => {
+      let count = 0;
+      aEntity.object3D.traverse(child => {
+        if (child.isMesh) {
+          meshToOrgan.set(child, { title, desc });
+          count++;
+        }
+      });
+      console.log(`[AR] Mapped ${count} meshes → "${title}"`);
+    };
+
+    // model-loaded fired setelah GLB selesai diparse
+    aEntity.addEventListener('model-loaded', mapMeshes, { once: true });
+    // Safety: kalau sudah loaded sebelum listener terpasang
+    if (aEntity.object3D && aEntity.object3D.children.length > 0) mapMeshes();
+  }
+
+
 // ════════════════════════════════════════════
 //  LANDING
 // ════════════════════════════════════════════
