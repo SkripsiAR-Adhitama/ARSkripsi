@@ -653,15 +653,15 @@ scaleSlider.addEventListener('input', e => {
   scaleValue.textContent = currentScale.toFixed(1);
 
   if (modelPlaced) {
-    // Simpan posisi dulu
     const savedPos = modelGroup.object3D.position.clone();
+    const savedRot = modelGroup.object3D.rotation.clone();
     
-    modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
-    
-    // Restore posisi setelah scale
+    modelGroup.object3D.scale.set(currentScale, currentScale, currentScale);
     modelGroup.object3D.position.copy(savedPos);
+    modelGroup.object3D.rotation.copy(savedRot);
   }
 });
+
 
 // ════════════════════════════════════════════
 //  ROTATION
@@ -813,7 +813,9 @@ function placeModel() {
 
 
   modelGroup.setAttribute('visible', 'true');
+  modelGroup.setAttribute('scale', '1 1 1');
 
+  
   modelGroup.object3D.position.copy(pos);
   modelGroup.object3D.quaternion.identity();
   modelGroup.object3D.rotateY(currentRotY * Math.PI / 180);
