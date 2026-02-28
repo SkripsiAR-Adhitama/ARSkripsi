@@ -653,7 +653,7 @@ scaleSlider.addEventListener('input', e => {
   scaleValue.textContent = currentScale.toFixed(1);
 
   if (modelPlaced) {
-    modelGroup.object3D.scale.set(currentScale, currentScale, currentScale);
+    modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
   }
 });
 
