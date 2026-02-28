@@ -596,32 +596,45 @@
 
   // ─── Place model ────────────────────────────────────
   function doPlace() {
-    if (!T) return;
-    let pos, quat;
 
-    if (lastHitPos && lastHitQuat) {
-      pos  = lastHitPos.clone();
-      quat = lastHitQuat.clone();
-    } else {
-      // Fallback: 1.5m depan kamera
-      const camObj = document.getElementById('main-cam').object3D;
-      const wp = new T.Vector3(); const wq = new T.Quaternion();
-      camObj.getWorldPosition(wp); camObj.getWorldQuaternion(wq);
-      const fwd = new T.Vector3(0, 0, -1.5).applyQuaternion(wq);
-      pos = wp.clone().add(fwd); pos.y -= 0.3;
-      quat = new T.Quaternion();
-    }
+  let pos, quat;
 
-    modelGroup.object3D.position.copy(pos);
-    modelGroup.object3D.quaternion.identity();
-    modelGroup.object3D.rotateY(currentRotY * Math.PI / 180);
-    modelGroup.object3D.visible = true;
-    modelGroup.setAttribute('visible', 'true');
-    modelPlaced = true;
+  if (lastHitPos) {
+    pos  = lastHitPos.clone();
+    quat = lastHitQuat ? lastHitQuat.clone() : new T.Quaternion();
+  } else {
+    const camObj = document.getElementById('main-cam').object3D;
+    const worldPos = new T.Vector3();
+    const worldQuat = new T.Quaternion();
+    camObj.getWorldPosition(worldPos);
+    camObj.getWorldQuaternion(worldQuat);
 
-    reticleEl.object3D.visible = false;
-    setTimeout(() => setMode('cursor'), 200);
+    const forward = new T.Vector3(0, 0, -1.2).applyQuaternion(worldQuat);
+    pos = worldPos.clone().add(forward);
+    pos.y -= 0.2;
+    quat = new T.Quaternion();
   }
+
+  // 🔥 FIX PENTING
+  modelGroup.setAttribute('visible', 'true');
+
+  modelGroup.object3D.position.copy(pos);
+  modelGroup.object3D.quaternion.copy(quat);
+
+  // Pastikan scale langsung diset saat pertama muncul
+  const s = 7 * currentScale;
+  modelGroup.querySelectorAll('a-gltf-model').forEach(el => {
+    el.setAttribute('scale', `${s} ${s} ${s}`);
+  });
+
+  modelGroup.setAttribute('rotation', `0 ${currentRotY} 0`);
+
+  modelPlaced = true;
+
+  reticleEl.object3D.visible = false;
+
+  setTimeout(() => setMode('cursor'), 300);
+}
 
 })();
 </script>
