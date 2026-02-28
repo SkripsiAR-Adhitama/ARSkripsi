@@ -448,6 +448,10 @@ const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
     if (aEntity.object3D && aEntity.object3D.children.length > 0) mapMeshes();
   }
 
+  scene.addEventListener('loaded', () => {
+  document.querySelectorAll('.organ').forEach(el => registerOrgan(el));
+  });
+
 
 // ════════════════════════════════════════════
 //  LANDING
@@ -693,38 +697,37 @@ function doCursorRaycast(frame) {
 
   const hits = raycaster.intersectObjects(meshes, false);
 
-  if (hits.length > 0) {
-    // Temukan parent entity dengan data-title
-    const info = findOrganInfo(hits[0].object);
-    if (info) {
-      if (info.title !== lastHoverInfo) {
-        lastHoverInfo = info.title;
-        hoveredOrgan  = info;
-        // Cursor berubah warna jika hover organ
-        htmlCursor.classList.add('hit');
-      }
-      return;
-    }
+  let info = null;
+  for (const hit of hits) {
+    info = meshToOrgan.get(hit.object);
+    if (info) break;
   }
 
-  // Tidak ada yang kena
-  if (lastHoverInfo !== null) {
-    lastHoverInfo = null;
-    hoveredOrgan  = null;
-    htmlCursor.classList.remove('hit');
+  if (info) {
+    if (info.title !== lastHoverInfo) {
+      lastHoverInfo = info.title;
+      hoveredOrgan  = info;
+      htmlCursor.classList.add('hit');
+    }
+  } else {
+    if (lastHoverInfo !== null) {
+      lastHoverInfo = null;
+      hoveredOrgan  = null;
+      htmlCursor.classList.remove('hit');
+    }
   }
 }
 
-function findOrganInfo(threeObject) {
-  let obj = threeObject;
-  while (obj) {
-    if (obj.el && obj.el.dataset && obj.el.dataset.title) {
-      return { title: obj.el.dataset.title, desc: obj.el.dataset.description };
-    }
-    obj = obj.parent;
-  }
-  return null;
-}
+// function findOrganInfo(threeObject) {
+//   let obj = threeObject;
+//   while (obj) {
+//     if (obj.el && obj.el.dataset && obj.el.dataset.title) {
+//       return { title: obj.el.dataset.title, desc: obj.el.dataset.description };
+//     }
+//     obj = obj.parent;
+//   }
+//   return null;
+// }
 
 // ════════════════════════════════════════════
 //  TOUCH HANDLER
@@ -833,9 +836,9 @@ function tapRaycast(touch) {
   modelGroup.object3D.traverse(child => { if (child.isMesh) meshes.push(child); });
 
   const hits = raycaster.intersectObjects(meshes, false);
-  if (hits.length > 0) {
-    const info = findOrganInfo(hits[0].object);
-    if (info) showInfo(info.title, info.desc);
+   for (const hit of hits) {
+    const info = meshToOrgan.get(hit.object);
+    if (info) { showInfo(info.title, info.desc); break; }
   }
 }
 </script>
