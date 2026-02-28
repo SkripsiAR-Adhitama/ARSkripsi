@@ -653,11 +653,13 @@ scaleSlider.addEventListener('input', e => {
   scaleValue.textContent = currentScale.toFixed(1);
 
   if (modelPlaced) {
+    // Simpan posisi dulu
+    const savedPos = modelGroup.object3D.position.clone();
+    
     modelGroup.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
-    // TARUH DI SINI ↓
-    alert(modelGroup.object3D.position.x + ',' + 
-          modelGroup.object3D.position.y + ',' + 
-          modelGroup.object3D.position.z);
+    
+    // Restore posisi setelah scale
+    modelGroup.object3D.position.copy(savedPos);
   }
 });
 
