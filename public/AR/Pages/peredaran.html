@@ -452,6 +452,11 @@ const meshToOrgan = new Map(); // key: THREE.Mesh, value: {title, desc}
   document.querySelectorAll('.organ').forEach(el => registerOrgan(el));
   });
 
+  setTimeout(() => {
+  console.log('Map size:', meshToOrgan.size);
+  meshToOrgan.forEach((v, k) => console.log(k.name, '→', v.title));
+}, 5000);
+
 
 // ════════════════════════════════════════════
 //  LANDING
@@ -590,6 +595,11 @@ function onSessionEnd() {
   reticleEl.object3D.visible = false;
   placementHint.classList.remove('hidden');
   setMode('placement');
+
+  setTimeout(() => {
+  console.log('Map size:', meshToOrgan.size);
+  meshToOrgan.forEach((v, k) => console.log(k.name, '→', v.title));
+}, 5000);
   currentScale = 1; scaleSlider.value = 1; scaleValue.textContent = '1';
   currentRotY  = 0; rotSlider.value  = 0; rotDisplay.textContent = '0°';
 }
