@@ -55,7 +55,8 @@
 <a-scene
   embedded
   xr-mode-ui="enabled: true"
-  webxr="optionalFeatures: hit-test, local-floor"
+  webxr="requiredFeatures: hit-test, local-floor"
+  one-time-hit-test
 >
 
   <!-- Anchor untuk menjaga posisi -->
@@ -112,44 +113,62 @@
 // ================= HIT TEST SEKALI =================
 AFRAME.registerComponent('one-time-hit-test', {
   init: function () {
+    this.placed = false;
+    this.hitTestSource = null;
+    this.referenceSpace = null;
+    this.viewerSpace = null;
+    this.anchor = document.querySelector('#placementAnchor');
+  },
+
+  async enterVR () {
     const sceneEl = this.el;
-    const anchor = document.querySelector('#placementAnchor');
-    let placed = false;
-    let hitTestSource = null;
-    let referenceSpace = null;
+    const session = sceneEl.renderer.xr.getSession();
 
-    sceneEl.addEventListener('enter-vr', async () => {
+    this.viewerSpace = await session.requestReferenceSpace('viewer');
+    this.referenceSpace = await session.requestReferenceSpace('local-floor');
 
-      const session = sceneEl.renderer.xr.getSession();
-
-      referenceSpace = await session.requestReferenceSpace('viewer');
-      hitTestSource = await session.requestHitTestSource({
-        space: referenceSpace
-      });
-
-      session.addEventListener('select', () => {
-        if (placed) return;
-
-        const frame = sceneEl.renderer.xr.getFrame();
-        const refSpace = sceneEl.renderer.xr.getReferenceSpace();
-        const hitTestResults = frame.getHitTestResults(hitTestSource);
-
-        if (hitTestResults.length > 0) {
-          const pose = hitTestResults[0].getPose(refSpace);
-
-          anchor.object3D.position.set(
-            pose.transform.position.x,
-            pose.transform.position.y,
-            pose.transform.position.z
-          );
-
-          placed = true;
-          hitTestSource.cancel();
-          document.getElementById("infoBox").innerHTML =
-            "Objek berhasil ditempatkan. Pilih bagian untuk melihat informasi.";
-        }
-      });
+    this.hitTestSource = await session.requestHitTestSource({
+      space: this.viewerSpace
     });
+
+    session.addEventListener('select', () => {
+      this.placeObject();
+    });
+  },
+
+  tick: function () {
+    if (!this.hitTestSource || this.placed) return;
+
+    const frame = this.el.renderer.xr.getFrame();
+    if (!frame) return;
+
+    const hitTestResults = frame.getHitTestResults(this.hitTestSource);
+
+    if (hitTestResults.length > 0) {
+      this.latestHit = hitTestResults[0];
+    }
+  },
+
+  placeObject: function () {
+    if (this.placed || !this.latestHit) return;
+
+    const pose = this.latestHit.getPose(this.referenceSpace);
+
+    this.anchor.object3D.position.set(
+      pose.transform.position.x,
+      pose.transform.position.y,
+      pose.transform.position.z
+    );
+
+    this.placed = true;
+
+    if (this.hitTestSource) {
+      this.hitTestSource.cancel();
+      this.hitTestSource = null;
+    }
+
+    document.getElementById("infoBox").innerHTML =
+      "Objek berhasil ditempatkan. Pilih bagian untuk melihat informasi.";
   }
 });
 
