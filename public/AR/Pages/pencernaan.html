@@ -646,6 +646,7 @@
       let lastHitPos = null;
       let lastHitQuat = null;
       let activeSession = null;
+      let placedPX = 0, placedPY = 0, placedPZ = 0;
 
       const scene = document.getElementById("scene");
       const modelGroup = document.getElementById("model-group");
@@ -870,12 +871,9 @@
         if (modelPlaced) {
           const pos = modelGroup.getAttribute("position");
           const rot = modelGroup.getAttribute("rotation");
-          modelGroup.setAttribute(
-            "scale",
-            `${currentScale} ${currentScale} ${currentScale}`,
-          );
-          modelGroup.setAttribute("position", pos);
-          modelGroup.setAttribute("rotation", rot);
+          modelGroup.setAttribute("scale", `${currentScale} ${currentScale} ${currentScale}`);
+          modelGroup.setAttribute("position", `${placedPX} ${placedPY} ${placedPZ}`);
+          modelGroup.setAttribute("rotation", `0 ${currentRotY} 0`);
         }
       });
 
@@ -984,6 +982,7 @@
       }
 
       // ── Place Model ───────────────────────────────────────
+      placedPX = px; placedPY = py; placedPZ = pz;
       function placeModel() {
         let px, py, pz;
 
