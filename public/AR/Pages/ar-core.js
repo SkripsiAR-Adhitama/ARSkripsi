@@ -54,10 +54,6 @@ document.querySelectorAll(".organ").forEach((el) => {
 
 // ── Landing ───────────────────────────────────────────
 document.getElementById("btn-enter-ar").addEventListener("click", startAR);
-document.getElementById("btn-enter-vr").addEventListener("click", () => {
-  scene.addEventListener("enter-vr", showARUI, { once: true });
-  scene.enterVR();
-});
 
 async function startAR() {
   if (!navigator.xr) {

@@ -10,7 +10,7 @@ a-scene { width: 100vw; height: 100vh; display: block; }
 @keyframes pulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px #ff4466); } 50% { transform: scale(1.12); filter: drop-shadow(0 0 22px #ff4466); } }
 .btn-main { background: linear-gradient(135deg, #00c6ff, #0072ff); border: none; border-radius: 12px; padding: 14px 32px; color: #fff; font-family: "Orbitron", sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; cursor: pointer; box-shadow: 0 0 24px #0072ff88; transition: all 0.3s; text-transform: uppercase; width: 100%; max-width: 300px; }
 .btn-main:active { transform: scale(0.97); }
-.btn-vr { background: linear-gradient(135deg, #7c3aed, #4f46e5); box-shadow: 0 0 24px #7c3aed88; }
+
 .organ-list { width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px 16px; }
 .organ-list h3 { font-family: "Orbitron", sans-serif; font-size: 9px; color: #00f7ff; letter-spacing: 3px; margin-bottom: 10px; }
 .organ-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: 5px; }
