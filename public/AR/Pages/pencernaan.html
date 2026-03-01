@@ -10,7 +10,7 @@
   <body>
 
     <!-- ══════════════════════════════════════════
-         UBAH BAGIAN INI UNTUK TIAP SISTEM ORGAN
+         Tampilan Awal Page
          ══════════════════════════════════════════ -->
     <div id="landing">
       <div class="heart-icon">🫁</div>
@@ -30,9 +30,9 @@
       <button class="btn-main" id="btn-enter-ar">🥽 Mulai AR</button>
     
     </div>
-    <!-- ══════════════════════════════════════════ -->
 
-    <!-- JANGAN UBAH BAGIAN DI BAWAH INI -->
+    
+    <!-- UI AR Control-->
     <div id="ar-ui">
       <div class="corner tl"></div>
       <div class="corner tr"></div>
@@ -76,7 +76,7 @@
     >
 
       <!-- ══════════════════════════════════════════
-           UBAH HANYA model-group UNTUK TIAP SISTEM
+           Inisialisasi Model (Objek)
            ══════════════════════════════════════════ -->
       <a-entity id="model-group" visible="false" position="0 0 0">
         <a-gltf-model class="organ" id="appendix"     src="../Models/Pencernaan/appendix.glb"      scale="1 1 1" data-title="Appendiks (Usus Buntu)"            data-description="Kantung kecil berbentuk jari di ujung usus besar. Dulunya dianggap organ vestigial, kini diketahui berperan dalam sistem imun dengan menyimpan bakteri baik usus."></a-gltf-model>
@@ -113,11 +113,11 @@
     </a-scene>
 
     <!-- ══════════════════════════════════════════
-         UBAH NAMA SISTEM DI SINI UNTUK TIAP HTML
+         Kontrol Nama Tampilan
          ══════════════════════════════════════════ -->
     <script> const AR_SYSTEM_NAME = "Pencernaan"; </script>
 
-    <!-- Load shared AR logic — JANGAN DIUBAH -->
+    <!-- File Logic AR-->
     <script src="ar-core.js"></script>
 
   </body>

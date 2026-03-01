@@ -10,7 +10,7 @@
   <body>
 
     <!-- ══════════════════════════════════════════
-         UBAH BAGIAN INI UNTUK TIAP SISTEM ORGAN
+         Tampilan Awal Page
          ══════════════════════════════════════════ -->
     <div id="landing">
       <div class="heart-icon"></div>
@@ -30,9 +30,9 @@
       <button class="btn-main" id="btn-enter-ar">🥽 Mulai AR</button>
     
     </div>
-    <!-- ══════════════════════════════════════════ -->
 
-    <!-- JANGAN UBAH BAGIAN DI BAWAH INI -->
+
+    <!-- UI AR Control -->
     <div id="ar-ui">
       <div class="corner tl"></div>
       <div class="corner tr"></div>
@@ -76,7 +76,7 @@
     >
 
       <!-- ══════════════════════════════════════════
-           UBAH HANYA model-group UNTUK TIAP SISTEM
+           Inisialisasi Model (Objek)
            ══════════════════════════════════════════ -->
   <a-entity id="model-group" visible="false" position="0 0 0">
     <a-gltf-model class="organ" id="bilikTutup"       src="../Models/Peredaran/bilikTutup.glb"         scale="3 3 3" data-title="Bilik Tutup"                       data-description="Bagian penutup bilik jantung. Berperan penting menjaga tekanan darah saat jantung berkontraksi kuat."></a-gltf-model>
@@ -113,11 +113,11 @@
     </a-scene>
 
     <!-- ══════════════════════════════════════════
-         UBAH NAMA SISTEM DI SINI UNTUK TIAP HTML
+         Kontrol Nama Tampilan
          ══════════════════════════════════════════ -->
     <script> const AR_SYSTEM_NAME = "Peredaran"; </script>
 
-    <!-- Load shared AR logic — JANGAN DIUBAH -->
+    <!-- File Logic AR -->
     <script src="ar-core.js"></script>
 
   </body>

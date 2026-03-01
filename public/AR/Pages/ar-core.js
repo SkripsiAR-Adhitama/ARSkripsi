@@ -1,9 +1,5 @@
 // ═══════════════════════════════════════════════════
-//  AR-CORE.JS — Shared logic untuk semua scene AR
-//  Dipakai oleh: ar-pencernaan.html, ar-peredaran.html, ar-pernapasan.html
-//
-//  Sebelum <script src="ar-core.js"> di tiap HTML, definisikan:
-//  const AR_SYSTEM_NAME = "Pencernaan"; // atau "Peredaran" / "Pernapasan"
+//  AR-CORE.JS — Logic scene AR
 // ═══════════════════════════════════════════════════
 
 const T = AFRAME.THREE;
@@ -36,7 +32,7 @@ const scaleValue = document.getElementById("scale-value");
 const rotSlider = document.getElementById("rotation-slider");
 const rotDisplay = document.getElementById("rotation-display");
 
-// ── Mesh → Organ Map ──────────────────────────────────
+
 const meshToOrgan = new Map();
 
 function registerOrgan(aEntity) {
@@ -52,7 +48,7 @@ document.querySelectorAll(".organ").forEach((el) => {
   el.addEventListener("model-loaded", () => registerOrgan(el));
 });
 
-// ── Landing ───────────────────────────────────────────
+// Landing Page
 document.getElementById("btn-enter-ar").addEventListener("click", startAR);
 
 async function startAR() {
@@ -90,7 +86,7 @@ async function startAR() {
   }
 }
 
-// ── AR Session Init ───────────────────────────────────
+// AR Session Req
 function initARSession(session) {
   showARUI();
   setMode("placement");
@@ -190,7 +186,7 @@ scene.addEventListener("exit-vr", () => {
   if (isARActive) onSessionEnd();
 });
 
-// ── Mode ──────────────────────────────────────────────
+// Control Organ AR
 function setMode(mode) {
   MODE = mode;
   if (mode === "placement") {
@@ -214,7 +210,7 @@ function setMode(mode) {
   }
 }
 
-// ── Back ──────────────────────────────────────────────
+// Kembali
 document.getElementById("btn-back").addEventListener("click", (e) => {
   e.stopPropagation();
   if (activeSession) activeSession.end();
@@ -224,7 +220,7 @@ document.getElementById("btn-back").addEventListener("click", (e) => {
   }
 });
 
-// ── Scale ─────────────────────────────────────────────
+// Control Skala
 scaleSlider.addEventListener("input", (e) => {
   e.stopPropagation();
   currentScale = parseFloat(scaleSlider.value);
@@ -239,7 +235,7 @@ scaleSlider.addEventListener("input", (e) => {
   }
 });
 
-// ── Rotation ──────────────────────────────────────────
+// Kontrol Rotasi
 rotSlider.addEventListener("input", (e) => {
   e.stopPropagation();
   currentRotY = parseInt(rotSlider.value);
@@ -256,7 +252,7 @@ document.getElementById("btn-reset-rot").addEventListener("click", (e) => {
   if (modelPlaced) modelGroup.setAttribute("rotation", "0 0 0");
 });
 
-// ── Info Panel ────────────────────────────────────────
+// Papan Informasi
 function showInfo(title, desc) {
   infoTitle.textContent = title;
   infoDesc.textContent = desc;
@@ -264,7 +260,7 @@ function showInfo(title, desc) {
   setTimeout(() => infoPanel.classList.remove("flash"), 600);
 }
 
-// ── Raycast via meshToOrgan map ───────────────────────
+// Raycast Organ
 function raycastOrgan(ndcX, ndcY) {
   if (meshToOrgan.size === 0) return null;
   const cam = scene.renderer.xr.isPresenting
@@ -281,7 +277,7 @@ function raycastOrgan(ndcX, ndcY) {
   return null;
 }
 
-// ── Cursor hover ──────────────────────────────────────
+
 let hoveredOrgan = null;
 let lastHoverInfo = null;
 
@@ -302,7 +298,7 @@ function doCursorRaycast() {
   }
 }
 
-// ── Touch ─────────────────────────────────────────────
+// Crosshair (Pencet)
 arUI.querySelectorAll("input, button").forEach((el) => {
   ["touchstart", "touchend", "pointerdown", "pointerup"].forEach((ev) =>
     el.addEventListener(ev, (e) => e.stopPropagation(), { passive: false }),
@@ -336,7 +332,7 @@ function handleTouch(evt) {
   }
 }
 
-// ── Place Model ───────────────────────────────────────
+// Penempatan Model
 function placeModel() {
   let px, py, pz;
 
@@ -357,7 +353,7 @@ function placeModel() {
     pz = p.z;
   }
 
-  // Simpan posisi untuk dipakai scale slider
+  // Posisi Skala
   placedPX = px;
   placedPY = py;
   placedPZ = pz;

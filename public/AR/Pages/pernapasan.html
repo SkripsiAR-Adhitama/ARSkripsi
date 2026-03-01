@@ -10,7 +10,7 @@
   <body>
 
     <!-- ══════════════════════════════════════════
-         UBAH BAGIAN INI UNTUK TIAP SISTEM ORGAN
+         Tampilan Awal Page
          ══════════════════════════════════════════ -->
     <div id="landing">
       <div class="heart-icon">🫁</div>
@@ -28,9 +28,9 @@
       <button class="btn-main" id="btn-enter-ar">🥽 Mulai AR</button>
     
     </div>
-    <!-- ══════════════════════════════════════════ -->
+    
 
-    <!-- JANGAN UBAH BAGIAN DI BAWAH INI -->
+    <!-- UI AR Control -->
     <div id="ar-ui">
       <div class="corner tl"></div>
       <div class="corner tr"></div>
@@ -74,7 +74,7 @@
     >
 
       <!-- ══════════════════════════════════════════
-           UBAH HANYA model-group UNTUK TIAP SISTEM
+           Inisialisasi Model (Objek)
            ══════════════════════════════════════════ -->
       <a-entity id="model-group" visible="false" position="0 0 0">
       <a-gltf-model class="organ" id="alveolus" src="../Models/Pernapasan/alveolus.glb" scale="1 1 1" data-title="Alveolus" data-description="Kantung udara kecil di ujung bronkiolus, tempat pertukaran gas terjadi. Oksigen masuk ke darah dan karbon dioksida dikeluarkan. Jumlahnya sekitar 300 juta di kedua paru-paru."></a-gltf-model>
@@ -105,11 +105,11 @@
     </a-scene>
 
     <!-- ══════════════════════════════════════════
-         UBAH NAMA SISTEM DI SINI UNTUK TIAP HTML
+         Kontrol Nama Tampilan
          ══════════════════════════════════════════ -->
     <script> const AR_SYSTEM_NAME = "Pernapasan Manusia"; </script>
 
-    <!-- Load shared AR logic — JANGAN DIUBAH -->
+    <!-- File Logic AR-->
     <script src="ar-core.js"></script>
 
   </body>
