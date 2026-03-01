@@ -236,10 +236,10 @@
       #rotation-panel {
         position: absolute;
         bottom: 110px;
-        right: 14px;
+        left: 14px;
         pointer-events: all;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 5px;
         border: 2px solid #ff3333;
@@ -264,12 +264,12 @@
         text-shadow: 0 0 10px #ff3333;
       }
       #rotation-slider {
-        writing-mode: vertical-lr;
-        direction: rtl;
-        -webkit-appearance: slider-vertical;
-        appearance: slider-vertical;
-        width: 32px;
-        height: 110px;
+        writing-mode: horizontal-tb;
+        direction: ltr;
+        -webkit-appearance: auto;
+        appearance: auto;
+        width: 160px;
+        height: 32px;
         accent-color: #ff3333;
         cursor: pointer;
       }
