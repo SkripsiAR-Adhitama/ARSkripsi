@@ -78,21 +78,23 @@ async function startAR() {
     await scene.renderer.xr.setSession(session);
     initARSession(session);
 
-     const arTimeout = setTimeout(() => {
-      if (!scene.renderer.xr.isPresenting) {
+    const arTimeout = setTimeout(() => {
+      if (!xrRefSpace) {
         alert("AR tidak dapat dimulai. Pastikan perangkat Anda mendukung ARCore di: https://developers.google.com/ar/devices");
         if (activeSession) activeSession.end();
       }
     }, 5000);
-    scene.addEventListener("enter-vr", () => {
-      clearTimeout(arTimeout);
-    }, { once: true });
-    
+
+    const refSpaceCheck = setInterval(() => {
+      if (xrRefSpace) {
+        clearTimeout(arTimeout);
+        clearInterval(refSpaceCheck);
+      }
+    }, 500);
+
   } catch (e) {
     console.error("[AR] requestSession failed:", e);
-    scene.addEventListener("enter-vr", () => initARSession(null), {
-      once: true,
-    });
+    scene.addEventListener("enter-vr", () => initARSession(null), { once: true });
     scene.enterAR();
   }
 }
