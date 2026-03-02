@@ -72,7 +72,7 @@ async function startAR() {
     domOverlay: { root: arUI },
   };
   
-  
+
   try {
 
     
@@ -90,7 +90,8 @@ async function startAR() {
     await scene.renderer.xr.setSession(session);
     initARSession(session);
     } catch (e) {
-    alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices"); // ← tambah
+    alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
+    window.history.back();
     return;
   }
 }
