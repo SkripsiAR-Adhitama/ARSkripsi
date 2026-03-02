@@ -77,6 +77,7 @@ async function startAR() {
     
     const session = await navigator.xr.requestSession("immersive-ar", init);
     const enabledFeatures = session.enabledFeatures ?? [];
+    alert("enabledFeatures: " + JSON.stringify(enabledFeatures));
     if (!enabledFeatures.includes("hit-test")) {
       alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
       session.end();
