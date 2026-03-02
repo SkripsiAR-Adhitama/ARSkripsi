@@ -15,6 +15,7 @@ let lastHitPos = null;
 let lastHitQuat = null;
 let activeSession = null;
 let placedPX = 0, placedPY = 0, placedPZ = 0;
+let highlightedMeshes = [];
 
 const scene = document.getElementById("scene");
 const modelGroup = document.getElementById("model-group");
@@ -344,8 +345,7 @@ function handleTouch(evt) {
   }
 }
 
-let highlightedMeshes = [];
-
+//highlight organ
 function highlightOrgan(organTitle) {
   clearHighlight();
 
