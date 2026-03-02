@@ -52,13 +52,19 @@ document.querySelectorAll(".organ").forEach((el) => {
 document.getElementById("btn-enter-ar").addEventListener("click", startAR);
 
 async function startAR() {
+  alert("1. StartAR Dipanggil");
   if (!navigator.xr) {
     alert("WebXR tidak tersedia. Pastikan browser anda kompatibel. Lihat di: https://caniuse.com/?search=webxr");
     return;
   }
+  
+  alert("2.Navigator .xr ada");
   const ok = await navigator.xr
     .isSessionSupported("immersive-ar")
     .catch(() => false);
+
+  
+  alert("3. isSessionSupported:");
   if (!ok) {
     alert("AR tidak didukung perangkat ini. Pastikan browser dan perangkat kompatibel.");
     return;
@@ -71,13 +77,15 @@ async function startAR() {
   };
 
   try {
+    
+    alert("14. Masuk Try");
     const session = await navigator.xr.requestSession("immersive-ar", init);
     activeSession = session;
     session.addEventListener("end", onSessionEnd);
     scene.renderer.xr.enabled = true;
     await scene.renderer.xr.setSession(session);
     initARSession(session);
-    alert("sampai sini"); // test dulu
+
 
     const arTimeout = setTimeout(() => {
       if (!xrRefSpace) {
@@ -94,6 +102,7 @@ async function startAR() {
     }, 500);
 
   } catch (e) {
+    alert("Error" + e.message);
     console.error("[AR] requestSession failed:", e);
     scene.addEventListener("enter-vr", () => initARSession(null), { once: true });
     scene.enterAR();
