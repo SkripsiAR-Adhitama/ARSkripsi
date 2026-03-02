@@ -71,13 +71,14 @@ async function startAR() {
     optionalFeatures: ["hit-test", "dom-overlay", "local-floor"],
     domOverlay: { root: arUI },
   };
-
+  
+  alert("masuk try sekarang"); // ← tambah
   try {
 
     
     const session = await navigator.xr.requestSession("immersive-ar", init);
     const enabledFeatures = session.enabledFeatures ?? [];
-    alert("enabledFeatures: " + JSON.stringify(enabledFeatures));
+
     if (!enabledFeatures.includes("hit-test")) {
       alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
       session.end();
@@ -89,6 +90,7 @@ async function startAR() {
     await scene.renderer.xr.setSession(session);
     initARSession(session);
     } catch (e) {
+    alert("CATCH ERROR: " + e.message); // ← tambah
     console.error("[AR] requestSession failed:", e);
     scene.addEventListener("enter-vr", () => initARSession(null), { once: true });
     scene.enterAR();
