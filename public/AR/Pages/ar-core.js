@@ -72,7 +72,7 @@ async function startAR() {
     domOverlay: { root: arUI },
   };
   
-  alert("masuk try sekarang"); // ← tambah
+  
   try {
 
     
