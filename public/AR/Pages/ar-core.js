@@ -90,10 +90,8 @@ async function startAR() {
     await scene.renderer.xr.setSession(session);
     initARSession(session);
     } catch (e) {
-    alert("CATCH ERROR: " + e.message); // ← tambah
-    console.error("[AR] requestSession failed:", e);
-    scene.addEventListener("enter-vr", () => initARSession(null), { once: true });
-    scene.enterAR();
+    alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices"); // ← tambah
+    return;
   }
 }
 
