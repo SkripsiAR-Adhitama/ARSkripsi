@@ -52,61 +52,46 @@ document.querySelectorAll(".organ").forEach((el) => {
 document.getElementById("btn-enter-ar").addEventListener("click", startAR);
 
 async function startAR() {
-  alert("1. StartAR Dipanggil");
-  if (!navigator.xr) {
+    if (!navigator.xr) {
     alert("WebXR tidak tersedia. Pastikan browser anda kompatibel. Lihat di: https://caniuse.com/?search=webxr");
     return;
   }
-  
-  alert("2.Navigator .xr ada");
+
   const ok = await navigator.xr
     .isSessionSupported("immersive-ar")
     .catch(() => false);
 
-  
-  alert("3. isSessionSupported:");
-  if (!ok) {
+    if (!ok) {
     alert("AR tidak didukung perangkat ini. Pastikan browser dan perangkat kompatibel.");
     return;
-  }
+   }
 
   const init = {
-    requiredFeatures: ["hit-test"],
-    optionalFeatures: ["dom-overlay", "local-floor"],
+    requiredFeatures: [],
+    optionalFeatures: ["hit-test", "dom-overlay", "local-floor"],
     domOverlay: { root: arUI },
   };
 
   try {
+
     
-    alert("14. Masuk Try");
     const session = await navigator.xr.requestSession("immersive-ar", init);
+    const enabledFeatures = session.enabledFeatures ?? [];
+    if (!enabledFeatures.includes("hit-test")) {
+      alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
+      session.end();
+      return;
+    }
     activeSession = session;
     session.addEventListener("end", onSessionEnd);
     scene.renderer.xr.enabled = true;
     await scene.renderer.xr.setSession(session);
     initARSession(session);
-
-
-    const arTimeout = setTimeout(() => {
-      if (!xrRefSpace) {
-        alert("AR tidak dapat dimulai. Pastikan perangkat Anda mendukung ARCore di: https://developers.google.com/ar/devices");
-        if (activeSession) activeSession.end();
-      }
-    }, 5000);
-
-    const refSpaceCheck = setInterval(() => {
-      if (xrRefSpace) {
-        clearTimeout(arTimeout);
-        clearInterval(refSpaceCheck);
-      }
-    }, 500);
-
-  } catch (e) {
-    alert("Error" + e.message);
+    } catch (e) {
     console.error("[AR] requestSession failed:", e);
     scene.addEventListener("enter-vr", () => initARSession(null), { once: true });
     scene.enterAR();
-  } 
+  }
 }
 
 // AR Session Req
