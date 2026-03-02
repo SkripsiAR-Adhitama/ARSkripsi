@@ -53,14 +53,14 @@ document.getElementById("btn-enter-ar").addEventListener("click", startAR);
 
 async function startAR() {
   if (!navigator.xr) {
-    alert("WebXR tidak tersedia. Gunakan Chrome terbaru di Android.");
+    alert("WebXR tidak tersedia. Pastikan browser anda kompatibel. Lihat di: https://caniuse.com/?search=webxr");
     return;
   }
   const ok = await navigator.xr
     .isSessionSupported("immersive-ar")
     .catch(() => false);
   if (!ok) {
-    alert("AR tidak didukung perangkat ini. Pastikan ARCore terinstall.");
+    alert("AR tidak didukung perangkat ini. Pastikan browser dan perangkat kompatibel.");
     return;
   }
 
@@ -77,6 +77,17 @@ async function startAR() {
     scene.renderer.xr.enabled = true;
     await scene.renderer.xr.setSession(session);
     initARSession(session);
+
+     const arTimeout = setTimeout(() => {
+      if (!scene.renderer.xr.isPresenting) {
+        alert("AR tidak dapat dimulai. Pastikan perangkat Anda mendukung ARCore di: https://developers.google.com/ar/devices");
+        if (activeSession) activeSession.end();
+      }
+    }, 5000);
+    scene.addEventListener("enter-vr", () => {
+      clearTimeout(arTimeout);
+    }, { once: true });
+    
   } catch (e) {
     console.error("[AR] requestSession failed:", e);
     scene.addEventListener("enter-vr", () => initARSession(null), {
