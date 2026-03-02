@@ -77,6 +77,7 @@ async function startAR() {
     scene.renderer.xr.enabled = true;
     await scene.renderer.xr.setSession(session);
     initARSession(session);
+    alert("sampai sini"); // test dulu
 
     const arTimeout = setTimeout(() => {
       if (!xrRefSpace) {
@@ -96,7 +97,7 @@ async function startAR() {
     console.error("[AR] requestSession failed:", e);
     scene.addEventListener("enter-vr", () => initARSession(null), { once: true });
     scene.enterAR();
-  }
+  } 
 }
 
 // AR Session Req
