@@ -269,6 +269,7 @@ function showInfo(title, desc) {
   infoDesc.textContent = desc;
   infoPanel.classList.add("flash");
   setTimeout(() => infoPanel.classList.remove("flash"), 600);
+  highlightOrgan(title);
 }
 
 // Raycast Organ
@@ -341,6 +342,36 @@ function handleTouch(evt) {
       if (info) showInfo(info.title, info.desc);
     }
   }
+}
+
+let highlightedMeshes = [];
+
+function highlightOrgan(organTitle) {
+  clearHighlight();
+
+  meshToOrgan.forEach((info, mesh) => {
+    if (info.title === organTitle) {
+      mesh.userData.originalEmissive = mesh.material.emissive?.clone();
+      mesh.userData.originalEmissiveIntensity = mesh.material.emissiveIntensity;
+
+      mesh.material.emissive = new T.Color(0x00aaff);
+      mesh.material.emissiveIntensity = 0.6;
+      mesh.material.needsUpdate = true;
+
+      highlightedMeshes.push(mesh);
+    }
+  });
+}
+
+function clearHighlight() {
+  highlightedMeshes.forEach((mesh) => {
+    if (mesh.userData.originalEmissive) {
+      mesh.material.emissive = mesh.userData.originalEmissive;
+      mesh.material.emissiveIntensity = mesh.userData.originalEmissiveIntensity ?? 0;
+      mesh.material.needsUpdate = true;
+    }
+  });
+  highlightedMeshes = [];
 }
 
 // Penempatan Model
