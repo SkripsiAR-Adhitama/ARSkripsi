@@ -32,6 +32,8 @@ const rotSlider = document.getElementById("rotation-slider");
 const rotDisplay = document.getElementById("rotation-display");
 
 
+reticleEl.object3D.visible = false;
+
 const meshToOrgan = new Map();
 
 function registerOrgan(aEntity) {
@@ -97,6 +99,9 @@ async function startAR() {
     return;
    }
 
+  reticleEl.object3D.visible = false;
+  scene.renderer.setAnimationLoop(null);
+
   const init = {
     requiredFeatures: [],
     optionalFeatures: ["hit-test", "dom-overlay", "local-floor"],
@@ -133,6 +138,9 @@ function initARSession(session) {
   showARUI();
   setMode("placement");
   if (!session) return;
+
+  reticleEl.object3D.visible = false;
+  lastHitPos = null;
 
   session.requestReferenceSpace("viewer").then((viewerSpace) => {
     session
@@ -209,6 +217,10 @@ function onSessionEnd() {
   lastHitPos = null;
   lastHitQuat = null;
   activeSession = null;
+
+  scene.renderer.setAnimationLoop(null);
+  reticleEl.object3D.visible = false;
+
   arUI.style.display = "none";
   htmlCursor.classList.remove("active");
   landing.classList.remove("hidden");
@@ -236,7 +248,7 @@ function setMode(mode) {
     modeBadge.classList.add("show");
     htmlCursor.classList.remove("active");
     placementHint.classList.remove("hidden");
-    reticleEl.object3D.visible = true;
+    reticleEl.object3D.visible = isARActive;
     setTimeout(() => modeBadge.classList.remove("show"), 2500);
   } else {
     modeBadge.textContent = "👆 KETUK ORGAN UNTUK INFO";
@@ -447,3 +459,9 @@ if (typeof window !== 'undefined') {
     window.setMode = setMode;
     window.showInfo = showInfo;
 }
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && activeSession) {
+    activeSession.end();
+  }
+});
