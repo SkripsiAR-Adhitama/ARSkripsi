@@ -107,47 +107,77 @@ export function initARSession(session) {
   setMode("placement");
   if (!session) return;
 
+  const scene = document.getElementById("scene");
+  const reticleEl = document.getElementById("reticle");
+  const infoDesc = document.getElementById("info-desc");
+
+  // Hit Test
   session.requestReferenceSpace("viewer").then((viewerSpace) => {
     session.requestHitTestSource({ space: viewerSpace }).then((src) => {
       hitTestSource = src;
     });
   });
 
+  // Reference Space
   session.requestReferenceSpace("local-floor").then((ref) => {
     xrRefSpace = ref;
+  }).catch(() => {
+    session.requestReferenceSpace("local").then((ref) => {
+      xrRefSpace = ref;
+    });
   });
 
-  const scene = document.getElementById("scene");
-  const reticleEl = document.getElementById("reticle");
-  const infoDesc = document.getElementById("info-desc");
+  // ✅ FIX UTAMA: tunggu renderer siap
+  scene.addEventListener(
+    "renderstart",
+    () => {
+      scene.renderer.setAnimationLoop((time, frame) => {
+        if (!frame || !isARActive || !scene.renderer.xr.isPresenting) return;
 
-  scene.renderer.setAnimationLoop((time, frame) => {
-    if (!frame || !isARActive || !scene.renderer.xr.isPresenting) return;
+        // ✅ Guard biar nggak error silent
+        if (!reticleEl || !reticleEl.object3D) return;
 
-    if (MODE === "placement" && hitTestSource && xrRefSpace) {
-      const hits = frame.getHitTestResults(hitTestSource);
-      if (hits.length > 0) {
-        const pose = hits[0].getPose(xrRefSpace);
-        if (pose) {
-          const mat4 = new T.Matrix4().fromArray(pose.transform.matrix);
-          const pos = new T.Vector3();
-          const quat = new T.Quaternion();
-          const scl = new T.Vector3();
-          mat4.decompose(pos, quat, scl);
-          lastHitPos = pos.clone();
-          lastHitQuat = quat.clone();
-          reticleEl.object3D.position.copy(pos);
-          reticleEl.object3D.quaternion.copy(quat);
-          reticleEl.object3D.visible = true;
-          infoDesc.textContent = "✅ Permukaan terdeteksi! Ketuk untuk menempatkan organ.";
+        if (MODE === "placement" && hitTestSource && xrRefSpace) {
+          const hits = frame.getHitTestResults(hitTestSource);
+
+          if (hits.length > 0) {
+            const pose = hits[0].getPose(xrRefSpace);
+
+            if (pose) {
+              const mat4 = new T.Matrix4().fromArray(pose.transform.matrix);
+              const pos = new T.Vector3();
+              const quat = new T.Quaternion();
+              const scl = new T.Vector3();
+
+              mat4.decompose(pos, quat, scl);
+
+              lastHitPos = pos.clone();
+              lastHitQuat = quat.clone();
+
+              reticleEl.object3D.position.copy(pos);
+              reticleEl.object3D.quaternion.copy(quat);
+              reticleEl.object3D.visible = true;
+
+              if (infoDesc) {
+                infoDesc.textContent =
+                  "✅ Permukaan terdeteksi! Ketuk untuk menempatkan organ.";
+              }
+            }
+          } else {
+            reticleEl.object3D.visible = false;
+
+            if (!modelPlaced && infoDesc) {
+              infoDesc.textContent =
+                "🔍 Arahkan ke permukaan datar...";
+            }
+          }
         }
-      } else {
-        reticleEl.object3D.visible = false;
-        if (!modelPlaced) infoDesc.textContent = "🔍 Arahkan ke permukaan datar...";
-      }
-    }
-    if (MODE === "cursor") doCursorRaycast();
-  });
+
+        if (MODE === "cursor") doCursorRaycast();
+      });
+    },
+    { once: true }
+  );
 }
 
 // ─── HANDLER & CONTROLS ───────────────────────────────────────────────────────
