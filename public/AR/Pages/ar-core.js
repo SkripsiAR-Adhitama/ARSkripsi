@@ -129,33 +129,41 @@ async function startAR() {
 }
 
 // AR Session Req
-function initARSession(session) {
+async function initARSession(session) {
   showARUI();
   setMode("placement");
   if (!session) return;
 
-  session.requestReferenceSpace("viewer").then((viewerSpace) => {
-    session
-      .requestHitTestSource({ space: viewerSpace })
-      .then((src) => {
-        hitTestSource = src;
-      })
-      .catch((e) => console.warn("[AR] hit-test unavailable:", e));
-  });
+  try {
+    let viewerSpace;
 
-  session
-    .requestReferenceSpace("local-floor")
-    .then((ref) => {
-      xrRefSpace = ref;
-    })
-    .catch(() => {
-      session
-        .requestReferenceSpace("local")
-        .then((ref) => {
-          xrRefSpace = ref;
-        })
-        .catch((e) => console.warn("[AR] refSpace gagal:", e));
-    });
+    try {
+      viewerSpace = await session.requestReferenceSpace("viewer");
+    } catch (e) {
+      console.warn("[AR] viewer gagal, fallback local");
+      viewerSpace = await session.requestReferenceSpace("local");
+    }
+
+    try {
+      hitTestSource = await session.requestHitTestSource({
+        space: viewerSpace,
+      });
+    } catch (e) {
+      console.warn("[AR] hit-test unavailable:", e);
+    }
+
+    try {
+      xrRefSpace = await session.requestReferenceSpace("local-floor");
+    } catch {
+      try {
+        xrRefSpace = await session.requestReferenceSpace("local");
+      } catch (e) {
+        console.warn("[AR] refSpace gagal:", e);
+      }
+    }
+  } catch (err) {
+    console.error("initARSession error:", err);
+  }
 
   scene.addEventListener(
     "renderstart",
@@ -165,24 +173,31 @@ function initARSession(session) {
 
         if (MODE === "placement" && hitTestSource && xrRefSpace) {
           const hits = frame.getHitTestResults(hitTestSource);
+
           if (hits.length > 0) {
             const pose = hits[0].getPose(xrRefSpace);
+
             if (pose) {
               const mat4 = new T.Matrix4().fromArray(pose.transform.matrix);
               const pos = new T.Vector3();
               const quat = new T.Quaternion();
               const scl = new T.Vector3();
+
               mat4.decompose(pos, quat, scl);
+
               lastHitPos = pos.clone();
               lastHitQuat = quat.clone();
+
               reticleEl.object3D.position.copy(pos);
               reticleEl.object3D.quaternion.copy(quat);
               reticleEl.object3D.visible = true;
+
               infoDesc.textContent =
                 "✅ Permukaan terdeteksi! Ketuk untuk menempatkan organ.";
             }
           } else {
             reticleEl.object3D.visible = false;
+
             if (!modelPlaced)
               infoDesc.textContent = "🔍 Arahkan ke permukaan datar...";
           }
@@ -191,7 +206,7 @@ function initARSession(session) {
         if (MODE === "cursor") doCursorRaycast();
       });
     },
-    { once: true },
+    { once: true }
   );
 }
 
@@ -482,5 +497,7 @@ export {
   placeModel,
   registerOrgan,
   meshToOrgan,
+  startAR,
+  initARSession,
 };
  
