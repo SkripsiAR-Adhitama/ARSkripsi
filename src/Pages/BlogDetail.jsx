@@ -31,6 +31,7 @@ export default function BlogDetail() {
   };
 
   const openARPage = (url_ar) => {
+    sessionStorage.setItem("lastPage", window.location.pathname);
     window.location.href = `/AR/Pages/${url_ar}.html`;
   };
 
@@ -64,9 +65,7 @@ export default function BlogDetail() {
       <div className={styles.arContainer}>
         <button
           className={styles.arButton}
-          onClick={() =>
-            (window.location.href = `/AR/Pages/${materi.url_ar}.html`)
-          }
+          onClick={() => openARPage(materi.url_ar)}
         >
           Mulai AR
         </button>

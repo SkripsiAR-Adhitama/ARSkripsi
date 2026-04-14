@@ -18,6 +18,11 @@ export default function IntroDetail() {
     }
   }, [name, navigate]);
 
+  const openARPage = (url_ar) => {
+    sessionStorage.setItem("lastPage", window.location.pathname);
+    window.location.href = `/AR/Pages/${url_ar}.html`;
+  };
+
   const getImageUrl = (imageName) => {
     try {
       return new URL(
@@ -53,9 +58,7 @@ export default function IntroDetail() {
       <div className={styles.arContainer}>
         <button
           className={styles.arButton}
-          onClick={() =>
-            (window.location.href = `/AR/Pages/${materi.url_ar}.html`)
-          }
+          onClick={() => openARPage(materi.url_ar)}
         >
           Mulai AR
         </button>

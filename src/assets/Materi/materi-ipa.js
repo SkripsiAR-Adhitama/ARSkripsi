@@ -47,20 +47,20 @@ let materiIpa = [
   {
     category: "Pernapasan",
     name: "Bronkus",
-    pengertian: "Cabang utama batang tenggorokan yang menuju ke paru-paru kanan dan kiri[cite: 2].",
+    pengertian: "Cabang utama batang tenggorokan yang menuju ke paru-paru kanan dan kiri.",
     caraKerja: [
-      "Menerima udara dari trakea[cite: 2].",
-      "Membagi aliran udara secara merata ke setiap lobus paru-paru[cite: 2].",
-      "Menyaring partikel kecil dengan lapisan mukus[cite: 2]."
+      "Menerima udara dari trakea.",
+      "Membagi aliran udara secara merata ke setiap lobus paru-paru.",
+      "Menyaring partikel kecil dengan lapisan mukus."
     ],
     fungsi: [
-      "Menghubungkan trakea dengan jaringan paru-paru[cite: 2].",
-      "Menyediakan jalur masuk dan keluar udara[cite: 2].",
-      "Menghangatkan dan melembapkan udara yang masuk[cite: 2]."
+      "Menghubungkan trakea dengan jaringan paru-paru.",
+      "Menyediakan jalur masuk dan keluar udara.",
+      "Menghangatkan dan melembapkan udara yang masuk."
     ],
     gangguan: [
-      "Bronkitis: Peradangan selaput lendir akibat infeksi atau asap[cite: 2].",
-      "Asma: Penyempitan bronkus akibat reaksi alergi[cite: 2]."
+      "Bronkitis: Peradangan selaput lendir akibat infeksi atau asap.",
+      "Asma: Penyempitan bronkus akibat reaksi alergi."
     ],
     url_ar: "pernapasan",
     image: "bronkus.png",
@@ -89,20 +89,20 @@ let materiIpa = [
   {
     category: "Pernapasan",
     name: "Trakea",
-    pengertian: "Tabung lebar yang berfungsi sebagai batang tenggorokan utama[cite: 2].",
+    pengertian: "Tabung lebar yang berfungsi sebagai batang tenggorokan utama.",
     caraKerja: [
-      "Menyalurkan udara dari laring menuju bronkus[cite: 2].",
-      "Menyaring debu menggunakan silia (rambut halus)[cite: 2].",
-      "Mendorong lendir kotor ke atas menuju kerongkongan[cite: 2]."
+      "Menyalurkan udara dari laring menuju bronkus.",
+      "Menyaring debu menggunakan silia (rambut halus.",
+      "Mendorong lendir kotor ke atas menuju kerongkongan."
     ],
     fungsi: [
-      "Penyaring utama udara dari kotoran dan kuman[cite: 2].",
-      "Menghubungkan sistem pernapasan atas dan bawah[cite: 2].",
-      "Menjaga saluran udara tetap terbuka dengan tulang rawan[cite: 2]."
+      "Penyaring utama udara dari kotoran dan kuman.",
+      "Menghubungkan sistem pernapasan atas dan bawah.",
+      "Menjaga saluran udara tetap terbuka dengan tulang rawan."
     ],
     gangguan: [
-      "Trakeitis: Infeksi bakteri yang menyebabkan pembengkakan saluran udara[cite: 2].",
-      "Trakeomalasia: Melemahnya tulang rawan trakea sehingga saluran mudah kolaps[cite: 2]."
+      "Trakeitis: Infeksi bakteri yang menyebabkan pembengkakan saluran udara.",
+      "Trakeomalasia: Melemahnya tulang rawan trakea sehingga saluran mudah kolaps."
     ],
     url_ar: "pernapasan",
     image: "trakea.png",
@@ -110,20 +110,20 @@ let materiIpa = [
   {
     category: "Pernapasan",
     name: "Alveolus",
-    pengertian: "Kantung udara kecil di ujung bronkiolus tempat pertukaran gas[cite: 3].",
+    pengertian: "Kantung udara kecil di ujung bronkiolus tempat pertukaran gas.",
     caraKerja: [
-      "Oksigen menembus dinding alveolus masuk ke pembuluh darah[cite: 3].",
-      "Karbon dioksida keluar dari darah menuju alveolus untuk dibuang[cite: 3].",
-      "Bekerja secara pasif melalui proses difusi[cite: 3]."
+      "Oksigen menembus dinding alveolus masuk ke pembuluh darah.",
+      "Karbon dioksida keluar dari darah menuju alveolus untuk dibuang.",
+      "Bekerja secara pasif melalui proses difusi."
     ],
     fungsi: [
-      "Pusat pertukaran O2 dan CO2 dalam sistem pernapasan[cite: 3].",
-      "Memperluas area permukaan untuk penyerapan oksigen[cite: 3].",
-      "Menyuplai oksigen langsung ke sel darah merah[cite: 3]."
+      "Pusat pertukaran O2 dan CO2 dalam sistem pernapasan.",
+      "Memperluas area permukaan untuk penyerapan oksigen.",
+      "Menyuplai oksigen langsung ke sel darah merah."
     ],
     gangguan: [
-      "Emfisema: Kerusakan dinding alveolus akibat polusi atau rokok[cite: 3].",
-      "Edema Paru: Penumpukan cairan di alveolus yang menghambat pertukaran gas[cite: 3]."
+      "Emfisema: Kerusakan dinding alveolus akibat polusi atau rokok.",
+      "Edema Paru: Penumpukan cairan di alveolus yang menghambat pertukaran gas."
     ],
     url_ar: "pernapasan",
     image: "alveolus.png",
@@ -132,20 +132,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Esafogus",
-    pengertian: "Saluran berotot yang menghubungkan faring (mulut) ke lambung[cite: 4].",
+    pengertian: "Saluran berotot yang menghubungkan faring (mulut) ke lambung.",
     caraKerja: [
-      "Mendorong makanan menggunakan gerakan peristaltik[cite: 4].",
-      "Membuka katup bawah untuk memasukkan makanan ke lambung[cite: 4].",
-      "Mencegah makanan kembali naik ke mulut[cite: 4]."
+      "Mendorong makanan menggunakan gerakan peristaltik.",
+      "Membuka katup bawah untuk memasukkan makanan ke lambung.",
+      "Mencegah makanan kembali naik ke mulut."
     ],
     fungsi: [
-      "Transportasi makanan menuju lambung[cite: 4].",
-      "Penyambung saluran pencernaan atas dan tengah[cite: 4].",
-      "Mencegah udara berlebih masuk ke lambung[cite: 4]."
+      "Transportasi makanan menuju lambung.",
+      "Penyambung saluran pencernaan atas dan tengah.",
+      "Mencegah udara berlebih masuk ke lambung."
     ],
     gangguan: [
-      "Ezofagitis: Peradangan akibat iritasi asam lambung[cite: 4].",
-      "Disfagia: Kesulitan menelan akibat gangguan otot kerongkongan[cite: 4]."
+      "Ezofagitis: Peradangan akibat iritasi asam lambung.",
+      "Disfagia: Kesulitan menelan akibat gangguan otot kerongkongan."
     ],
     url_ar: "pencernaan",
     image: "esofagus.png",
@@ -153,20 +153,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Lambung",
-    pengertian: "Organ berongga tempat pencernaan mekanik dan kimiawi terjadi[cite: 4].",
+    pengertian: "Organ berongga tempat pencernaan mekanik dan kimiawi terjadi.",
     caraKerja: [
-      "Mengaduk makanan dengan gerak peristaltik kuat[cite: 4].",
-      "Mencampur makanan dengan asam HCL dan enzim pepsin[cite: 4].",
-      "Mengubah bolus menjadi bubur halus (kim)[cite: 4]."
+      "Mengaduk makanan dengan gerak peristaltik kuat.",
+      "Mencampur makanan dengan asam HCL dan enzim pepsin.",
+      "Mengubah bolus menjadi bubur halus (kim)."
     ],
     fungsi: [
-      "Membunuh kuman dengan asam klorida[cite: 4].",
-      "Mencerna protein menjadi pepton[cite: 4].",
-      "Penyimpanan sementara makanan sebelum ke usus[cite: 4]."
+      "Membunuh kuman dengan asam klorida.",
+      "Mencerna protein menjadi pepton.",
+      "Penyimpanan sementara makanan sebelum ke usus."
     ],
     gangguan: [
-      "Gastritis: Iritasi dinding lambung akibat pola makan atau bakteri[cite: 4].",
-      "Tukak Lambung: Luka terbuka pada lapisan lambung[cite: 4]."
+      "Gastritis: Iritasi dinding lambung akibat pola makan atau bakteri.",
+      "Tukak Lambung: Luka terbuka pada lapisan lambung."
     ],
     url_ar: "pencernaan",
     image: "lambung.png",
@@ -174,20 +174,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Hati",
-    pengertian: "Kelenjar terbesar dalam tubuh yang menyaring darah pencernaan[cite: 4].",
+    pengertian: "Kelenjar terbesar dalam tubuh yang menyaring darah pencernaan.",
     caraKerja: [
-      "Menyaring racun dan sisa obat dari darah[cite: 4].",
-      "Menghasilkan empedu secara terus-menerus[cite: 4].",
-      "Menyimpan kelebihan glukosa dalam bentuk glikogen[cite: 4]."
+      "Menyaring racun dan sisa obat dari darah.",
+      "Menghasilkan empedu secara terus-menerus.",
+      "Menyimpan kelebihan glukosa dalam bentuk glikogen."
     ],
     fungsi: [
-      "Menghasilkan empedu untuk mencerna lemak[cite: 4].",
-      "Pusat detoksifikasi zat berbahaya[cite: 4].",
-      "Metabolisme karbohidrat, protein, dan lemak[cite: 4]."
+      "Menghasilkan empedu untuk mencerna lemak.",
+      "Pusat detoksifikasi zat berbahaya.",
+      "Metabolisme karbohidrat, protein, dan lemak."
     ],
     gangguan: [
-      "Hepatitis: Peradangan akibat infeksi virus atau konsumsi alkohol[cite: 4].",
-      "Sirosis: Pembentukan jaringan parut yang merusak fungsi hati[cite: 4]."
+      "Hepatitis: Peradangan akibat infeksi virus atau konsumsi alkohol.",
+      "Sirosis: Pembentukan jaringan parut yang merusak fungsi hati."
     ],
     url_ar: "pencernaan",
     image: "hati.png",
@@ -195,20 +195,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Kantung Empedu",
-    pengertian: "Organ kecil di bawah hati yang menyimpan cairan empedu[cite: 5].",
+    pengertian: "Organ kecil di bawah hati yang menyimpan cairan empedu.",
     caraKerja: [
-      "Menampung empedu yang diproduksi oleh hati[cite: 5].",
-      "Memekatkan cairan empedu[cite: 5].",
-      "Berkontraksi melepaskan empedu ke usus saat lemak masuk[cite: 5]."
+      "Menampung empedu yang diproduksi oleh hati.",
+      "Memekatkan cairan empedu.",
+      "Berkontraksi melepaskan empedu ke usus saat lemak masuk."
     ],
     fungsi: [
-      "Membantu proses emulsi dan pencernaan lemak[cite: 5].",
-      "Membuang limbah metabolisme melalui cairan empedu[cite: 5].",
-      "Meningkatkan penyerapan vitamin yang larut lemak[cite: 5]."
+      "Membantu proses emulsi dan pencernaan lemak.",
+      "Membuang limbah metabolisme melalui cairan empedu.",
+      "Meningkatkan penyerapan vitamin yang larut lemak."
     ],
     gangguan: [
-      "Batu Empedu: Endapan cairan empedu yang mengeras[cite: 5].",
-      "Kolesistitis: Peradangan akibat sumbatan saluran empedu[cite: 5]."
+      "Batu Empedu: Endapan cairan empedu yang mengeras.",
+      "Kolesistitis: Peradangan akibat sumbatan saluran empedu."
     ],
     url_ar: "pencernaan",
     image: "kantungEmpedu.png",
@@ -216,20 +216,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Pankreas",
-    pengertian: "Organ kelenjar yang menghasilkan enzim pencernaan dan hormon[cite: 5].",
+    pengertian: "Organ kelenjar yang menghasilkan enzim pencernaan dan hormon.",
     caraKerja: [
-      "Menghasilkan jus pankreas ke dalam usus dua belas jari[cite: 5].",
-      "Mengeluarkan insulin langsung ke aliran darah[cite: 5].",
-      "Menetralkan asam lambung yang masuk ke usus[cite: 5]."
+      "Menghasilkan jus pankreas ke dalam usus dua belas jari.",
+      "Mengeluarkan insulin langsung ke aliran darah.",
+      "Menetralkan asam lambung yang masuk ke usus."
     ],
     fungsi: [
-      "Menghasilkan enzim amilase, lipase, dan tripsin[cite: 5].",
-      "Mengatur kadar gula darah dalam tubuh[cite: 5].",
-      "Membantu pencernaan kimiawi tingkat lanjut[cite: 5]."
+      "Menghasilkan enzim amilase, lipase, dan tripsin.",
+      "Mengatur kadar gula darah dalam tubuh.",
+      "Membantu pencernaan kimiawi tingkat lanjut."
     ],
     gangguan: [
-      "Pankreatitis: Peradangan yang merusak jaringan pankreas[cite: 5].",
-      "Diabetes Melitus: Kegagalan pankreas memproduksi insulin secara cukup[cite: 5]."
+      "Pankreatitis: Peradangan yang merusak jaringan pankreas.",
+      "Diabetes Melitus: Kegagalan pankreas memproduksi insulin secara cukup."
     ],
     url_ar: "pencernaan",
     image: "pankreas.png",
@@ -237,20 +237,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Usus Besar",
-    pengertian: "Bagian usus tempat pengolahan sisa makanan terakhir[cite: 6].",
+    pengertian: "Bagian usus tempat pengolahan sisa makanan terakhir.",
     caraKerja: [
-      "Menyerap air dan elektrolit dari sisa makanan[cite: 6].",
-      "Melakukan fermentasi sisa makanan dengan bakteri baik[cite: 6].",
-      "Mendorong sisa padat menuju rektum[cite: 6]."
+      "Menyerap air dan elektrolit dari sisa makanan.",
+      "Melakukan fermentasi sisa makanan dengan bakteri baik.",
+      "Mendorong sisa padat menuju rektum."
     ],
     fungsi: [
-      "Mengatur kadar air dalam feses[cite: 6].",
-      "Membantu pembentukan vitamin K melalui bakteri E. coli[cite: 6].",
-      "Tempat pembusukan sisa makanan[cite: 6]."
+      "Mengatur kadar air dalam feses.",
+      "Membantu pembentukan vitamin K melalui bakteri E. coli.",
+      "Tempat pembusukan sisa makanan."
     ],
     gangguan: [
-      "Konstipasi (Sembelit): Kurangnya serat sehingga feses sulit keluar[cite: 6].",
-      "Diare: Penyerapan air yang tidak sempurna akibat infeksi[cite: 6]."
+      "Konstipasi (Sembelit): Kurangnya serat sehingga feses sulit keluar.",
+      "Diare: Penyerapan air yang tidak sempurna akibat infeksi."
     ],
     url_ar: "pencernaan",
     image: "ususBesar.png",
@@ -258,20 +258,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Usus Halus",
-    pengertian: "Saluran terpanjang tempat penyerapan nutrisi utama[cite: 6].",
+    pengertian: "Saluran terpanjang tempat penyerapan nutrisi utama.",
     caraKerja: [
-      "Mencampur kim dengan enzim empedu dan pankreas[cite: 6].",
-      "Menyerap sari makanan melalui jonjot usus (vili)[cite: 6].",
-      "Mendorong sisa makanan ke usus besar[cite: 6]."
+      "Mencampur kim dengan enzim empedu dan pankreas.",
+      "Menyerap sari makanan melalui jonjot usus (vili).",
+      "Mendorong sisa makanan ke usus besar."
     ],
     fungsi: [
-      "Pusat utama penyerapan nutrisi ke aliran darah[cite: 6].",
-      "Mencerna karbohidrat, lemak, dan protein secara tuntas[cite: 6].",
-      "Menjaga keseimbangan cairan selama pencernaan[cite: 6]."
+      "Pusat utama penyerapan nutrisi ke aliran darah.",
+      "Mencerna karbohidrat, lemak, dan protein secara tuntas.",
+      "Menjaga keseimbangan cairan selama pencernaan."
     ],
     gangguan: [
-      "Cacingan: Infeksi parasit yang mengambil nutrisi tubuh[cite: 6].",
-      "Malabsorbsi: Ketidakmampuan usus menyerap sari makanan dengan benar[cite: 6]."
+      "Cacingan: Infeksi parasit yang mengambil nutrisi tubuh.",
+      "Malabsorbsi: Ketidakmampuan usus menyerap sari makanan dengan benar."
     ],
     url_ar: "pencernaan",
     image: "ususHalus.png",
@@ -279,20 +279,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Usus Buntu",
-    pengertian: "Organ kecil berbentuk tabung yang menempel di awal usus besar[cite: 7].",
+    pengertian: "Organ kecil berbentuk tabung yang menempel di awal usus besar.",
     caraKerja: [
-      "Menampung bakteri baik untuk saluran cerna[cite: 7].",
-      "Berperan dalam sistem pertahanan tubuh lokal[cite: 7].",
-      "Menjaga mikroflora usus setelah diare[cite: 7]."
+      "Menampung bakteri baik untuk saluran cerna.",
+      "Berperan dalam sistem pertahanan tubuh lokal.",
+      "Menjaga mikroflora usus setelah diare."
     ],
     fungsi: [
-      "Bagian dari sistem kekebalan tubuh (imunitas)[cite: 7].",
-      "Menyimpan bakteri menguntungkan bagi pencernaan[cite: 7].",
-      "Fungsi cadangan dalam pemulihan usus[cite: 7]."
+      "Bagian dari sistem kekebalan tubuh (imunitas).",
+      "Menyimpan bakteri menguntungkan bagi pencernaan.",
+      "Fungsi cadangan dalam pemulihan usus."
     ],
     gangguan: [
-      "Apendisitis: Peradangan akibat sumbatan sisa makanan atau kuman[cite: 7].",
-      "Tumor Apendiks: Pertumbuhan sel tidak normal di area usus buntu[cite: 7]."
+      "Apendisitis: Peradangan akibat sumbatan sisa makanan atau kuman.",
+      "Tumor Apendiks: Pertumbuhan sel tidak normal di area usus buntu."
     ],
     url_ar: "pencernaan",
     image: "ususBuntu.png",
@@ -300,20 +300,20 @@ let materiIpa = [
   {
     category: "Pencernaan",
     name: "Rektum",
-    pengertian: "Bagian akhir usus besar yang berakhir di anus[cite: 7].",
+    pengertian: "Bagian akhir usus besar yang berakhir di anus.",
     caraKerja: [
-      "Menerima dan menyimpan feses sementara[cite: 7].",
-      "Memberikan sinyal ke otak saat feses siap dikeluarkan[cite: 7].",
-      "Berkontraksi saat proses buang air besar[cite: 7]."
+      "Menerima dan menyimpan feses sementara.",
+      "Memberikan sinyal ke otak saat feses siap dikeluarkan.",
+      "Berkontraksi saat proses buang air besar."
     ],
     fungsi: [
-      "Gudang penyimpanan feses sebelum keluar[cite: 7].",
-      "Mengontrol kapan waktu pengosongan usus[cite: 7].",
-      "Menyerap sedikit sisa air dan mineral[cite: 7]."
+      "Gudang penyimpanan feses sebelum keluar.",
+      "Mengontrol kapan waktu pengosongan usus.",
+      "Menyerap sedikit sisa air dan mineral."
     ],
     gangguan: [
-      "Hemoroid (Ambeien): Pembengkakan pembuluh darah di rektum/anus[cite: 7].",
-      "Proktitis: Peradangan pada lapisan dinding rektum[cite: 7]."
+      "Hemoroid (Ambeien): Pembengkakan pembuluh darah di rektum/anus.",
+      "Proktitis: Peradangan pada lapisan dinding rektum."
     ],
     url_ar: "pencernaan",
     image: "rektum.png",
@@ -322,20 +322,20 @@ let materiIpa = [
   {
     category: "Peredaran",
     name: "Ventrikel",
-    pengertian: "Ruang jantung bagian bawah yang memompa darah keluar[cite: 8].",
+    pengertian: "Ruang jantung bagian bawah yang memompa darah keluar.",
     caraKerja: [
-      "Ventrikel kanan memompa darah kotor ke paru-paru[cite: 8].",
-      "Ventrikel kiri memompa darah bersih ke seluruh tubuh[cite: 8].",
-      "Berkontraksi kuat untuk menciptakan tekanan darah tinggi[cite: 8]."
+      "Ventrikel kanan memompa darah kotor ke paru-paru.",
+      "Ventrikel kiri memompa darah bersih ke seluruh tubuh.",
+      "Berkontraksi kuat untuk menciptakan tekanan darah tinggi."
     ],
     fungsi: [
-      "Pompa utama aliran darah keluar jantung[cite: 8].",
-      "Menjaga distribusi darah ke organ-organ vital[cite: 8].",
-      "Bekerja berirama dengan atrium[cite: 8]."
+      "Pompa utama aliran darah keluar jantung.",
+      "Menjaga distribusi darah ke organ-organ vital.",
+      "Bekerja berirama dengan atrium."
     ],
     gangguan: [
-      "Gagal Jantung Ventrikel: Ketidakmampuan memompa darah secara cukup[cite: 8].",
-      "Hipertrofi Ventrikel: Penebalan otot bilik jantung yang mengganggu fungsi[cite: 8]."
+      "Gagal Jantung Ventrikel: Ketidakmampuan memompa darah secara cukup.",
+      "Hipertrofi Ventrikel: Penebalan otot bilik jantung yang mengganggu fungsi."
     ],
     url_ar: "peredaran",
     image: "ventrikel.png",
@@ -343,20 +343,20 @@ let materiIpa = [
   {
     category: "Peredaran",
     name: "Atrium",
-    pengertian: "Ruang jantung bagian atas yang menerima darah masuk[cite: 8].",
+    pengertian: "Ruang jantung bagian atas yang menerima darah masuk.",
     caraKerja: [
-      "Menerima darah dari vena seluruh tubuh dan paru-paru[cite: 8].",
-      "Mendorong darah turun menuju ventrikel[cite: 8].",
-      "Berkontraksi dengan tekanan yang lebih rendah dari ventrikel[cite: 8]."
+      "Menerima darah dari vena seluruh tubuh dan paru-paru.",
+      "Mendorong darah turun menuju ventrikel.",
+      "Berkontraksi dengan tekanan yang lebih rendah dari ventrikel."
     ],
     fungsi: [
-      "Tempat penampungan darah awal di jantung[cite: 8].",
-      "Mengatur pengisian darah ke bilik jantung[cite: 8].",
-      "Menjaga tekanan darah vena tetap rendah[cite: 8]."
+      "Tempat penampungan darah awal di jantung.",
+      "Mengatur pengisian darah ke bilik jantung.",
+      "Menjaga tekanan darah vena tetap rendah."
     ],
     gangguan: [
-      "Atrial Fibrilasi: Irama jantung yang tidak teratur pada serambi[cite: 8].",
-      "Jantung Bocor (Atrial Septal Defect): Adanya lubang pada sekat antar serambi[cite: 8]."
+      "Atrial Fibrilasi: Irama jantung yang tidak teratur pada serambi.",
+      "Jantung Bocor (Atrial Septal Defect): Adanya lubang pada sekat antar serambi."
     ],
     url_ar: "peredaran",
     image: "atrium.png",
@@ -364,20 +364,20 @@ let materiIpa = [
   {
     category: "Peredaran",
     name: "Vena Pulmonalis",
-    pengertian: "Pembuluh darah yang membawa darah kaya oksigen dari paru-paru[cite: 9].",
+    pengertian: "Pembuluh darah yang membawa darah kaya oksigen dari paru-paru.",
     caraKerja: [
-      "Mengalirkan darah dari paru-paru menuju atrium kiri jantung[cite: 9].",
-      "Bekerja berlawanan dengan vena biasa karena membawa oksigen[cite: 9].",
-      "Menjaga aliran darah bersih lancar kembali ke jantung[cite: 9]."
+      "Mengalirkan darah dari paru-paru menuju atrium kiri jantung.",
+      "Bekerja berlawanan dengan vena biasa karena membawa oksigen.",
+      "Menjaga aliran darah bersih lancar kembali ke jantung."
     ],
     fungsi: [
-      "Satu-satunya vena yang membawa darah kaya oksigen[cite: 9].",
-      "Penyuplai darah bersih dari sistem pernapasan ke jantung[cite: 9].",
-      "Menjaga sirkulasi paru tetap efisien[cite: 9]."
+      "Satu-satunya vena yang membawa darah kaya oksigen.",
+      "Penyuplai darah bersih dari sistem pernapasan ke jantung.",
+      "Menjaga sirkulasi paru tetap efisien."
     ],
     gangguan: [
-      "Obstruksi Vena Pulmonalis: Penyumbatan aliran darah dari paru ke jantung[cite: 9].",
-      "Hipertensi Vena Pulmonalis: Tekanan tinggi pada pembuluh vena paru[cite: 9]."
+      "Obstruksi Vena Pulmonalis: Penyumbatan aliran darah dari paru ke jantung.",
+      "Hipertensi Vena Pulmonalis: Tekanan tinggi pada pembuluh vena paru."
     ],
     url_ar: "peredaran",
     image: "venaPulmonalis.png",
@@ -385,20 +385,20 @@ let materiIpa = [
   {
     category: "Peredaran",
     name: "Aorta",
-    pengertian: "Pembuluh darah nadi (arteri) terbesar dalam tubuh manusia[cite: 9].",
+    pengertian: "Pembuluh darah nadi (arteri) terbesar dalam tubuh manusia.",
     caraKerja: [
-      "Menerima darah bersih bertekanan tinggi dari ventrikel kiri[cite: 9].",
-      "Menyebarkan darah melalui cabang-cabang arteri ke seluruh tubuh[cite: 9].",
-      "Mempertahankan tekanan darah selama jantung istirahat[cite: 9]."
+      "Menerima darah bersih bertekanan tinggi dari ventrikel kiri.",
+      "Menyebarkan darah melalui cabang-cabang arteri ke seluruh tubuh.",
+      "Mempertahankan tekanan darah selama jantung istirahat."
     ],
     fungsi: [
-      "Saluran utama distribusi darah oksigen ke organ tubuh[cite: 9].",
-      "Penyedia darah untuk otak, tangan, dan organ perut[cite: 9].",
-      "Menyuplai nutrisi ke seluruh sel tubuh[cite: 9]."
+      "Saluran utama distribusi darah oksigen ke organ tubuh.",
+      "Penyedia darah untuk otak, tangan, dan organ perut.",
+      "Menyuplai nutrisi ke seluruh sel tubuh."
     ],
     gangguan: [
-      "Aneurisma Aorta: Pelebaran abnormal dinding aorta yang berisiko pecah[cite: 9].",
-      "Aterosklerosis: Penumpukan plak lemak di dinding aorta[cite: 9]."
+      "Aneurisma Aorta: Pelebaran abnormal dinding aorta yang berisiko pecah.",
+      "Aterosklerosis: Penumpukan plak lemak di dinding aorta."
     ],
     url_ar: "peredaran",
     image: "aorta.png",
@@ -406,20 +406,20 @@ let materiIpa = [
   {
     category: "Peredaran",
     name: "Arteri Pulmonalis",
-    pengertian: "Pembuluh darah nadi yang membawa darah kotor ke paru-paru[cite: 9].",
+    pengertian: "Pembuluh darah nadi yang membawa darah kotor ke paru-paru.",
     caraKerja: [
-      "Menerima darah kaya CO2 dari ventrikel kanan[cite: 9].",
-      "Membawa darah ke jaringan paru-paru untuk dibersihkan[cite: 9].",
-      "Bekerja berlawanan dengan arteri biasa karena membawa CO2[cite: 9]."
+      "Menerima darah kaya CO2 dari ventrikel kanan.",
+      "Membawa darah ke jaringan paru-paru untuk dibersihkan.",
+      "Bekerja berlawanan dengan arteri biasa karena membawa CO2."
     ],
     fungsi: [
-      "Penyalur utama darah kotor menuju sistem pernapasan[cite: 9].",
-      "Membantu proses pembuangan limbah gas CO2[cite: 9].",
-      "Bagian krusial dari sirkulasi kecil (pulmonal)[cite: 9]."
+      "Penyalur utama darah kotor menuju sistem pernapasan.",
+      "Membantu proses pembuangan limbah gas CO2.",
+      "Bagian krusial dari sirkulasi kecil (pulmonal)."
     ],
     gangguan: [
-      "Emboli Paru: Penyumbatan arteri paru oleh gumpalan darah[cite: 9].",
-      "Hipertensi Pulmonal: Tekanan darah tinggi di pembuluh darah paru-paru[cite: 9]."
+      "Emboli Paru: Penyumbatan arteri paru oleh gumpalan darah.",
+      "Hipertensi Pulmonal: Tekanan darah tinggi di pembuluh darah paru-paru."
     ],
     url_ar: "peredaran",
     image: "arteriPulmonalis.png",

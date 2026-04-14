@@ -2,37 +2,44 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>AR Pencernaan - Sistem Pencernaan</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-     <link rel="stylesheet" href="ar-core.css"/>
+    <link rel="stylesheet" href="ar-core.css" />
   </head>
   <body>
-
-         <!-- Tampilan Awal Page -->
+    <!-- Tampilan Awal Page -->
     <div id="landing">
-           <button id="btn-exit-page" class="back-button-pastel">
-          ← Kembali
-      </button>
+      <button id="btn-exit-page" class="back-button-pastel">← Kembali</button>
       <div class="heart-icon">⚕️</div>
       <div class="landing-title">AR Sistem Pencernaan<br />Manusia</div>
       <p class="landing-sub">
-        Ring mendeteksi permukaan → ketuk untuk menempatkan → ketuk organ untuk info.
+        Ring mendeteksi permukaan → ketuk untuk menempatkan → ketuk organ untuk
+        info.
       </p>
       <div class="organ-list">
         <h3>ORGAN DALAM SCENE</h3>
         <ul>
-          <li>Appendiks</li><li>Saluran Empedu</li><li>Kolon</li>
-          <li>Duodenum</li><li>Esofagus</li><li>Kantung Empedu</li>
-          <li>Ileum</li><li>Jejunum</li><li>Lambung</li>
-          <li>Hati</li><li>Pankreas</li><li>Rektum</li>
+          <li>Appendiks</li>
+          <li>Saluran Empedu</li>
+          <li>Kolon</li>
+          <li>Duodenum</li>
+          <li>Esofagus</li>
+          <li>Kantung Empedu</li>
+          <li>Ileum</li>
+          <li>Jejunum</li>
+          <li>Lambung</li>
+          <li>Hati</li>
+          <li>Pankreas</li>
+          <li>Rektum</li>
         </ul>
       </div>
       <button class="btn-main" id="btn-enter-ar">🥽 Mulai AR</button>
-    
     </div>
 
-    
     <!-- UI AR Control-->
     <div id="ar-ui">
       <div class="corner tl"></div>
@@ -42,22 +49,41 @@
       <button id="btn-back">←</button>
       <div id="mode-badge">MODE PENEMPATAN</div>
       <div id="placement-hint">
-        <p>🔍 Arahkan ke permukaan datar<br />Ring akan muncul → lalu <strong>Ketuk</strong></p>
+        <p>
+          🔍 Arahkan ke permukaan datar<br />Ring akan muncul → lalu
+          <strong>Ketuk</strong>
+        </p>
       </div>
       <div id="scale-panel">
         <div id="scale-value">1</div>
-        <input type="range" id="scale-slider" min="1" max="5" step="0.1" value="1" />
+        <input
+          type="range"
+          id="scale-slider"
+          min="1"
+          max="5"
+          step="0.1"
+          value="1"
+        />
         <div id="scale-label">S C A L E</div>
       </div>
       <div id="rotation-panel">
         <label>ROT Y</label>
         <div id="rotation-display">0°</div>
-        <input type="range" id="rotation-slider" min="0" max="360" step="1" value="0" />
+        <input
+          type="range"
+          id="rotation-slider"
+          min="0"
+          max="360"
+          step="1"
+          value="0"
+        />
         <button id="btn-reset-rot">↺</button>
       </div>
       <div id="info-panel">
         <div id="info-title">AR Sistem Pencernaan</div>
-        <div id="info-desc">Ring mendeteksi permukaan... Arahkan ke lantai atau meja.</div>
+        <div id="info-desc">
+          Ring mendeteksi permukaan... Arahkan ke lantai atau meja.
+        </div>
       </div>
     </div>
 
@@ -66,7 +92,7 @@
       <div class="hcursor-inner"></div>
       <div class="hcursor-dot"></div>
     </div>
-    
+
     <div id="error-modal" class="modal-overlay hidden">
       <div class="modal-content">
         <div class="modal-header">
@@ -86,46 +112,210 @@
       background="color: transparent; transparent: true"
       webxr="requiredFeatures: hit-test; optionalFeatures: local-floor, dom-overlay; overlayElement: #ar-ui;"
     >
-
-           <!-- Inisialisasi Model (Objek) -->
+      <!-- Inisialisasi Model (Objek) -->
       <a-entity id="model-group" visible="false" position="0 0 0">
-        <a-gltf-model class="organ" id="appendix"     src="../Models/Pencernaan/appendix.glb"      scale="1 1 1" data-title="Appendiks (Usus Buntu)"            data-description="Kantung kecil berbentuk jari di ujung usus besar. Dulunya dianggap organ vestigial, kini diketahui berperan dalam sistem imun dengan menyimpan bakteri baik usus."></a-gltf-model>
-        <a-gltf-model class="organ" id="biliary_tree" src="../Models/Pencernaan/biliary_tree.glb"   scale="1 1 1" data-title="Pohon Bilier (Saluran Empedu)"     data-description="Jaringan saluran yang mengalirkan empedu dari hati dan kantung empedu menuju usus dua belas jari (duodenum) untuk membantu pencernaan lemak."></a-gltf-model>
-        <a-gltf-model class="organ" id="colon"        src="../Models/Pencernaan/colon.glb"          scale="1 1 1" data-title="Kolon (Usus Besar)"                data-description="Bagian akhir saluran pencernaan sepanjang ±1.5 meter. Menyerap air dan elektrolit dari sisa makanan, lalu membentuk feses untuk dikeluarkan dari tubuh."></a-gltf-model>
-        <a-gltf-model class="organ" id="duodenum"     src="../Models/Pencernaan/duodenum.glb"       scale="1 1 1" data-title="Duodenum (Usus Dua Belas Jari)"    data-description="Bagian pertama usus halus sepanjang ±25 cm. Menerima makanan dari lambung, empedu dari hati, dan enzim dari pankreas untuk proses pencernaan kimia utama."></a-gltf-model>
-        <a-gltf-model class="organ" id="esofagus"     src="../Models/Pencernaan/esofagus.glb"       scale="1 1 1" data-title="Esofagus (Kerongkongan)"           data-description="Tabung berotot sepanjang ±25 cm yang menghubungkan tenggorokan ke lambung. Menggerakkan makanan melalui gerakan peristaltik — kontraksi otot bergelombang."></a-gltf-model>
-        <a-gltf-model class="organ" id="galbladder"   src="../Models/Pencernaan/galbladder.glb"     scale="1 1 1" data-title="Kantung Empedu"                    data-description="Organ kecil berbentuk buah pir di bawah hati. Menyimpan dan memekatkan empedu yang diproduksi hati, lalu melepaskannya ke duodenum saat makanan berlemak masuk."></a-gltf-model>
-        <a-gltf-model class="organ" id="ileum"        src="../Models/Pencernaan/ileum.glb"          scale="1 1 1" data-title="Ileum (Usus Halus Bawah)"          data-description="Bagian terakhir usus halus sepanjang ±3 meter. Menyerap vitamin B12, asam empedu, dan nutrisi yang belum terserap di bagian sebelumnya sebelum masuk ke usus besar."></a-gltf-model>
-        <a-gltf-model class="organ" id="jejenum"      src="../Models/Pencernaan/jejunum.glb"        scale="1 1 1" data-title="Jejunum (Usus Halus Tengah)"       data-description="Bagian tengah usus halus sepanjang ±2.5 meter. Tempat utama penyerapan nutrisi seperti karbohidrat, protein, lemak, dan vitamin yang sudah dicerna."></a-gltf-model>
-        <a-gltf-model class="organ" id="lambung"      src="../Models/Pencernaan/lambung.glb"        scale="1 1 1" data-title="Lambung (Gaster)"                  data-description="Organ berotot berbentuk kantung yang menampung makanan dari esofagus. Menghasilkan asam klorida dan enzim pepsin untuk mencerna protein serta membunuh bakteri berbahaya."></a-gltf-model>
-        <a-gltf-model class="organ" id="liver"        src="../Models/Pencernaan/liver.glb"          scale="1 1 1" data-title="Hati (Liver)"                      data-description="Kelenjar terbesar dalam tubuh dengan lebih dari 500 fungsi. Menghasilkan empedu, memetabolisme nutrisi dari usus, menetralisir racun, dan menyimpan glikogen sebagai cadangan energi."></a-gltf-model>
-        <a-gltf-model class="organ" id="pankreas"     src="../Models/Pencernaan/pankreas.glb"       scale="1 1 1" data-title="Pankreas"                          data-description="Kelenjar ganda yang berfungsi sebagai organ eksokrin (menghasilkan enzim pencernaan amilase, lipase, protease) dan endokrin (menghasilkan insulin dan glukagon untuk mengatur gula darah)."></a-gltf-model>
-        <a-gltf-model class="organ" id="rectum"       src="../Models/Pencernaan/rectum.glb"         scale="1 1 1" data-title="Rektum"                            data-description="Bagian akhir usus besar sepanjang ±15 cm. Menyimpan feses sementara sebelum dikeluarkan melalui anus. Dinding rektum mengirim sinyal ke otak saat sudah penuh untuk memicu rasa ingin buang air besar."></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="appendix"
+          src="../Models/Pencernaan/appendix.glb"
+          scale="1 1 1"
+          data-title="Appendiks (Usus Buntu)"
+          data-description="Kantung kecil berbentuk jari di ujung usus besar. Dulunya dianggap organ vestigial, kini diketahui berperan dalam sistem imun dengan menyimpan bakteri baik usus."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="biliary_tree"
+          src="../Models/Pencernaan/biliary_tree.glb"
+          scale="1 1 1"
+          data-title="Pohon Bilier (Saluran Empedu)"
+          data-description="Jaringan saluran yang mengalirkan empedu dari hati dan kantung empedu menuju usus dua belas jari (duodenum) untuk membantu pencernaan lemak."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="colon"
+          src="../Models/Pencernaan/colon.glb"
+          scale="1 1 1"
+          data-title="Kolon (Usus Besar)"
+          data-description="Bagian akhir saluran pencernaan sepanjang ±1.5 meter. Menyerap air dan elektrolit dari sisa makanan, lalu membentuk feses untuk dikeluarkan dari tubuh."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="duodenum"
+          src="../Models/Pencernaan/duodenum.glb"
+          scale="1 1 1"
+          data-title="Duodenum (Usus Dua Belas Jari)"
+          data-description="Bagian pertama usus halus sepanjang ±25 cm. Menerima makanan dari lambung, empedu dari hati, dan enzim dari pankreas untuk proses pencernaan kimia utama."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="esofagus"
+          src="../Models/Pencernaan/esofagus.glb"
+          scale="1 1 1"
+          data-title="Esofagus (Kerongkongan)"
+          data-description="Tabung berotot sepanjang ±25 cm yang menghubungkan tenggorokan ke lambung. Menggerakkan makanan melalui gerakan peristaltik — kontraksi otot bergelombang."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="galbladder"
+          src="../Models/Pencernaan/galbladder.glb"
+          scale="1 1 1"
+          data-title="Kantung Empedu"
+          data-description="Organ kecil berbentuk buah pir di bawah hati. Menyimpan dan memekatkan empedu yang diproduksi hati, lalu melepaskannya ke duodenum saat makanan berlemak masuk."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="ileum"
+          src="../Models/Pencernaan/ileum.glb"
+          scale="1 1 1"
+          data-title="Ileum (Usus Halus Bawah)"
+          data-description="Bagian terakhir usus halus sepanjang ±3 meter. Menyerap vitamin B12, asam empedu, dan nutrisi yang belum terserap di bagian sebelumnya sebelum masuk ke usus besar."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="jejenum"
+          src="../Models/Pencernaan/jejunum.glb"
+          scale="1 1 1"
+          data-title="Jejunum (Usus Halus Tengah)"
+          data-description="Bagian tengah usus halus sepanjang ±2.5 meter. Tempat utama penyerapan nutrisi seperti karbohidrat, protein, lemak, dan vitamin yang sudah dicerna."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="lambung"
+          src="../Models/Pencernaan/lambung.glb"
+          scale="1 1 1"
+          data-title="Lambung (Gaster)"
+          data-description="Organ berotot berbentuk kantung yang menampung makanan dari esofagus. Menghasilkan asam klorida dan enzim pepsin untuk mencerna protein serta membunuh bakteri berbahaya."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="liver"
+          src="../Models/Pencernaan/liver.glb"
+          scale="1 1 1"
+          data-title="Hati (Liver)"
+          data-description="Kelenjar terbesar dalam tubuh dengan lebih dari 500 fungsi. Menghasilkan empedu, memetabolisme nutrisi dari usus, menetralisir racun, dan menyimpan glikogen sebagai cadangan energi."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="pankreas"
+          src="../Models/Pencernaan/pankreas.glb"
+          scale="1 1 1"
+          data-title="Pankreas"
+          data-description="Kelenjar ganda yang berfungsi sebagai organ eksokrin (menghasilkan enzim pencernaan amilase, lipase, protease) dan endokrin (menghasilkan insulin dan glukagon untuk mengatur gula darah)."
+        ></a-gltf-model>
+        <a-gltf-model
+          class="organ"
+          id="rectum"
+          src="../Models/Pencernaan/rectum.glb"
+          scale="1 1 1"
+          data-title="Rektum"
+          data-description="Bagian akhir usus besar sepanjang ±15 cm. Menyimpan feses sementara sebelum dikeluarkan melalui anus. Dinding rektum mengirim sinyal ke otak saat sudah penuh untuk memicu rasa ingin buang air besar."
+        ></a-gltf-model>
       </a-entity>
 
       <a-entity id="reticle" visible="false">
-        <a-torus color="#00f7ff" radius="0.12" radius-tubular="0.006" opacity="0.95" rotation="-90 0 0" animation="property:rotation; to:-90 360 0; loop:true; dur:1600; easing:linear"></a-torus>
-        <a-torus color="#ffffff" radius="0.08" radius-tubular="0.004" opacity="0.6" rotation="-90 0 0" animation="property:rotation; to:-90 -360 0; loop:true; dur:2400; easing:linear"></a-torus>
-        <a-circle color="#00f7ff" radius="0.018" opacity="1" rotation="-90 0 0" material="shader:flat; color:#00f7ff"></a-circle>
-        <a-box color="#00f7ff" width="0.005" height="0.001" depth="0.04" position="0.16 0 0"   rotation="-90 0 0" material="shader:flat"></a-box>
-        <a-box color="#00f7ff" width="0.005" height="0.001" depth="0.04" position="-0.16 0 0"  rotation="-90 0 0" material="shader:flat"></a-box>
-        <a-box color="#00f7ff" width="0.04"  height="0.001" depth="0.005" position="0 0 0.16"  rotation="-90 0 0" material="shader:flat"></a-box>
-        <a-box color="#00f7ff" width="0.04"  height="0.001" depth="0.005" position="0 0 -0.16" rotation="-90 0 0" material="shader:flat"></a-box>
+        <a-torus
+          color="#00f7ff"
+          radius="0.12"
+          radius-tubular="0.006"
+          opacity="0.95"
+          rotation="-90 0 0"
+          animation="property:rotation; to:-90 360 0; loop:true; dur:1600; easing:linear"
+        ></a-torus>
+        <a-torus
+          color="#ffffff"
+          radius="0.08"
+          radius-tubular="0.004"
+          opacity="0.6"
+          rotation="-90 0 0"
+          animation="property:rotation; to:-90 -360 0; loop:true; dur:2400; easing:linear"
+        ></a-torus>
+        <a-circle
+          color="#00f7ff"
+          radius="0.018"
+          opacity="1"
+          rotation="-90 0 0"
+          material="shader:flat; color:#00f7ff"
+        ></a-circle>
+        <a-box
+          color="#00f7ff"
+          width="0.005"
+          height="0.001"
+          depth="0.04"
+          position="0.16 0 0"
+          rotation="-90 0 0"
+          material="shader:flat"
+        ></a-box>
+        <a-box
+          color="#00f7ff"
+          width="0.005"
+          height="0.001"
+          depth="0.04"
+          position="-0.16 0 0"
+          rotation="-90 0 0"
+          material="shader:flat"
+        ></a-box>
+        <a-box
+          color="#00f7ff"
+          width="0.04"
+          height="0.001"
+          depth="0.005"
+          position="0 0 0.16"
+          rotation="-90 0 0"
+          material="shader:flat"
+        ></a-box>
+        <a-box
+          color="#00f7ff"
+          width="0.04"
+          height="0.001"
+          depth="0.005"
+          position="0 0 -0.16"
+          rotation="-90 0 0"
+          material="shader:flat"
+        ></a-box>
       </a-entity>
 
       <a-entity id="cam-rig">
-        <a-camera id="main-cam" look-controls wasd-controls="enabled:false"></a-camera>
+        <a-camera
+          id="main-cam"
+          look-controls
+          wasd-controls="enabled:false"
+        ></a-camera>
       </a-entity>
       <a-light type="ambient" intensity="0.8" color="#ffffff"></a-light>
-      <a-light type="directional" intensity="0.9" color="#ffffff" position="1 2 1"></a-light>
-      <a-light type="point" intensity="0.4" color="#66aaff" position="-1 1.5 0"></a-light>
+      <a-light
+        type="directional"
+        intensity="0.9"
+        color="#ffffff"
+        position="1 2 1"
+      ></a-light>
+      <a-light
+        type="point"
+        intensity="0.4"
+        color="#66aaff"
+        position="-1 1.5 0"
+      ></a-light>
     </a-scene>
 
-         <!-- Kontrol Nama Tampilan -->
-    <script> const AR_SYSTEM_NAME = "Pencernaan"; </script>
+    <!-- Kontrol Nama Tampilan -->
+    <script>
+      const AR_SYSTEM_NAME = "Pencernaan";
+    </script>
 
     <!-- File Logic AR-->
     <script type="module" src="ar-core.js"></script>
 
+    <script>
+      const btnExit = document.getElementById("btn-exit-page");
+
+      btnExit.addEventListener("click", () => {
+        const lastPage = sessionStorage.getItem("lastPage");
+
+        if (lastPage) {
+          window.location.href = lastPage;
+        } else {
+          window.location.href = "/";
+        }
+      });
+    </script>
   </body>
 </html>

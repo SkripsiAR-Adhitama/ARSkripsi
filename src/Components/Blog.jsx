@@ -10,10 +10,11 @@ function Blog({ selectedCategory = 'All', searchTerm = '' }) {
     return new URL(`../assets/Images/AsetGambar/Materi/${category}/${imageName}`, import.meta.url).href;
   };
 
-  const openARPage = (url_ar) => {
+ const openARPage = (url_ar) => {
+    sessionStorage.setItem("lastPage", window.location.pathname);
     window.location.href = `/AR/Pages/${url_ar}.html`;
   };
-
+  
   const filteredData = materiIpa.filter((item) => {
     const matchCategory = selectedCategory === 'All' || item.category === selectedCategory;
     const matchSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

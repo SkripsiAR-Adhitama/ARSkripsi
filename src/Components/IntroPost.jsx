@@ -15,10 +15,11 @@ function IntroPost({ selectedCategory = 'All' }) {
     }
   };
 
-  const openARPage = (url_ar) => {
+const openARPage = (url_ar) => {
+    sessionStorage.setItem("lastPage", window.location.pathname);
     window.location.href = `/AR/Pages/${url_ar}.html`;
   };
-
+  
   const filteredData = selectedCategory === 'All'
     ? makroIpa
     : makroIpa.filter(item => item.category === selectedCategory);

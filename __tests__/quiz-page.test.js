@@ -1,9 +1,15 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
+} from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import QuizPage from "../src/quiz/quiz-page";
 
-
+// 🔹 Mock Game Component
 jest.mock("../src/quiz/game", () => {
   const React = require("react");
   return function MockGame({ playerName, numQuestions, onGameFinish }) {
@@ -18,12 +24,10 @@ jest.mock("../src/quiz/game", () => {
   };
 });
 
-// Helper render dengan location.state
+// 🔹 Helper render
 const renderQuizPage = (state = {}) =>
   render(
-    <MemoryRouter
-      initialEntries={[{ pathname: "/halaman-kuis", state }]}
-    >
+    <MemoryRouter initialEntries={[{ pathname: "/halaman-kuis", state }]}>
       <Routes>
         <Route path="/halaman-kuis" element={<QuizPage />} />
       </Routes>
@@ -31,7 +35,7 @@ const renderQuizPage = (state = {}) =>
   );
 
 describe("QuizPage Component", () => {
-  // ─── Membaca state dari navigate ─────────────────────────────────────────────
+  // ─── STATE TEST ─────────────────────────────────────────
 
   test("meneruskan playerName dari location.state ke Game", () => {
     renderQuizPage({ playerName: "Rudi", numQuestions: 5 });
@@ -43,54 +47,164 @@ describe("QuizPage Component", () => {
     expect(screen.getByText(/15 soal/)).toBeInTheDocument();
   });
 
-  test("menggunakan default 'Guest' jika playerName tidak ada di state", () => {
+  test("menggunakan default 'Guest'", () => {
     renderQuizPage({});
     expect(screen.getByText(/Guest/)).toBeInTheDocument();
   });
 
-  test("menggunakan default 20 soal jika numQuestions tidak ada di state", () => {
+  test("menggunakan default 20 soal", () => {
     renderQuizPage({});
     expect(screen.getByText(/20 soal/)).toBeInTheDocument();
   });
 
-  // ─── Modal peringatan back button ────────────────────────────────────────────
+  // ─── MODAL AWAL ─────────────────────────────────────────
 
-  test("modal peringatan tidak tampil saat awal render", () => {
-    renderQuizPage({ playerName: "Ana", numQuestions: 10 });
-    expect(screen.queryByText(/Selesaikan kuis/i)).not.toBeInTheDocument();
+  test("modal tidak tampil saat awal render", () => {
+    renderQuizPage();
+    expect(
+      screen.queryByText(/Selesaikan kuis/i)
+    ).not.toBeInTheDocument();
   });
 
-  // ─── Setelah game selesai ─────────────────────────────────────────────────────
+  // ─── GAME FINISH ────────────────────────────────────────
 
-  test("isFinished menjadi true setelah onGameFinish dipanggil", () => {
-    renderQuizPage({ playerName: "Ana", numQuestions: 3 });
-    // Klik tombol yang memanggil onGameFinish di mock Game
+  test("isFinished aktif setelah klik selesai", () => {
+    renderQuizPage();
     fireEvent.click(screen.getByText("Selesai Game"));
-    // Tidak ada efek visual langsung, tapi tidak ada error
-    // State isFinished mencegah modal back button muncul
-    expect(screen.queryByText(/Selesaikan kuis/i)).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByText(/Selesaikan kuis/i)
+    ).not.toBeInTheDocument();
   });
 
-  // ─── Event listener beforeunload ─────────────────────────────────────────────
+  // ─── BEFOREUNLOAD ───────────────────────────────────────
 
-  test("event listener beforeunload ditambahkan saat mount", () => {
-    const addSpy = jest.spyOn(window, "addEventListener");
-    renderQuizPage({ playerName: "Beni", numQuestions: 5 });
-    expect(addSpy).toHaveBeenCalledWith(
+  test("beforeunload listener ditambahkan", () => {
+    const spy = jest.spyOn(window, "addEventListener");
+
+    renderQuizPage();
+
+    expect(spy).toHaveBeenCalledWith(
       "beforeunload",
       expect.any(Function)
     );
-    addSpy.mockRestore();
+
+    spy.mockRestore();
   });
 
-  test("event listener beforeunload dihapus saat unmount", () => {
-    const removeSpy = jest.spyOn(window, "removeEventListener");
-    const { unmount } = renderQuizPage({ playerName: "Beni", numQuestions: 5 });
+  test("beforeunload listener dihapus saat unmount", () => {
+    const spy = jest.spyOn(window, "removeEventListener");
+
+    const { unmount } = renderQuizPage();
     unmount();
-    expect(removeSpy).toHaveBeenCalledWith(
+
+    expect(spy).toHaveBeenCalledWith(
       "beforeunload",
       expect.any(Function)
     );
-    removeSpy.mockRestore();
+
+    spy.mockRestore();
+  });
+
+  test("beforeunload mencegah keluar", () => {
+    renderQuizPage();
+
+    const event = new Event("beforeunload");
+    event.preventDefault = jest.fn();
+
+    act(() => {
+      window.dispatchEvent(event);
+    });
+
+    expect(event.preventDefault).toHaveBeenCalled();
+  });
+
+  // ─── POPSTATE (BACK BUTTON) ─────────────────────────────
+
+  test("modal muncul saat tekan back", async () => {
+    renderQuizPage();
+
+    await waitFor(() => {}); // tunggu useEffect
+
+    act(() => {
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    expect(
+      await screen.findByText(/Selesaikan kuis terlebih dahulu/i)
+    ).toBeInTheDocument();
+  });
+
+  test("modal bisa ditutup", async () => {
+    renderQuizPage();
+
+    await waitFor(() => {});
+
+    act(() => {
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    const btn = await screen.findByText(/Mengerti/i);
+    fireEvent.click(btn);
+
+    expect(
+      screen.queryByText(/Selesaikan kuis/i)
+    ).not.toBeInTheDocument();
+  });
+
+  test("tidak tampil modal jika sudah selesai", async () => {
+    renderQuizPage();
+
+    fireEvent.click(screen.getByText("Selesai Game"));
+
+    await waitFor(() => {});
+
+    act(() => {
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    expect(
+      screen.queryByText(/Selesaikan kuis/i)
+    ).not.toBeInTheDocument();
+  });
+
+  test("pushState dipanggil saat mount", () => {
+    const spy = jest.spyOn(window.history, "pushState");
+
+    renderQuizPage();
+
+    expect(spy).toHaveBeenCalled();
+
+    spy.mockRestore();
+  });
+
+  test("isi modal tampil dengan benar", async () => {
+    renderQuizPage();
+
+    await waitFor(() => {});
+
+    act(() => {
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    expect(await screen.findByText("⚠️ Perhatian")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Selesaikan kuis terlebih dahulu/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText("Mengerti")).toBeInTheDocument();
+  });
+
+  test("event popstate dihapus saat unmount", () => {
+    const spy = jest.spyOn(window, "removeEventListener");
+
+    const { unmount } = renderQuizPage();
+    unmount();
+
+    expect(spy).toHaveBeenCalledWith(
+      "popstate",
+      expect.any(Function)
+    );
+
+    spy.mockRestore();
   });
 });
