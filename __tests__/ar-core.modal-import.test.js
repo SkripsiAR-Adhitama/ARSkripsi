@@ -1,9 +1,9 @@
 /**
  * arcore.modal.test.js  (import-based — coverage terdeteksi)
- * Menguji showModal() dengan import langsung dari ar-core.module.js
+ * Menguji showModal() dengan import langsung dari ar-core.js
  */
 
-import { showModal } from "../public/AR/Pages/ar-core.module";
+import { showModal } from "../public/AR/Pages/ar-core";
 import { setupARDom } from "./ar-core.setup";
 
 describe("showModal()", () => {

@@ -16,7 +16,7 @@ import {
   meshToOrgan,
   _setState,
   initDOM,
-} from "../public/AR/Pages/ar-core.module";
+} from "../public/AR/Pages/ar-core";
 
 // ─── DOM Setup ────────────────────────────────────────────────────────────────
 function buildDOM() {
