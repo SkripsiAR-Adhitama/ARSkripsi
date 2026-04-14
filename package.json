@@ -13,7 +13,7 @@
     "test:report": "jest --coverage --reporters=default --reporters=jest-html-reporter"
   },
   "dependencies": {
-    "aframe": "^1.4.2",
+    "aframe": "^1.7.1",
     "autoprefixer": "^10.4.23",
     "he": "^1.2.0",
     "localforage": "^1.10.0",
