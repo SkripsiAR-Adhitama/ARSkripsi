@@ -3,7 +3,7 @@
  * Menguji showModal() dengan import langsung dari ar-core.js
  */
 
-import { showModal } from "../public/AR/Pages/ar-core";
+import { showModal } from "../public/AR/Pages/ar-core.module";
 import { setupARDom } from "./ar-core.setup";
 
 describe("showModal()", () => {
