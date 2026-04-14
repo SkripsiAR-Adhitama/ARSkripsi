@@ -4,13 +4,13 @@
 
 
 :root {
-  font-family: "Comic Neue", cursive;
+  font-family: "Fredoka", sans-serif;
   line-height: 1.5;
-  font-weight: 700;
+  font-weight: 500;
 
   color-scheme: light;
   color: black;
-  background-color: #c4ebf1;
+  background-color: #FFFFFF;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

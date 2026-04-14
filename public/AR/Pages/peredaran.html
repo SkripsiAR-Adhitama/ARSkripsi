@@ -9,17 +9,19 @@
   </head>
   <body>
 
-    <!-- ══════════════════════════════════════════
-         Tampilan Awal Page
-         ══════════════════════════════════════════ -->
+         <!-- Tampilan Awal Page -->
     <div id="landing">
-      <div class="heart-icon"></div>
-      <div class="landing-title">AR Sistem Peredaran Darah<br />MANUSIA</div>
+      <div id="landing">
+           <button id="btn-exit-page" class="back-button-pastel">
+          ← Kembali
+      </button>
+      <div class="heart-icon">🫀</div>
+      <div class="landing-title">AR Sistem Peredaran Darah<br />Manusia</div>
       <p class="landing-sub">
         Ring mendeteksi permukaan → ketuk untuk menempatkan → ketuk organ untuk info.
       </p>
       <div class="organ-list">
-    <h3>📦 ORGAN DALAM SCENE</h3>
+    <h3>ORGAN DALAM SCENE</h3>
     <ul>
       <li>Bilik Tutup</li><li>Vena Kecil</li><li>Serambi Kiri</li>
       <li>Vena Pulmonalis</li><li>Katup Bikuspid</li><li>Aorta</li>
@@ -38,7 +40,7 @@
       <div class="corner tr"></div>
       <div class="corner bl"></div>
       <div class="corner br"></div>
-      <button id="btn-back">← Kembali</button>
+      <button id="btn-back">←</button>
       <div id="mode-badge">MODE PENEMPATAN</div>
       <div id="placement-hint">
         <p>🔍 Arahkan ke permukaan datar<br />Ring akan muncul → lalu <strong>Ketuk</strong></p>
@@ -65,6 +67,17 @@
       <div class="hcursor-inner"></div>
       <div class="hcursor-dot"></div>
     </div>
+    
+    <div id="error-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="warning-icon">⚠️</span>
+          <h3>SISTEM ERROR</h3>
+        </div>
+        <p id="modal-message">Pesan error akan muncul di sini.</p>
+        <button id="btn-modal-close" class="btn-main">MENGERTI</button>
+      </div>
+    </div>
 
     <a-scene
       id="scene"
@@ -75,9 +88,7 @@
       webxr="requiredFeatures: hit-test; optionalFeatures: local-floor, dom-overlay; overlayElement: #ar-ui;"
     >
 
-      <!-- ══════════════════════════════════════════
-           Inisialisasi Model (Objek)
-           ══════════════════════════════════════════ -->
+           <!-- Inisialisasi Model (Objek) -->
   <a-entity id="model-group" visible="false" position="0 0 0">
     <a-gltf-model class="organ" id="bilikTutup"       src="../Models/Peredaran/bilikTutup.glb"         scale="3 3 3" data-title="Bilik Tutup"                       data-description="Bagian penutup bilik jantung. Berperan penting menjaga tekanan darah saat jantung berkontraksi kuat."></a-gltf-model>
     <a-gltf-model class="organ" id="venaKecil"        src="../Models/Peredaran/vena_kecil.glb"         scale="3 3 3" data-title="Vena Kecil"                        data-description="Pembuluh vena kecil yang mengalirkan darah dari jaringan menuju vena lebih besar lalu kembali ke jantung."></a-gltf-model>
@@ -92,7 +103,6 @@
     <a-gltf-model class="organ" id="serambiKanan"     src="../Models/Peredaran/serambiKanan.glb"       scale="3 3 3" data-title="Serambi Kanan (Atrium Kanan)"      data-description="Ruang atas kanan jantung. Menerima darah miskin oksigen dari seluruh tubuh melalui vena kava superior dan inferior."></a-gltf-model>
     <a-gltf-model class="organ" id="aurikelKanan"     src="../Models/Peredaran/aurikel_kanan.glb"      scale="3 3 3" data-title="Aurikel Kanan"                     data-description="Kantung berbentuk telinga pada serambi kanan. Membantu menampung darah dari vena kava sebelum dipompa ke bilik kanan."></a-gltf-model>
   </a-entity>
-      <!-- ══════════════════════════════════════════ -->
 
       <a-entity id="reticle" visible="false">
         <a-torus color="#00f7ff" radius="0.12" radius-tubular="0.006" opacity="0.95" rotation="-90 0 0" animation="property:rotation; to:-90 360 0; loop:true; dur:1600; easing:linear"></a-torus>
@@ -112,9 +122,7 @@
       <a-light type="point" intensity="0.4" color="#66aaff" position="-1 1.5 0"></a-light>
     </a-scene>
 
-    <!-- ══════════════════════════════════════════
-         Kontrol Nama Tampilan
-         ══════════════════════════════════════════ -->
+         <!-- Kontrol Nama Tampilan -->
     <script> const AR_SYSTEM_NAME = "Peredaran"; </script>
 
     <!-- File Logic AR -->

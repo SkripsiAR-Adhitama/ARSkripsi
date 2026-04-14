@@ -1,0 +1,81 @@
+
+.content {
+  padding: 20px;
+}
+
+.exploreHeader {
+  font-weight: 700;
+  font-size: 2rem;
+  color: black;
+}
+
+.exploreHeader h3 {
+  text-align: center;
+   -webkit-text-stroke: 1px white;
+}
+
+.menuContainer {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+  padding: 40px;
+  max-width: 900px;
+  margin-top: 26px;   
+  margin-bottom: -26px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.characterCard {
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+  overflow: hidden;
+  padding: 20px 15px 30px 15px; 
+}
+
+.characterCard imgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; 
+  width: 100%;
+  margin-bottom: 20px;
+}
+.characterCard:hover {
+  transform: scale(1.05);
+}
+
+.characterCard img {
+  max-width: 100px; 
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.characterCard textWrapper {
+  width: 100%;
+  margin-top: auto; 
+}
+.characterCard h4 {
+  font-size: 20px;
+  font-weight: 700;
+  color: black;
+  margin: 0 0 8px 0;
+  min-height: 40px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.characterCard p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}

@@ -9,17 +9,19 @@
   </head>
   <body>
 
-    <!-- ══════════════════════════════════════════
-         Tampilan Awal Page
-         ══════════════════════════════════════════ -->
+         <!-- Tampilan Awal Page -->
     <div id="landing">
-      <div class="heart-icon">🫁</div>
-      <div class="landing-title">AR Sistem Pencernaan<br />MANUSIA</div>
+      <div id="landing">
+           <button id="btn-exit-page" class="back-button-pastel">
+          ← Kembali
+      </button>
+      <div class="heart-icon">⚕️</div>
+      <div class="landing-title">AR Sistem Pencernaan<br />Manusia</div>
       <p class="landing-sub">
         Ring mendeteksi permukaan → ketuk untuk menempatkan → ketuk organ untuk info.
       </p>
       <div class="organ-list">
-        <h3>📦 ORGAN DALAM SCENE</h3>
+        <h3>ORGAN DALAM SCENE</h3>
         <ul>
           <li>Appendiks</li><li>Saluran Empedu</li><li>Kolon</li>
           <li>Duodenum</li><li>Esofagus</li><li>Kantung Empedu</li>
@@ -38,7 +40,7 @@
       <div class="corner tr"></div>
       <div class="corner bl"></div>
       <div class="corner br"></div>
-      <button id="btn-back">← Kembali</button>
+      <button id="btn-back">←</button>
       <div id="mode-badge">MODE PENEMPATAN</div>
       <div id="placement-hint">
         <p>🔍 Arahkan ke permukaan datar<br />Ring akan muncul → lalu <strong>Ketuk</strong></p>
@@ -65,6 +67,17 @@
       <div class="hcursor-inner"></div>
       <div class="hcursor-dot"></div>
     </div>
+    
+    <div id="error-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="warning-icon">⚠️</span>
+          <h3>SISTEM ERROR</h3>
+        </div>
+        <p id="modal-message">Pesan error akan muncul di sini.</p>
+        <button id="btn-modal-close" class="btn-main">MENGERTI</button>
+      </div>
+    </div>
 
     <a-scene
       id="scene"
@@ -75,9 +88,7 @@
       webxr="requiredFeatures: hit-test; optionalFeatures: local-floor, dom-overlay; overlayElement: #ar-ui;"
     >
 
-      <!-- ══════════════════════════════════════════
-           Inisialisasi Model (Objek)
-           ══════════════════════════════════════════ -->
+           <!-- Inisialisasi Model (Objek) -->
       <a-entity id="model-group" visible="false" position="0 0 0">
         <a-gltf-model class="organ" id="appendix"     src="../Models/Pencernaan/appendix.glb"      scale="1 1 1" data-title="Appendiks (Usus Buntu)"            data-description="Kantung kecil berbentuk jari di ujung usus besar. Dulunya dianggap organ vestigial, kini diketahui berperan dalam sistem imun dengan menyimpan bakteri baik usus."></a-gltf-model>
         <a-gltf-model class="organ" id="biliary_tree" src="../Models/Pencernaan/biliary_tree.glb"   scale="1 1 1" data-title="Pohon Bilier (Saluran Empedu)"     data-description="Jaringan saluran yang mengalirkan empedu dari hati dan kantung empedu menuju usus dua belas jari (duodenum) untuk membantu pencernaan lemak."></a-gltf-model>
@@ -92,7 +103,6 @@
         <a-gltf-model class="organ" id="pankreas"     src="../Models/Pencernaan/pankreas.glb"       scale="1 1 1" data-title="Pankreas"                          data-description="Kelenjar ganda yang berfungsi sebagai organ eksokrin (menghasilkan enzim pencernaan amilase, lipase, protease) dan endokrin (menghasilkan insulin dan glukagon untuk mengatur gula darah)."></a-gltf-model>
         <a-gltf-model class="organ" id="rectum"       src="../Models/Pencernaan/rectum.glb"         scale="1 1 1" data-title="Rektum"                            data-description="Bagian akhir usus besar sepanjang ±15 cm. Menyimpan feses sementara sebelum dikeluarkan melalui anus. Dinding rektum mengirim sinyal ke otak saat sudah penuh untuk memicu rasa ingin buang air besar."></a-gltf-model>
       </a-entity>
-      <!-- ══════════════════════════════════════════ -->
 
       <a-entity id="reticle" visible="false">
         <a-torus color="#00f7ff" radius="0.12" radius-tubular="0.006" opacity="0.95" rotation="-90 0 0" animation="property:rotation; to:-90 360 0; loop:true; dur:1600; easing:linear"></a-torus>
@@ -112,9 +122,7 @@
       <a-light type="point" intensity="0.4" color="#66aaff" position="-1 1.5 0"></a-light>
     </a-scene>
 
-    <!-- ══════════════════════════════════════════
-         Kontrol Nama Tampilan
-         ══════════════════════════════════════════ -->
+         <!-- Kontrol Nama Tampilan -->
     <script> const AR_SYSTEM_NAME = "Pencernaan"; </script>
 
     <!-- File Logic AR-->

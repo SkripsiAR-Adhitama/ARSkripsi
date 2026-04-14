@@ -1,0 +1,224 @@
+ .container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+}
+
+.arContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 70px;
+}
+
+.backButton {
+  margin-bottom: 1.25rem;
+  color: #1b5886;
+  background: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.backButton:hover {
+  color: #ef4444;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.badge {
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #111827;
+  margin-top: 10px;
+  text-shadow: 
+    -1px -1px 0 #fff,  
+     7px -1px 0 #fff,
+    -1px  7px 0 #fff,
+     7px  7px 0 #fff;
+}
+
+.heroSection {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;    
+  justify-content: center;
+  margin-bottom: 4rem;
+  border-radius: 20px;
+  background: white; 
+  width: 100%;
+}
+
+.mainImage {
+  display: block;
+  max-height: 400px;
+  width: auto;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+}
+
+.arButton {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 16px 45px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  transition: all 0.3s ease;
+}
+
+.arButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+}
+
+.infoCard {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 15px;
+}
+
+.infoCard p, .list li {
+  color: #475569;
+  line-height: 1.8;
+  font-size: 20px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.list li::before {
+  content: "•";
+  color: #ef4444;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.twoColumn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.dangerCard {
+  border-left: 6px solid #ef4444; 
+}
+
+/* MATERI TERKAIT */
+.relatedSection {
+  margin-top: 5rem;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 3rem;
+}
+
+.relatedSection h4 {
+  margin-bottom: 2rem;
+  font-size: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.smallCard {
+  text-align: center;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 15px;
+  transition: 0.2s;
+}
+
+.smallCard img {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.smallCard h5 {
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.smallCard:hover {
+  background: #fffafa;
+  transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+  .twoColumn {
+    grid-template-columns: 1fr;
+  }
+  .title {
+    font-size: 36px;
+  }
+}
+
+/* Tambahkan ini di bagian bawah file CSS Anda */
+
+.organGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 10px;
+}
+
+.organItem {
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border-left: 4px solid #1b5886;
+}
+
+.organItem strong {
+  display: block;
+  color: #1e293b;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+/* Penyesuaian Responsif */
+@media (max-width: 768px) {
+  .organGrid {
+    grid-template-columns: 1fr;
+  }
+}

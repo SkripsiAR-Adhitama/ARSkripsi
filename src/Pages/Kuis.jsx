@@ -6,7 +6,6 @@ function Kuis() {
   return (
     <div>
         <HomeQuiz />
-        {/* <QuizPage /> */}
     </div>
   )
 }

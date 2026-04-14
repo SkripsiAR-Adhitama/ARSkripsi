@@ -1,84 +1,111 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import materiIpa from '../assets/Materi/materi-ipa';
+import styles from "../Pages/style/blogDetail.module.css";
+import materiIpa from "../assets/Materi/materi-ipa";
 
 export default function BlogDetail() {
-    const { name } = useParams();
-    const navigate = useNavigate();
-    const [materi, setMateri] = useState(null);
+  const { name } = useParams();
+  const navigate = useNavigate();
+  const [materi, setMateri] = useState(null);
 
-    useEffect(() => {
-        const foundMateri = materiIpa.find(item => item.name === name);
-        
-        if (foundMateri) {
-            setMateri(foundMateri);
-        } else {
-            alert('Materi tidak ditemukan');
-            navigate('/');
-        }
-    }, [name, navigate]);
+  useEffect(() => {
+    const foundMateri = materiIpa.find((item) => item.name === name);
 
-    const getImageUrl = (imageName) => {
-        try {
-            return new URL(`../assets/Materi/Images/${imageName}`, import.meta.url).href;
-        } catch (error) {
-            return 'https://via.placeholder.com/400x200?text=Image+Not+Found';
-        }
-    };
-
-    const openARPage = (url_ar) => {
-        window.location.href = `/AR/Pages/${url_ar}.html`;
-    };
-
-    if (!materi) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-500 text-lg">Loading...</p>
-            </div>
-        );
+    if (foundMateri) {
+      setMateri(foundMateri);
+    } else {
+      alert("Materi tidak ditemukan");
+      navigate("/");
     }
+  }, [name, navigate]);
 
+  const getImageUrl = (category, imageName) => {
+    try {
+      return new URL(
+        `../assets/Images/AsetGambar/Materi/${category}/${imageName}`,
+        import.meta.url,
+      ).href;
+    } catch (error) {
+      return "https://via.placeholder.com/400x200?text=Image+Not+Found";
+    }
+  };
+
+  const openARPage = (url_ar) => {
+    window.location.href = `/AR/Pages/${url_ar}.html`;
+  };
+
+  if (!materi) {
     return (
-        <div className="px-6 md:px-20 lg:px-56 mt-10 mb-10">
-            {/* Tombol Kembali */}
-            <button 
-                onClick={() => navigate(-1)}
-                className="mb-5 text-red-500 hover:text-red-600 flex items-center"
-            >
-                ← Kembali
-            </button>
-
-            {/* Category */}
-            <h3 className="text-red-500 text-[12px] font-semibold">
-                {materi.category}
-            </h3>
-
-            {/* Nama Organ */}
-            <h3 className="text-[24px] font-bold mt-2">
-                {materi.name}
-            </h3>
-
-            {/* Gambar */}
-            <img 
-                src={getImageUrl(materi.image)} 
-                alt={materi.name}
-                className='rounded-2xl mt-5 mb-5 object-cover w-full h-[400px]'
-            />
-
-            {/* Deskripsi */}
-            <h3 className='text-gray-600 mt-5 leading-relaxed text-justify'>
-                {materi.description}
-            </h3>
-
-            {/* Button AR */}
-            <div className="flex justify-center mt-8">
-                <button 
-                    className='bg-red-500 rounded-full text-white flex items-center text-[16px] px-6 py-3 hover:bg-red-600 transition-colors'
-                    onClick={() => openARPage(materi.url_ar)}
-                >
-                    Mulai AR
-                </button>
-            </div>
-        </div>
+      <div className={styles.loadingWrapper}>
+        <p className={styles.loadingText}>Loading...</p>
+      </div>
     );
+  }
+
+  return (
+    <div className={styles.container}>
+      <button onClick={() => navigate(-1)} className={styles.backButton}>
+        ← Kembali
+      </button>
+
+      <header className={styles.header}>
+        <span className={styles.badge}>{materi.category}</span>
+        <h1 className={styles.title}>{materi.name}</h1>
+      </header>
+
+      <div className={styles.heroSection}>
+        <img
+          src={getImageUrl(materi.category, materi.image)}
+          alt={materi.name}
+          className={styles.mainImage}
+        />
+      </div>
+
+      <div className={styles.arContainer}>
+        <button
+          className={styles.arButton}
+          onClick={() =>
+            (window.location.href = `/AR/Pages/${materi.url_ar}.html`)
+          }
+        >
+          Mulai AR
+        </button>
+      </div>
+
+      <div className={styles.contentGrid}>
+        <div className={styles.infoCard}>
+          <h4 className={styles.cardTitle}>Pengertian</h4>
+          <p>{materi.pengertian}</p>
+        </div>
+
+        <div className={styles.twoColumn}>
+          <div className={styles.infoCard}>
+            <h4 className={styles.cardTitle}>Cara Kerja</h4>
+            <ul className={styles.list}>
+              {materi.caraKerja.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.infoCard}>
+            <h4 className={styles.cardTitle}>Fungsi Utama</h4>
+            <ul className={styles.list}>
+              {materi.fungsi.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className={`${styles.infoCard} ${styles.dangerCard}`}>
+          <h4 className={styles.cardTitle}>Gangguan Kesehatan</h4>
+          <ul className={styles.list}>
+            {materi.gangguan.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }

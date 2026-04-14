@@ -1,17 +1,18 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import materiIpa from '../assets/Materi/materi-ipa'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from '../Components/style/blog.module.css'; 
+import materiIpa from '../assets/Materi/materi-ipa';
 
 function Blog({ selectedCategory = 'All', searchTerm = '' }) {
   const navigate = useNavigate();
   
-  const getImageUrl = (imageName) => {
-    return new URL(`../assets/Materi/Images/${imageName}`, import.meta.url).href
-  }
+  const getImageUrl = (category, imageName) => {
+    return new URL(`../assets/Images/AsetGambar/Materi/${category}/${imageName}`, import.meta.url).href;
+  };
 
   const openARPage = (url_ar) => {
     window.location.href = `/AR/Pages/${url_ar}.html`;
-  }
+  };
 
   const filteredData = materiIpa.filter((item) => {
     const matchCategory = selectedCategory === 'All' || item.category === selectedCategory;
@@ -21,24 +22,35 @@ function Blog({ selectedCategory = 'All', searchTerm = '' }) {
   });
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 px-10 md:px-15 lg:px-32'>
+    <div className={styles.gridContainer}>
       {filteredData.length > 0 ? (
         filteredData.map((item, index) => (
-          <div key={index} className='m-4'>
-            <img 
-              src={getImageUrl(item.image)} 
-              alt={item.name}
-              className='w-full rounded-2xl object-cover h-[200px] cursor-pointer hover:opacity-90 transition-opacity' 
-              onClick={() => navigate(`/blog-detail/${item.name}`)} 
-            />
-            <h3 className='text-red-500 mt-3 font-semibold'>{item.category}</h3>
-            <h3 className='font-bold mt-3'>{item.name}</h3>
-            <h3 className='line-clamp-3 text-gray-400 mt-3'>{item.description}</h3>
-            <div className='ml-2 flex justify-end mt-3'>
+          <div 
+            key={index} 
+            className={styles.card} 
+            onClick={() => navigate(`/blog-detail/${item.name}`)}
+          >
+            
+            <div className={styles.imageWrapper}>
+              <img 
+                src={getImageUrl(item.category, item.image)} 
+                alt={item.name}
+                className={styles.cardImage} 
+              />
+            </div>
+            
+
+            <div className={styles.infoContent}>
+              <span className={styles.category}>{item.category}</span>
+              <h3 className={styles.title}>{item.name}</h3>
+              <p className={styles.description}>{item.pengertian}</p>
+            </div>
+            
+            <div className={styles.buttonWrapper}>
               <button 
-                className='bg-red-500 rounded-full text-white flex items-center text-[14px] px-4 py-2 hover:bg-red-600 transition-colors'
+                className={styles.btnAr}
                 onClick={(e) => {
-                  e.stopPropagation();
+                  e.stopPropagation(); 
                   openARPage(item.url_ar);
                 }}
               >
@@ -48,13 +60,12 @@ function Blog({ selectedCategory = 'All', searchTerm = '' }) {
           </div>
         ))
       ) : (
-        <div className='col-span-full text-center py-20'>
-          <p className='text-gray-500 text-lg'>😔 Tidak ada materi ditemukan</p>
-          <p className='text-gray-400 text-sm mt-2'>Coba ubah filter atau kata kunci pencarian</p>
+        <div className={styles.emptyState}>
+          <p className={styles.emptyTitle}>😔 Tidak ada materi ditemukan</p>
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default Blog
+export default Blog;

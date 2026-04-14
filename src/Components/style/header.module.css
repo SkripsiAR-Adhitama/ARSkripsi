@@ -1,0 +1,25 @@
+.headerContainer {
+  position: relative;
+  padding: 110px 0 0 80px;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.headerTitle {
+  position: relative;
+  padding-top: 60px;
+  text-align: center;
+  font-size: 6rem;
+  color: black;
+  text-shadow: 
+    -1px -1px 0 #fff,  
+     7px -1px 0 #fff,
+    -1px  7px 0 #fff,
+     7px  7px 0 #fff;
+  
+}

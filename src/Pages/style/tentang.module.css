@@ -1,0 +1,180 @@
+.headerWrapper {
+  position: relative;
+  padding: 40px;
+}
+
+.backButton {
+  position: absolute;
+  left: 20px;
+  top: 30px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 18px 22px;
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #1b5886;
+  background: #ffff;
+  border-radius: 10px;
+  border: none;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background: #d0e7fb;
+  color: #0d3b66;
+  transform: translateX(-2px);
+}
+
+.headerTitle {
+  text-align: center;
+  font-size: 5rem;
+  margin: 150px auto 50px auto;
+  text-shadow:
+    -1px -1px 0 #fff,
+    7px -1px 0 #fff,
+    -1px 7px 0 #fff,
+    7px 7px 0 #fff;
+}
+
+.contentBox {
+  width: 850px;
+  height: 500px;
+  margin: 50px auto 50px auto;
+
+  background: white;
+  border-radius: 25px;
+  padding: 30px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #1b5886;
+}
+
+.sectionText {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.twoColumn {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.list {
+  font-size: 14px;
+  padding-left: 18px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.card {
+  background: #f9fbff;
+  border-radius: 20px;
+  padding: 15px;
+
+  text-align: center;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  font-size: 2rem;
+  width: 35px;
+  height: 35px;
+  margin: 0 auto 10px auto;
+  color: #1b5886;
+}
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 5px;
+  color: #1b5886;
+}
+
+.card p {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.list {
+  text-align: left;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.list li {
+  list-style-type: none;
+  position: relative;
+  padding-left: 15px;
+  font-weight: 600;
+}
+
+.list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #1b5886;
+  font-weight: bold;
+}
+
+.card:nth-child(1) {
+  background: #e3f2fd;
+}
+.card:nth-child(2) {
+  background: #e8f5e9;
+}
+.card:nth-child(3) {
+  background: #fff3e0;
+}
+.card:nth-child(4) {
+  background: #ede7f6;
+}
+.card:nth-child(5) {
+  background: #fce4ec;
+}
+.card:nth-child(6) {
+  background: #e0f7fa;
+}
+
+.card {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

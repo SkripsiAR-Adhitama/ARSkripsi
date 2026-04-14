@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 function shuffle(array) {
   const shuffledArray = [...array];

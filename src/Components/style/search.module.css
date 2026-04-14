@@ -1,0 +1,93 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 2rem; 
+  padding: 0 50px; 
+}
+
+.topNavigation {
+  position: relative;
+  padding: 40px;
+}
+
+.backButton {
+  position: absolute;
+  left: 20px;
+  top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1b5886;
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background: #f8fafc;
+  transform: translateX(-5px);
+}
+
+.pageTitle {
+  text-align: center;
+  font-size: 5rem;
+  margin: 100px auto 50px auto;
+  font-weight: bold;
+  text-shadow: 
+    -1px -1px 0 #fff,  
+     7px -1px 0 #fff,
+    -1px  7px 0 #fff,
+     7px  7px 0 #fff;
+}
+
+.tagContainer {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.tagItem {
+  list-style: none;
+  padding: 0.25rem 1rem;
+  padding-bottom: 0.5rem;
+  border-radius: 9999px; 
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.tagItem:hover {
+  transform: scale(1.1); 
+}
+
+.activeTag {
+  background-color: #ef4444;
+  color: white;
+}
+
+.inactiveTag {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 2.5rem;
+    margin-top: 100px;
+  }
+  
+  .tagContainer {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tagItem {
+    border-radius: 4px;
+  }
+}

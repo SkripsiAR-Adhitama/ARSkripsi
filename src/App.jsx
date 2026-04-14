@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Home from './Pages/Home'
+import Footer from './Components/Footer'
 import Header from './Components/Header'
 import { Route, Routes } from 'react-router-dom'
 import BlogDetail from './Pages/BlogDetail'
@@ -18,8 +19,7 @@ function App() {
 
   return (
     <>
-    <div className='p-[20px]'>
-    <Header/>
+    <div className="appBackground p-[20px]">
     <Routes>
       <Route path='/' element={<Home />}></Route>
       <Route path='/blog-detail/:name' element={<BlogDetail />}></Route>
@@ -30,7 +30,9 @@ function App() {
       <Route path='/sk-kd' element={<StandarKompetensi/>}></Route>
       <Route path='/kuis-aplikasi' element={<Kuis/>}></Route>
       <Route path='/kuis-aplikasi/halaman-kuis' element={<QuizPage/>}></Route>
+    
     </Routes>
+    <Footer />
     </div>
     </>
   )

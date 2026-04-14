@@ -1,26 +1,66 @@
-import he from "he";
-
 let makroIpa = [
-    {
+  {
     category: "Pencernaan",
     name: "Organ Pencernaan",
     description: "Lambung, Hati, Pankreas, Usus",
     url_ar: "pencernaan",
-    image: "pencernaan-makro.jpg",
+    image: "pencernaan.png",
+    pengertian: "Sistem pencernaan adalah sistem yang berfungsi untuk mengolah makanan menjadi energi bagi tubuh.",
+   organTerkait: [
+  { nama: "Esofagus", fungsi: "Menyalurkan makanan ke lambung dengan gerak peristaltik." },
+  { nama: "Lambung", fungsi: "Mencerna makanan secara kimiawi dan membunuh kuman dengan asam HCL." },
+  { nama: "Hati", fungsi: "Menghasilkan empedu dan menawarkan racun dalam tubuh." },
+  { nama: "Kantung Empedu", fungsi: "Menyimpan dan memekatkan cairan empedu untuk mencerna lemak." },
+  { nama: "Pankreas", fungsi: "Menghasilkan enzim pencernaan dan hormon insulin." },
+  { nama: "Usus Halus", fungsi: "Tempat penyerapan utama sari-sari makanan ke dalam darah." },
+  { nama: "Usus Besar", fungsi: "Menyerap air dan membentuk feses dengan bantuan bakteri." },
+  { nama: "Usus Buntu", fungsi: "Berperan sebagai organ pertahanan tubuh (sistem imun) pada usus." },
+  { nama: "Rektum", fungsi: "Tempat penyimpanan sementara feses sebelum dikeluarkan." },
+],
+    caraKerja: ["Makanan masuk melalui mulut", "Dicerna di lambung", "Diserap di usus", "Sisa makanan dikeluarkan"],
+    fungsi: ["Mencerna makanan", "Menyerap nutrisi", "Menghasilkan energi"],
+    gangguan: ["Maag", "Diare"],
   },
-    {
+  {
     category: "Pernapasan",
     name: "Organ Pernapasan",
-    description: "Trakea, Paru-Paru, Alvelous",
+    description: "Trakea, Paru-paru, Alveolus",
     url_ar: "pernapasan",
-    image: "pernapasan-makro.jpg",
+    image: "paruParu.png",
+    pengertian: "Sistem pernapasan adalah sistem yang membantu tubuh mengambil oksigen dan mengeluarkan karbon dioksida.",
+    
+   organTerkait: [
+  { nama: "Trakea", fungsi: "Batang tenggorokan yang menyaring udara dari kotoran." },
+  { nama: "Bronkus", fungsi: "Cabang batang tenggorokan yang menyalurkan udara ke paru-paru." },
+  { nama: "Bronkiolus", fungsi: "Cabang lebih kecil dari bronkus yang menuju ke alveolus." },
+  { nama: "Paru-paru", fungsi: "Organ utama tempat berlangsungnya proses pernapasan." },
+  { nama: "Alveolus", fungsi: "Tempat pertukaran oksigen dan karbon dioksida secara difusi." },
+  { nama: "Diafragma", fungsi: "Otot utama yang mengatur tekanan udara untuk proses bernapas." },
+],
+    caraKerja: ["Udara masuk melalui hidung", "Melewati trakea", "Masuk ke paru-paru", "Oksigen diserap darah"],
+    fungsi: ["Membantu bernapas", "Menyuplai oksigen ke tubuh", "Mengeluarkan karbon dioksida"],
+    gangguan: ["Asma", "Flu"],
   },
-    {
-    category: "Peredaran Darah",
+  {
+    category: "Peredaran",
     name: "Organ Peredaran Darah",
-    description: "Jantung, Kiri, Kanan, Vena",
+    description: "Jantung, Arteri, Vena",
     url_ar: "peredaran",
-    image: "peredaran-makro.jpg",
+    image: "jantung.png",
+    pengertian: "Sistem peradaran darah adalah sistem yang mengedarkan darah ke seluruh tubuh.",
+    
+    organTerkait: [
+  { nama: "Ventrikel", fungsi: "Bilik jantung yang memompa darah keluar dari jantung." },
+  { nama: "Atrium", fungsi: "Serambi jantung yang menerima darah yang masuk ke jantung." },
+  { nama: "Vena Pulmonalis", fungsi: "Membawa darah kaya oksigen dari paru-paru menuju ke jantung." },
+  { nama: "Aorta", fungsi: "Pembuluh nadi terbesar yang mengedarkan darah oksigen ke seluruh tubuh." },
+  { nama: "Arteri Pulmonalis", fungsi: "Membawa darah kaya karbon dioksida dari jantung ke paru-paru." },
+  { nama: "Katup Bikuspid", fungsi: "Mencegah darah di bilik kiri kembali ke serambi kiri." },
+],
+    caraKerja: ["Jantung memompa darah", "Darah mengalir melalui pembuluh", "Oksigen disalurkan ke tubuh"],
+    fungsi: ["Mengangkut oksigen", "Mengedarkan nutrisi", "Mengeluarkan zat sisa"],
+    gangguan: ["Hipertensi", "Anemia"],
   },
 ];
+
 export default makroIpa;

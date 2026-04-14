@@ -1,6 +1,4 @@
-// ═══════════════════════════════════════════════════
 //  AR-CORE.JS — Logic scene AR
-// ═══════════════════════════════════════════════════
 
 const T = AFRAME.THREE;
 
@@ -49,21 +47,53 @@ document.querySelectorAll(".organ").forEach((el) => {
   el.addEventListener("model-loaded", () => registerOrgan(el));
 });
 
-// Landing Page
+document.getElementById("btn-exit-page").addEventListener("click", () => {
+  window.history.back();
+});
 document.getElementById("btn-enter-ar").addEventListener("click", startAR);
+function showModal(message, shouldGoBack = false) {
+  const modal = document.getElementById("error-modal");
+  const modalMsg = document.getElementById("modal-message");
+  const modalBtn = document.getElementById("btn-modal-close");
+
+  modalMsg.textContent = message;
+  modal.classList.remove("hidden");
+
+  modalBtn.onclick = () => {
+    modal.classList.add("hidden");
+    if (shouldGoBack) {
+      window.history.back();
+    }
+  };
+}
 
 async function startAR() {
     if (!navigator.xr) {
-    alert("WebXR tidak tersedia. Pastikan browser anda kompatibel. Lihat di: https://caniuse.com/?search=webxr");
+    showModal("WebXR tidak tersedia. Pastikan browser anda kompatibel. Lihat di: https://caniuse.com/?search=webxr");
     return;
   }
 
+  function showModal(message, shouldGoBack = false) {
+  const modal = document.getElementById("error-modal");
+  const modalMsg = document.getElementById("modal-message");
+  const modalBtn = document.getElementById("btn-modal-close");
+
+  modalMsg.textContent = message;
+  modal.classList.remove("hidden");
+
+  modalBtn.onclick = () => {
+    modal.classList.add("hidden");
+    if (shouldGoBack) {
+      window.history.back();
+    }
+  };
+}
   const ok = await navigator.xr
     .isSessionSupported("immersive-ar")
     .catch(() => false);
 
     if (!ok) {
-    alert("AR tidak didukung perangkat ini. Pastikan browser dan perangkat kompatibel.");
+    showModal("AR tidak didukung perangkat ini. Pastikan browser dan perangkat kompatibel.");
     return;
    }
 
@@ -81,7 +111,7 @@ async function startAR() {
     const enabledFeatures = session.enabledFeatures ?? [];
 
     if (!enabledFeatures.includes("hit-test")) {
-      alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
+      showModal("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
       session.end();
       window.history.back();
       return;
@@ -92,7 +122,7 @@ async function startAR() {
     await scene.renderer.xr.setSession(session);
     initARSession(session);
     } catch (e) {
-    alert("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
+    showModal("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
     window.history.back();
     return;
   }
@@ -411,4 +441,9 @@ function placeModel() {
 
   reticleEl.object3D.visible = false;
   setTimeout(() => setMode("cursor"), 300);
+}
+
+if (typeof window !== 'undefined') {
+    window.setMode = setMode;
+    window.showInfo = showInfo;
 }

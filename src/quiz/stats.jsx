@@ -1,17 +1,8 @@
 import React from 'react'
-import "./stats.css";
-
-function Stat({label, value}) {
-    return(
-    <li className="stats__stat-container">
-    <div className="stats__stat-label">{label}</div>
-    <div className="stats__stat-value">{value}</div>
-    </li>
-    );
-}
+import '../quiz/style/stats.css';
 
 /**
- * The Stats component renders the score and current question number.
+ * The Stats untuk mengelola skor dan nomor pertanyaan.
  * @param {object} props
  * @param {number} props.score
  * @param {number} props.questionNumber
@@ -19,10 +10,9 @@ function Stat({label, value}) {
  * @param {number} props.remainingLives
  */
 function Stats({ score, questionNumber, totalQuestions, remainingLives}) {
-  // Jika nyawa masih ada, tampilkan hati
-  // Jika nyawa habis (0), tampilkan "Habis" atau emoji tengkorak
   let livesDisplay;
-  
+  const remainingQuestions = totalQuestions - questionNumber;
+  const progressPercentage = (questionNumber / totalQuestions) * 100;
   if (remainingLives > 0) {
     const hearts = Array.from({ length: remainingLives }, (_, i) => '❤️');
     livesDisplay = hearts.join(" ");
@@ -31,12 +21,29 @@ function Stats({ score, questionNumber, totalQuestions, remainingLives}) {
   }
 
   return (
-    <ul className="stats">
-      <Stat label="Score" value={score} />
-      <Stat label="Question" value={`${questionNumber} / ${totalQuestions}`} />
-      <Stat label="Nyawa" value={livesDisplay} />
-    </ul>
-  )
+    <div className="stats-container">
+      <div className="stats__top-row">
+        <div className="stats__badge">Skor: {score}</div>
+        <div className="stats__lives">
+          {Array.from({ length: remainingLives }, (_, i) => (
+            <span key={i} className="heart-icon">❤️</span>
+          ))}
+          {remainingLives === 0 && "0 ❤️"}
+        </div>
+      </div>
+      
+      <div className="progress-container">
+        <div 
+          className="progress-bar-fill" 
+          style={{ width: `${progressPercentage}%` }}
+        ></div>
+        <span className="progress-text">
+          {remainingQuestions > 0 
+            ? `Sisa ${remainingQuestions} soal lagi!` 
+            : "Soal Terakhir! Ayo fokus!"}</span>
+      </div>
+    </div>
+  );
 }
 
 export default Stats

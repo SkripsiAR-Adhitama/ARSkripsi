@@ -1,34 +1,17 @@
-import React, {useState} from 'react'
-import Header from '../Components/Header'
-import Search from '../Components/Search'
-import IntroPost from '../Components/IntroPost'
-import Blog from '../Components/Blog'
-import Footer from '../Components/Footer'
+import React from "react";
+import Header from "../Components/Header";
+import Hero from "../Components/Hero";
+import { menu } from "../Components/menu";
+
 function Home() {
-
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
-
   return (
-   <>
-   <Search
-    onCategoryChange={setSelectedCategory}
-    onSearchChange={setSearchTerm}
-    />
-   
-    <IntroPost
-   selectedCategory={selectedCategory}
-   />
-
-    {selectedCategory !== 'All' && (
-        <Blog 
-          selectedCategory={selectedCategory}
-          searchTerm={searchTerm}
-        />
-      )}
-   {/* <Footer/>  */}
-   </>
-  )
+    <div className="mobile-frame">
+      <Header />
+      <div className="content">
+        <Hero menu={menu} />
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;

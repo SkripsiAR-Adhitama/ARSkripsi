@@ -1,0 +1,42 @@
+export const menu = [
+  {
+    id: 1,
+    name: "Materi Pembelajaran",
+    description: "Belajar menyenangkan dengan aku",
+    image: "materi.png",
+    bg: "#FFFFFF",
+    url:"materi-pembelajaran",
+  },
+  {
+    id: 2,
+    name: "Petunjuk Penggunaan",
+    description: "Iniloh cara gunain aku",
+    image: "penggunaan.png",
+    bg: "#FFFFFF",
+    url: "petunjuk-penggunaan",
+  },
+  {
+    id: 3,
+    name: "Tentang Aplikasi",
+    description: "Ini kalo mau tau aku ini apa",
+    image: "tentang_aplikasi.png",
+    bg: "#FFFFFF",
+    url: "tentang-aplikasi",
+  },
+  {
+    id: 4,
+    name: "Capaian Pembelajaran",
+    description: "Ini daftar kemampuan yang harus kamu raih",
+    image: "sk.png",
+    bg: "#FFFFFF",
+    url: "sk-kd",
+  },
+  {
+    id: 5,
+    name: "Kuis",
+    description: "Berani tes kepintaranmu ngga? yuk sini",
+    image: "kuis_tangan.png",
+    bg: "#FFFFFF",
+    url: "kuis-aplikasi",
+  },
+];
