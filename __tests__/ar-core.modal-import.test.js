@@ -3,30 +3,39 @@
  * Menguji showModal() dengan import langsung dari ar-core.js
  */
 
-import { showModal } from "../public/AR/Pages/ar-core.module";
+import { showModal } from "../public/AR/Pages/ar-core";
 import { setupARDom } from "./ar-core.setup";
 
 describe("showModal()", () => {
   beforeEach(() => {
     setupARDom();
-    jest.spyOn(window.history, "back").mockImplementation(() => {});
+    jest.resetModules();
   });
-  afterEach(() => jest.restoreAllMocks());
+  test("...", async () => {
+    const { showModal } = await import("../public/AR/Pages/ar-core");
+    showModal("WebXR tidak tersedia.");
+  });
 
   test("mengisi #modal-message dengan pesan yang diberikan", () => {
     showModal("WebXR tidak tersedia.");
-    expect(document.getElementById("modal-message").textContent).toBe("WebXR tidak tersedia.");
+    expect(document.getElementById("modal-message").textContent).toBe(
+      "WebXR tidak tersedia.",
+    );
   });
 
   test("menghapus class 'hidden' dari modal", () => {
     showModal("Error");
-    expect(document.getElementById("error-modal").classList.contains("hidden")).toBe(false);
+    expect(
+      document.getElementById("error-modal").classList.contains("hidden"),
+    ).toBe(false);
   });
 
   test("klik tombol menutup modal", () => {
     showModal("Error");
     document.getElementById("btn-modal-close").click();
-    expect(document.getElementById("error-modal").classList.contains("hidden")).toBe(true);
+    expect(
+      document.getElementById("error-modal").classList.contains("hidden"),
+    ).toBe(true);
   });
 
   test("history.back TIDAK dipanggil jika shouldGoBack = false (default)", () => {
@@ -51,6 +60,8 @@ describe("showModal()", () => {
     showModal("Pertama");
     document.getElementById("btn-modal-close").click();
     showModal("Kedua");
-    expect(document.getElementById("error-modal").classList.contains("hidden")).toBe(false);
+    expect(
+      document.getElementById("error-modal").classList.contains("hidden"),
+    ).toBe(false);
   });
 });
