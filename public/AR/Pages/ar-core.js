@@ -447,3 +447,40 @@ if (typeof window !== 'undefined') {
     window.setMode = setMode;
     window.showInfo = showInfo;
 }
+
+export function _setState(patch) {
+  if ("MODE"              in patch) MODE              = patch.MODE;
+  if ("isARActive"        in patch) isARActive        = patch.isARActive;
+  if ("modelPlaced"       in patch) modelPlaced       = patch.modelPlaced;
+  if ("currentScale"      in patch) currentScale      = patch.currentScale;
+  if ("currentRotY"       in patch) currentRotY       = patch.currentRotY;
+  if ("hitTestSource"     in patch) hitTestSource     = patch.hitTestSource;
+  if ("xrRefSpace"        in patch) xrRefSpace        = patch.xrRefSpace;
+  if ("lastHitPos"        in patch) lastHitPos        = patch.lastHitPos;
+  if ("lastHitQuat"       in patch) lastHitQuat       = patch.lastHitQuat;
+  if ("activeSession"     in patch) activeSession     = patch.activeSession;
+  if ("placedPX"          in patch) placedPX          = patch.placedPX;
+  if ("placedPY"          in patch) placedPY          = patch.placedPY;
+  if ("placedPZ"          in patch) placedPZ          = patch.placedPZ;
+  if ("highlightedMeshes" in patch) highlightedMeshes = patch.highlightedMeshes;
+  if ("hoveredOrgan"      in patch) hoveredOrgan      = patch.hoveredOrgan;
+  if ("lastHoverInfo"     in patch) lastHoverInfo     = patch.lastHoverInfo;
+}
+ 
+// Export semua fungsi yang perlu diuji
+export {
+  showModal,
+  showARUI,
+  onSessionEnd,
+  setMode,
+  showInfo,
+  highlightOrgan,
+  clearHighlight,
+  handleTouch,
+  doCursorRaycast,
+  raycastOrgan,
+  placeModel,
+  registerOrgan,
+  meshToOrgan,
+};
+ 
