@@ -8,7 +8,7 @@
  * @testenv jsdom
  */
 
-import { setupARDom } from "./ar-core.setup";
+import { setupARDom } from "../test-utils/ar-core.setup";
 
 // ─── State global AR ──────────────────────────────────────────────────────────
 let isARActive;

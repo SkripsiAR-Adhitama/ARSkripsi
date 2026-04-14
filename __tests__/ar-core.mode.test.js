@@ -8,7 +8,7 @@
  * @testenv jsdom
  */
 
-import { setupARDom } from "./ar-core.setup";
+import { setupARDom } from "../test-utils/ar-core.setup";
 
 // Implementasi setMode sesuai source ar-core.js
 // (export dari ar-core.js atau definisikan ulang di sini)

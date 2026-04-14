@@ -8,7 +8,7 @@
  * @testenv jsdom
  */
 
-import { setupARDom } from "./ar-core.setup";
+import { setupARDom } from "../test-utils/ar-core.setup";
 
 // ─── Helper: buat mock Mesh Three.js ─────────────────────────────────────────
 function createMockMesh(organTitle = "Test Organ") {

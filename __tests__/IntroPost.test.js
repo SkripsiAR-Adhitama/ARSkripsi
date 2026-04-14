@@ -87,7 +87,7 @@ describe("IntroPost Component (Improved Coverage)", () => {
     const btn = screen.getByRole("button", { name: /Mulai AR/i });
     fireEvent.click(btn);
 
-    expect(window.location.href).toBe("/AR/Pages/pencernaan.html");
+    expect(window.location.pathname).toBe("/AR/Pages/pencernaan.html");
     expect(mockedUsedNavigate).not.toHaveBeenCalled();
   });
 

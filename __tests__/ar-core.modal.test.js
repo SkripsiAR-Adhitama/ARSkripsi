@@ -11,7 +11,7 @@
  * @testenv jsdom
  */
 
-import { setupARDom } from "./ar-core.setup";
+import { setupARDom } from "../test-utils/ar-core.setup";
 
 // Fungsi showModal diekstrak / di-export dari ar-core.js
 // untuk unit testing terisolasi.

@@ -8,7 +8,7 @@
  * @testenv jsdom
  */
 
-import { setupARDom } from "./ar-core.setup";
+import { setupARDom } from "../test-utils/ar-core.setup";
 
 // ─── Mock fungsi yang bergantung pada Three.js ────────────────────────────────
 const mockPlaceModel = jest.fn();

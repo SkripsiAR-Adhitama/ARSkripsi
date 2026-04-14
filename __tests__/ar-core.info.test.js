@@ -10,7 +10,7 @@
  * @testenv jsdom
  */
 
-import { setupARDom } from "./ar-core.setup";
+import { setupARDom } from "../test-utils/ar-core.setup";
 
 // Mock fungsi highlightOrgan karena diuji terpisah
 const mockHighlightOrgan = jest.fn();
