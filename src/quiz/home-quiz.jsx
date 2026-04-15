@@ -99,6 +99,9 @@ function HomeQuiz() {
               <p>🥇 Expert (80–89) - Baik</p>
               <p>🥈 Learner (70–79) - Cukup</p>
               <p>🥉 Beginner (&lt;70) - Perlu Bimbingan</p>
+              <h4>Pedoman Skor</h4>
+              <p>⚠️ Skor setiap pertanyaan kuis : 4</p>
+              <p>❤️ Skor setiap nyawa : 2</p>
             </div>
           )}
         </div>
