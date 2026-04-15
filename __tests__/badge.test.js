@@ -1,4 +1,4 @@
-// Jika belum di-export, definisikan inline untuk keperluan testing:
+
 const getBadge = (score) => {
   if (score >= 90) return { title: "Quiz Master", icon: "🏆", desc: "Sangat Baik" };
   else if (score >= 80) return { title: "Expert", icon: "🥇", desc: "Baik" };
@@ -7,7 +7,6 @@ const getBadge = (score) => {
 };
 
 describe("getBadge()", () => {
-  // ─── Boundary: skor >= 90 ────────────────────────────────────────────────────
 
   test("skor 100 → Quiz Master", () => {
     expect(getBadge(100)).toEqual({ title: "Quiz Master", icon: "🏆", desc: "Sangat Baik" });
@@ -21,8 +20,6 @@ describe("getBadge()", () => {
     expect(getBadge(89).title).not.toBe("Quiz Master");
   });
 
-  // ─── Boundary: skor >= 80 ────────────────────────────────────────────────────
-
   test("skor tepat 80 → Expert", () => {
     expect(getBadge(80)).toEqual({ title: "Expert", icon: "🥇", desc: "Baik" });
   });
@@ -35,7 +32,6 @@ describe("getBadge()", () => {
     expect(getBadge(79).title).not.toBe("Expert");
   });
 
-  // ─── Boundary: skor >= 70 ────────────────────────────────────────────────────
 
   test("skor tepat 70 → Learner", () => {
     expect(getBadge(70)).toEqual({ title: "Learner", icon: "🥈", desc: "Cukup" });
@@ -49,7 +45,6 @@ describe("getBadge()", () => {
     expect(getBadge(69).title).not.toBe("Learner");
   });
 
-  // ─── Boundary: skor < 70 ─────────────────────────────────────────────────────
 
   test("skor 50 → Beginner", () => {
     expect(getBadge(50)).toEqual({ title: "Beginner", icon: "🥉", desc: "Perlu Bimbingan" });
@@ -59,7 +54,6 @@ describe("getBadge()", () => {
     expect(getBadge(0).title).toBe("Beginner");
   });
 
-  // ─── Struktur return value ───────────────────────────────────────────────────
 
   test("selalu mengembalikan objek dengan key title, icon, desc", () => {
     [100, 85, 72, 40].forEach((score) => {

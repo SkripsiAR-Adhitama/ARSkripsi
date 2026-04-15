@@ -50,8 +50,8 @@ let makroIpa = [
     pengertian: "Sistem peradaran darah adalah sistem yang mengedarkan darah ke seluruh tubuh.",
     
     organTerkait: [
-  { nama: "Ventrikel", fungsi: "Bilik jantung yang memompa darah keluar dari jantung." },
-  { nama: "Atrium", fungsi: "Serambi jantung yang menerima darah yang masuk ke jantung." },
+  { nama: "Bilik (Ventrikel)", fungsi: "Bilik jantung yang memompa darah keluar dari jantung." },
+  { nama: "Serambi (Atrium)", fungsi: "Serambi jantung yang menerima darah yang masuk ke jantung." },
   { nama: "Vena Pulmonalis", fungsi: "Membawa darah kaya oksigen dari paru-paru menuju ke jantung." },
   { nama: "Aorta", fungsi: "Pembuluh nadi terbesar yang mengedarkan darah oksigen ke seluruh tubuh." },
   { nama: "Arteri Pulmonalis", fungsi: "Membawa darah kaya karbon dioksida dari jantung ke paru-paru." },

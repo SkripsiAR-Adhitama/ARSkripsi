@@ -82,11 +82,9 @@ describe("SETUP EXTRA COVERAGE", () => {
     const cb1 = jest.fn();
     const cb2 = jest.fn();
 
-    // branch true
     scene.addEventListener("renderstart", cb1);
     expect(cb1).toHaveBeenCalled();
 
-    // branch false
     scene.addEventListener("click", cb2);
     expect(cb2).not.toHaveBeenCalled();
   });

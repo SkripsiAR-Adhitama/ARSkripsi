@@ -1,13 +1,4 @@
-/**
- * ar-core.setup.js
- * Setup DOM global yang dibutuhkan oleh ar-core.js.
- * Di-import di awal setiap test file.
- *
- * Cara pakai di setiap test file:
- *   import './ar-core.setup';
- */
 
-// ─── Buat elemen DOM minimal yang dibutuhkan ar-core.js ─────────────────────
 export function setupARDom() {
   document.body.innerHTML = `
     <div id="landing"></div>
@@ -47,7 +38,6 @@ export function setupARDom() {
     <button id="btn-enter-ar">🥽 Mulai AR</button>
   `;
 
-  // Mock elemen A-Frame scene dengan object3D minimal
   const scene = document.createElement("div");
   scene.id = "scene";
   scene.renderer = {
@@ -65,7 +55,6 @@ export function setupARDom() {
   scene.exitVR = jest.fn();
   document.body.appendChild(scene);
 
-  // Mock elemen model-group dan reticle dengan object3D A-Frame style
   const modelGroup = document.getElementById("model-group");
   modelGroup.setAttribute = jest.fn();
   modelGroup.object3D = { visible: false };
@@ -73,7 +62,6 @@ export function setupARDom() {
   const reticle = document.getElementById("reticle");
   reticle.object3D = { visible: false, position: {}, quaternion: {} };
 
-  // Mock main-cam
   const cam = document.createElement("div");
   cam.id = "main-cam";
   cam.object3D = {
@@ -85,7 +73,6 @@ export function setupARDom() {
   return { scene, modelGroup, reticle };
 }
 
-// ─── Mock AFRAME global ───────────────────────────────────────────────────────
 global.AFRAME = {
   THREE: {
     Matrix4: class {
@@ -113,11 +100,9 @@ global.AFRAME = {
   },
 };
 
-// ─── Mock navigator.xr ───────────────────────────────────────────────────────
 global.navigator.xr = {
   isSessionSupported: jest.fn().mockResolvedValue(true),
   requestSession: jest.fn(),
 };
 
-// ─── Suppress console.warn dari A-Frame ──────────────────────────────────────
 global.console.warn = jest.fn();

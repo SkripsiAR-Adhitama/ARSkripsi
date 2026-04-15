@@ -1,18 +1,6 @@
-/**
- * Unit Test: ar-core.js → showInfo()
- *
- * Menguji fungsi showInfo yang menampilkan informasi organ pada info panel:
- * - Mengisi info-title dan info-desc
- * - Menambah class "flash" pada info-panel
- * - Menghapus class "flash" setelah 600ms
- * - Memanggil highlightOrgan dengan judul yang benar
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// Mock fungsi highlightOrgan karena diuji terpisah
 const mockHighlightOrgan = jest.fn();
 
 let infoTitle;
@@ -43,8 +31,7 @@ describe("showInfo()", () => {
     jest.useRealTimers();
   });
 
-  // ─── Isi Konten ───────────────────────────────────────────────────────────────
-
+  
   test("mengisi info-title dengan judul organ yang diberikan", () => {
     showInfo("Paru-Paru", "Organ pernapasan utama.");
     expect(infoTitle.textContent).toBe("Paru-Paru");
@@ -62,8 +49,7 @@ describe("showInfo()", () => {
     expect(infoDesc.textContent).toBe(longDesc);
   });
 
-  // ─── Flash Animation ──────────────────────────────────────────────────────────
-
+  
   test("menambah class 'flash' ke info-panel saat dipanggil", () => {
     showInfo("Bronkus", "Percabangan trakea.");
     expect(infoPanel.classList.contains("flash")).toBe(true);
@@ -82,8 +68,6 @@ describe("showInfo()", () => {
     expect(infoPanel.classList.contains("flash")).toBe(true);
   });
 
-  // ─── Highlight Organ ──────────────────────────────────────────────────────────
-
   test("memanggil highlightOrgan dengan judul organ yang benar", () => {
     showInfo("Aorta", "Arteri terbesar dalam tubuh.");
     expect(mockHighlightOrgan).toHaveBeenCalledWith("Aorta");
@@ -94,7 +78,6 @@ describe("showInfo()", () => {
     expect(mockHighlightOrgan).toHaveBeenCalledTimes(1);
   });
 
-  // ─── Pembaruan Berulang ───────────────────────────────────────────────────────
 
   test("info diperbarui jika showInfo dipanggil dua kali berturut-turut", () => {
     showInfo("Organ A", "Deskripsi A");

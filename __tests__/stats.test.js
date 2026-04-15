@@ -1,7 +1,3 @@
-/**
- * Unit Test: stats.jsx
- * Menguji komponen Stats yang menampilkan skor, nyawa, dan progress bar.
- */
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
@@ -15,7 +11,6 @@ describe("Stats Component", () => {
     remainingLives: 5,
   };
 
-  // ─── Rendering Dasar ─────────────────────────────────────────────────────────
 
   test("menampilkan skor yang benar", () => {
     render(<Stats {...defaultProps} />);
@@ -28,18 +23,13 @@ describe("Stats Component", () => {
     expect(hearts).toHaveLength(3);
   });
 
-  // ─── remainingLives = 0 ──────────────────────────────────────────────────────
-
   test("menampilkan '0 ❤️' jika nyawa habis", () => {
     render(<Stats {...defaultProps} remainingLives={0} />);
     expect(screen.getByText("0 ❤️")).toBeInTheDocument();
   });
 
-  // ─── Progress Text ────────────────────────────────────────────────────────────
-
   test("menampilkan sisa soal jika bukan soal terakhir", () => {
     render(<Stats {...defaultProps} questionNumber={3} totalQuestions={10} />);
-    // sisa = 10 - 3 = 7
     expect(screen.getByText(/Sisa 7 soal lagi!/i)).toBeInTheDocument();
   });
 
@@ -47,8 +37,6 @@ describe("Stats Component", () => {
     render(<Stats {...defaultProps} questionNumber={10} totalQuestions={10} />);
     expect(screen.getByText(/Soal Terakhir! Ayo fokus!/i)).toBeInTheDocument();
   });
-
-  // ─── Progress Bar ─────────────────────────────────────────────────────────────
 
   test("progress bar memiliki lebar yang proporsional", () => {
     const { container } = render(

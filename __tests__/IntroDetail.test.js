@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import IntroDetail from '../src/Pages/IntroDetail';
 
-// Mocking data makro agar konsisten dengan struktur makro-ipa.js kamu
 jest.mock('../src/assets/Materi/makro-ipa', () => [
   {
     name: "Organ Pencernaan",
@@ -46,7 +45,6 @@ describe('Pengujian Halaman IntroDetail (Whitebox)', () => {
       </MemoryRouter>
     );
 
-    // Memastikan organ terkait muncul (mapping dari materi.organTerkait)
     expect(screen.getByText('Esofagus')).toBeInTheDocument();
     expect(screen.getByText('Menyalurkan makanan')).toBeInTheDocument();
     expect(screen.getByText('Lambung')).toBeInTheDocument();

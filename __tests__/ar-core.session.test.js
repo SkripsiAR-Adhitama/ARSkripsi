@@ -1,16 +1,6 @@
-/**
- * Unit Test: ar-core.js → showARUI() & onSessionEnd()
- *
- * Menguji lifecycle sesi AR:
- * - showARUI()    : memperlihatkan UI AR dan menyembunyikan landing page
- * - onSessionEnd(): mereset semua state saat sesi AR berakhir
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// ─── State global AR ──────────────────────────────────────────────────────────
 let isARActive;
 let modelPlaced;
 let hitTestSource;
@@ -97,7 +87,6 @@ describe("onSessionEnd()", () => {
     modelGroup = els.modelGroup;
     reticleEl = els.reticle;
 
-    // Set ulang elemen yang mungkin di-overwrite setupARDom ke-dua
     arUI = document.getElementById("ar-ui");
     landing = document.getElementById("landing");
     htmlCursor = document.getElementById("html-cursor");
@@ -107,7 +96,6 @@ describe("onSessionEnd()", () => {
     rotSlider = document.getElementById("rotation-slider");
     rotDisplay = document.getElementById("rotation-display");
 
-    // Kondisi "sedang aktif"
     isARActive = true;
     modelPlaced = true;
     hitTestSource = {};
@@ -126,7 +114,6 @@ describe("onSessionEnd()", () => {
     mockSetMode.mockClear();
   });
 
-  // ─── Reset state boolean ───────────────────────────────────────────────────
 
   test("isARActive menjadi false", () => {
     onSessionEnd();
@@ -137,8 +124,6 @@ describe("onSessionEnd()", () => {
     onSessionEnd();
     expect(modelPlaced).toBe(false);
   });
-
-  // ─── Reset state objek / referensi ────────────────────────────────────────
 
   test("hitTestSource menjadi null", () => {
     onSessionEnd();
@@ -165,35 +150,25 @@ describe("onSessionEnd()", () => {
     expect(activeSession).toBeNull();
   });
 
-  // ─── UI: #ar-ui disembunyikan ─────────────────────────────────────────────
-
   test("#ar-ui disembunyikan (style.display = 'none')", () => {
     onSessionEnd();
     expect(arUI.style.display).toBe("none");
   });
-
-  // ─── UI: html-cursor ──────────────────────────────────────────────────────
 
   test("htmlCursor kehilangan class 'active'", () => {
     onSessionEnd();
     expect(htmlCursor.classList.contains("active")).toBe(false);
   });
 
-  // ─── UI: landing page ditampilkan kembali ─────────────────────────────────
-
   test("#landing kehilangan class 'hidden' (muncul kembali)", () => {
     onSessionEnd();
     expect(landing.classList.contains("hidden")).toBe(false);
   });
 
-  // ─── UI: placement hint ───────────────────────────────────────────────────
-
   test("placementHint kehilangan class 'hidden'", () => {
     onSessionEnd();
     expect(placementHint.classList.contains("hidden")).toBe(false);
   });
-
-  // ─── 3D: reticle tidak visible ────────────────────────────────────────────
 
   test("reticle.object3D.visible menjadi false", () => {
     reticleEl.object3D.visible = true;
@@ -201,14 +176,10 @@ describe("onSessionEnd()", () => {
     expect(reticleEl.object3D.visible).toBe(false);
   });
 
-  // ─── 3D: model-group disembunyikan ────────────────────────────────────────
-
   test("modelGroup.setAttribute dipanggil dengan 'visible' = 'false'", () => {
     onSessionEnd();
     expect(modelGroup.setAttribute).toHaveBeenCalledWith("visible", "false");
   });
-
-  // ─── Reset scale ──────────────────────────────────────────────────────────
 
   test("currentScale direset ke 1", () => {
     onSessionEnd();
@@ -225,8 +196,6 @@ describe("onSessionEnd()", () => {
     expect(scaleValue.textContent).toBe("1");
   });
 
-  // ─── Reset rotasi ─────────────────────────────────────────────────────────
-
   test("currentRotY direset ke 0", () => {
     onSessionEnd();
     expect(currentRotY).toBe(0);
@@ -241,8 +210,6 @@ describe("onSessionEnd()", () => {
     onSessionEnd();
     expect(rotDisplay.textContent).toBe("0°");
   });
-
-  // ─── Mode direset ke placement ────────────────────────────────────────────
 
   test("setMode('placement') dipanggil saat sesi berakhir", () => {
     onSessionEnd();

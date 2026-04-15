@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 
 global.AFRAME = {
   THREE: {
@@ -56,7 +53,6 @@ require('../public/AR/Pages/ar-core.js');
 describe('AR-Core Logic Test', () => {
   
   test('Mode Penempatan harus mengubah teks badge dan visibilitas reticle', () => {
-    // Jalankan fungsi setMode
     window.setMode('placement');
     
     const modeBadge = document.getElementById('mode-badge');
@@ -88,7 +84,6 @@ describe('AR-Core Logic Test', () => {
     const scaleValue = document.getElementById('scale-value');
     
     slider.value = "1.5";
-    // Trigger event input secara manual
     slider.dispatchEvent(new Event('input'));
     
     expect(scaleValue.textContent).toBe("1.5");

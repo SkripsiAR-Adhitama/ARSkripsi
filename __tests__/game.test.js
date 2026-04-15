@@ -3,7 +3,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Game from '../src/quiz/game';
 
-// 1. Mocking Trivia Data
 jest.mock('../src/quiz/trivia-data', () => [
   {
     question: "Apa fungsi Jantung?",
@@ -17,7 +16,6 @@ jest.mock('../src/quiz/trivia-data', () => [
   }
 ]);
 
-// 2. Mocking useNavigate
 const mockedUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -28,7 +26,6 @@ describe('Pengujian Integrasi Logika Kuis (Whitebox)', () => {
   const mockOnGameEnd = jest.fn();
 
   beforeEach(() => {
-    // Kunci urutan soal agar konsisten
     jest.spyOn(global.Math, 'random').mockReturnValue(0.1);
   });
 
@@ -37,7 +34,6 @@ describe('Pengujian Integrasi Logika Kuis (Whitebox)', () => {
     jest.clearAllMocks();
   });
 
-  // Helper untuk deteksi soal otomatis
   const getJawaban = (tipe) => {
     const questionText = screen.getByRole('heading', { level: 2 }).textContent;
     if (questionText.includes("Jantung")) {
@@ -69,17 +65,13 @@ describe('Pengujian Integrasi Logika Kuis (Whitebox)', () => {
   test('Skenario: Selesai karena SOAL HABIS (Total Skor 8)', async () => {
     render(<MemoryRouter><Game onGameEnd={mockOnGameEnd} /></MemoryRouter>);
 
-    // Soal 1
     fireEvent.click(screen.getByText(getJawaban('benar')));
     fireEvent.click(screen.getByText(/Lanjut/i));
-
-    // Soal 2
     fireEvent.click(screen.getByText(getJawaban('benar')));
     fireEvent.click(screen.getByText(/Lanjut/i));
 
     await waitFor(() => {
       expect(screen.getByText(/KUIS SELESAI!/i)).toBeInTheDocument();
-      // Verifikasi skor akhir di layar EndScreen
       expect(screen.getByText('8')).toBeInTheDocument();
     }, { timeout: 2000 });
   });
@@ -87,7 +79,6 @@ describe('Pengujian Integrasi Logika Kuis (Whitebox)', () => {
   test('Skenario: Selesai karena GAME OVER (Nyawa Habis)', async () => {
     render(<MemoryRouter><Game onGameEnd={mockOnGameEnd} /></MemoryRouter>);
 
-    // Klik salah sampai nyawa (10) habis
     for (let i = 0; i < 10; i++) {
       const btnSalah = screen.queryByText('Bernapas') || screen.queryByText('Mencerna');
       if (btnSalah) {

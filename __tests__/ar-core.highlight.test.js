@@ -1,16 +1,6 @@
-/**
- * Unit Test: ar-core.js → highlightOrgan() & clearHighlight()
- *
- * Menguji fungsi highlight 3D organ pada mesh Three.js:
- * - highlightOrgan: mengubah emissive warna mesh yang cocok
- * - clearHighlight: mengembalikan emissive ke nilai semula
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// ─── Helper: buat mock Mesh Three.js ─────────────────────────────────────────
 function createMockMesh(organTitle = "Test Organ") {
   return {
     isMesh: true,
@@ -22,8 +12,6 @@ function createMockMesh(organTitle = "Test Organ") {
     },
   };
 }
-
-// ─── Definisi fungsi (sesuai source ar-core.js) ───────────────────────────────
 
 const T = global.AFRAME.THREE;
 let meshToOrgan;
@@ -61,8 +49,6 @@ describe("highlightOrgan() & clearHighlight()", () => {
     highlightedMeshes = [];
   });
 
-  // ─── highlightOrgan ────────────────────────────────────────────────────────
-
   test("mesh dengan judul yang cocok mendapat emissiveIntensity 0.6", () => {
     const mesh = createMockMesh();
     meshToOrgan.set(mesh, { title: "Paru-Paru", desc: "Organ pernapasan." });
@@ -78,7 +64,6 @@ describe("highlightOrgan() & clearHighlight()", () => {
 
     highlightOrgan("Aorta");
 
-    // emissive di-set ke new T.Color(0x00aaff)
     expect(mesh.material.emissive).toBeDefined();
     expect(mesh.material.emissive.hex).toBe(0x00aaff);
   });
@@ -120,8 +105,8 @@ describe("highlightOrgan() & clearHighlight()", () => {
 
     highlightOrgan("Paru-Paru");
 
-    expect(meshA.material.emissiveIntensity).toBe(0.6); // di-highlight
-    expect(meshB.material.emissiveIntensity).toBe(0);   // tidak
+    expect(meshA.material.emissiveIntensity).toBe(0.6); 
+    expect(meshB.material.emissiveIntensity).toBe(0); 
   });
 
   test("multiple mesh dengan judul sama semuanya di-highlight", () => {
@@ -147,11 +132,10 @@ describe("highlightOrgan() & clearHighlight()", () => {
 
     highlightOrgan("Organ Tidak Ada");
 
-    expect(mesh.material.emissiveIntensity).toBe(0); // tidak berubah
+    expect(mesh.material.emissiveIntensity).toBe(0);
     expect(highlightedMeshes).toHaveLength(0);
   });
 
-  // ─── clearHighlight ────────────────────────────────────────────────────────
 
   test("clearHighlight: mengembalikan emissive ke nilai asli", () => {
     const mesh = createMockMesh();
@@ -159,7 +143,7 @@ describe("highlightOrgan() & clearHighlight()", () => {
     meshToOrgan.set(mesh, { title: "Vena", desc: "..." });
 
     highlightOrgan("Vena");
-    mesh.userData.originalEmissive = savedEmissive; // simulasikan save
+    mesh.userData.originalEmissive = savedEmissive;
 
     clearHighlight();
 
@@ -204,8 +188,6 @@ describe("highlightOrgan() & clearHighlight()", () => {
     expect(() => clearHighlight()).not.toThrow();
   });
 
-  // ─── Highlight berurutan ──────────────────────────────────────────────────
-
   test("highlight organ baru otomatis menghapus highlight organ sebelumnya", () => {
     const meshA = createMockMesh();
     const meshB = createMockMesh();
@@ -215,9 +197,7 @@ describe("highlightOrgan() & clearHighlight()", () => {
     highlightOrgan("Organ A");
     expect(highlightedMeshes).toContain(meshA);
 
-    // Highlight organ lain — clearHighlight dipanggil di dalam highlightOrgan
     highlightOrgan("Organ B");
-    // meshA harus sudah di-clear (ada di highlightedMeshes baru hanya meshB)
     expect(highlightedMeshes).toContain(meshB);
     expect(highlightedMeshes).not.toContain(meshA);
   });

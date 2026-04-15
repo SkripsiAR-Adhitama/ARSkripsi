@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import IntroPost from "../src/Components/IntroPost";
 
-// ─── MOCK NAVIGATE ─────────────────────────────────────────────
 const mockedUsedNavigate = jest.fn();
 
 jest.mock("react-router-dom", () => ({
@@ -11,7 +10,6 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-// ─── MOCK DATA ─────────────────────────────────────────────────
 jest.mock("../src/assets/Materi/makro-ipa", () => [
   {
     category: "Pencernaan",
@@ -35,7 +33,6 @@ describe("IntroPost Component (Improved Coverage)", () => {
     jest.clearAllMocks();
   });
 
-  // ─── FILTER TEST ─────────────────────────────────────────────
   test("menampilkan data sesuai kategori", () => {
     render(
       <MemoryRouter>
@@ -58,7 +55,6 @@ describe("IntroPost Component (Improved Coverage)", () => {
     expect(screen.getByText("Organ Pernapasan")).toBeInTheDocument();
   });
 
-  // ─── NAVIGATE TEST ───────────────────────────────────────────
   test("navigasi ke detail saat card diklik", () => {
     render(
       <MemoryRouter>
@@ -73,7 +69,6 @@ describe("IntroPost Component (Improved Coverage)", () => {
     );
   });
 
-  // ─── BUTTON AR TEST ──────────────────────────────────────────
   test("tombol AR tidak trigger navigate (stopPropagation bekerja)", () => {
     delete window.location;
     window.location = { href: "" };
@@ -91,7 +86,6 @@ describe("IntroPost Component (Improved Coverage)", () => {
     expect(mockedUsedNavigate).not.toHaveBeenCalled();
   });
 
-  // ─── EMPTY DATA TEST ─────────────────────────────────────────
   test("menampilkan pesan jika data kosong", () => {
     render(
       <MemoryRouter>
@@ -102,7 +96,6 @@ describe("IntroPost Component (Improved Coverage)", () => {
     expect(screen.getByText(/Data tidak ditemukan/i)).toBeInTheDocument();
   });
 
-  // ─── IMAGE TEST (SUCCESS PATH) ───────────────────────────────
   test("image dirender dengan benar", () => {
     render(
       <MemoryRouter>
@@ -115,7 +108,6 @@ describe("IntroPost Component (Improved Coverage)", () => {
     expect(img.src).toContain("pencernaan.png");
   });
 
-  // ─── IMAGE ERROR (CATCH BLOCK) ───────────────────────────────
   test("fallback image digunakan jika error", () => {
     const originalURL = global.URL;
 

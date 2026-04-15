@@ -1,10 +1,5 @@
-/**
- * FULL COVERAGE TEST — FINAL VERSION
- */
-
 let arCore;
 
-// ─── MOCK AFRAME ─────────────────────────────────────────
 global.AFRAME = {
   THREE: {
     Color: class {
@@ -57,7 +52,6 @@ global.AFRAME = {
   },
 };
 
-// ─── BUILD DOM ─────────────────────────────────────────
 function buildBaseDOM() {
   document.body.innerHTML = `
     <div id="landing"></div>
@@ -84,7 +78,6 @@ function buildBaseDOM() {
     <button id="btn-enter-ar"></button>
   `;
 
-  // reticle
   const reticle = document.createElement("div");
   reticle.id = "reticle";
   reticle.object3D = {
@@ -94,13 +87,11 @@ function buildBaseDOM() {
   };
   document.body.appendChild(reticle);
 
-  // model-group
   const modelGroup = document.createElement("div");
   modelGroup.id = "model-group";
   modelGroup.setAttribute = jest.fn();
   document.body.appendChild(modelGroup);
 
-  // scene
   const scene = document.createElement("div");
   scene.id = "scene";
   scene.renderer = {
@@ -116,7 +107,6 @@ function buildBaseDOM() {
   scene.exitVR = jest.fn();
   document.body.appendChild(scene);
 
-  // camera
   const cam = document.createElement("div");
   cam.id = "main-cam";
   cam.object3D = {
@@ -126,16 +116,11 @@ function buildBaseDOM() {
   document.body.appendChild(cam);
 }
 
-// ─── SETUP ─────────────────────────────────────────
 beforeEach(() => {
   jest.resetModules();
   buildBaseDOM();
   arCore = require("../public/AR/Pages/ar-core.js");
 });
-
-// ─────────────────────────────────────────
-// TEST
-// ─────────────────────────────────────────
 
 describe("UI BASIC", () => {
   test("showARUI", () => {
@@ -291,6 +276,27 @@ describe("RAYCAST", () => {
     const res = arCore.raycastOrgan(0, 0);
     expect(res).toBe(null);
   });
+
+  test("raycast pakai XR camera", () => {
+    const mesh = { isMesh: true };
+
+    arCore.meshToOrgan.set(mesh, { title: "A", desc: "B" });
+
+    const scene = document.getElementById("scene");
+    scene.renderer.xr.isPresenting = true;
+    scene.renderer.xr.getCamera = jest.fn(() => ({}));
+
+    global.AFRAME.THREE.Raycaster = class {
+      setFromCamera() {}
+      intersectObjects() {
+        return [{ object: mesh }];
+      }
+    };
+
+    const res = arCore.raycastOrgan(0, 0);
+
+    expect(res.title).toBe("A");
+  });
 });
 
 describe("CURSOR RAYCAST", () => {
@@ -444,94 +450,122 @@ describe("MODAL", () => {
   });
 });
 
-
-
 describe("START AR", () => {
-test("startAR device tidak support", async () => {
-  delete navigator.xr;
+  test("startAR device tidak support", async () => {
+    delete navigator.xr;
 
-  await arCore.startAR();
+    await arCore.startAR();
 
-  expect(document.getElementById("modal-message").textContent)
-    .toContain("WebXR tidak tersedia");
-});
+    expect(document.getElementById("modal-message").textContent).toContain(
+      "WebXR tidak tersedia",
+    );
+  });
 
+  test("startAR gagal requestSession", async () => {
+    navigator.xr = {
+      isSessionSupported: jest.fn().mockResolvedValue(true),
+      requestSession: jest.fn().mockRejectedValue("fail"),
+    };
 
-test("startAR gagal requestSession", async () => {
-  navigator.xr = {
-    isSessionSupported: jest.fn().mockResolvedValue(true),
-    requestSession: jest.fn().mockRejectedValue("fail"),
-  };
+    await arCore.startAR();
 
-  await arCore.startAR();
+    expect(document.getElementById("modal-message").textContent).toContain(
+      "Perangkat ini tidak mendukung",
+    );
+  });
+  test("startAR tanpa hit-test feature", async () => {
+    const endMock = jest.fn();
 
-  expect(document.getElementById("modal-message").textContent)
-    .toContain("Perangkat ini tidak mendukung");
-});
-test("startAR tanpa hit-test feature", async () => {
-  const endMock = jest.fn();
+    navigator.xr = {
+      isSessionSupported: jest.fn().mockResolvedValue(true),
+      requestSession: jest.fn().mockResolvedValue({
+        enabledFeatures: [],
+        end: endMock,
+        addEventListener: jest.fn(),
+      }),
+    };
 
-  navigator.xr = {
-    isSessionSupported: jest.fn().mockResolvedValue(true),
-    requestSession: jest.fn().mockResolvedValue({
-      enabledFeatures: [],
-      end: endMock,
-      addEventListener: jest.fn(),
-    }),
-  };
+    await arCore.startAR();
 
-  await arCore.startAR();
+    expect(endMock).toHaveBeenCalled();
+  });
 
-  expect(endMock).toHaveBeenCalled();
-});
+  test("startAR tidak support immersive-ar", async () => {
+    navigator.xr = {
+      isSessionSupported: jest.fn().mockResolvedValue(false),
+    };
+
+    await arCore.startAR();
+
+    expect(document.getElementById("modal-message").textContent).toContain(
+      "AR tidak didukung",
+    );
+  });
 });
 
 describe("INIT AR SESSION", () => {
   test("initARSession basic flow", async () => {
-  const fakeSession = {
-    requestReferenceSpace: jest.fn().mockResolvedValue({}),
-    requestHitTestSource: jest.fn().mockResolvedValue({}),
-  };
+    const fakeSession = {
+      requestReferenceSpace: jest.fn().mockResolvedValue({}),
+      requestHitTestSource: jest.fn().mockResolvedValue({}),
+    };
 
-  const scene = document.getElementById("scene");
+    const scene = document.getElementById("scene");
 
-  arCore.initARSession(fakeSession);
+    arCore.initARSession(fakeSession);
 
-  expect(scene.addEventListener).toHaveBeenCalled();
+    expect(scene.addEventListener).toHaveBeenCalled();
+  });
+  test("initARSession fallback local space", async () => {
+    const fakeSession = {
+      requestReferenceSpace: jest
+        .fn()
+        .mockRejectedValueOnce("fail viewer")
+        .mockResolvedValueOnce({}), // fallback local
+      requestHitTestSource: jest.fn().mockResolvedValue({}),
+    };
+
+    arCore.initARSession(fakeSession);
+
+    expect(true).toBe(true);
+  });
+
+  const flush = () => new Promise((r) => setTimeout(r, 0));
+
+  test("initARSession hit-test gagal", async () => {
+    console.warn = jest.fn();
+
+    const fakeSession = {
+      requestReferenceSpace: jest.fn().mockResolvedValue({}),
+      requestHitTestSource: jest.fn().mockRejectedValue("fail"),
+    };
+
+    arCore.initARSession(fakeSession);
+
+    await flush();
+
+    expect(console.warn).toHaveBeenCalled();
+  });
+
+  test("initARSession refSpace gagal semua", async () => {
+    console.warn = jest.fn();
+
+    const fakeSession = {
+      requestReferenceSpace: jest
+        .fn()
+        .mockResolvedValueOnce({})
+        .mockRejectedValueOnce("fail local-floor")
+        .mockRejectedValueOnce("fail local"),
+      requestHitTestSource: jest.fn().mockResolvedValue({}),
+    };
+
+    arCore.initARSession(fakeSession);
+
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(console.warn).toHaveBeenCalled();
+  });
 });
-test("initARSession fallback local space", async () => {
-  const fakeSession = {
-    requestReferenceSpace: jest
-      .fn()
-      .mockRejectedValueOnce("fail viewer")
-      .mockResolvedValueOnce({}), // fallback local
-    requestHitTestSource: jest.fn().mockResolvedValue({}),
-  };
-
-  arCore.initARSession(fakeSession);
-
-  expect(true).toBe(true);
-});
-
-
-const flush = () => new Promise((r) => setTimeout(r, 0));
-
-test("initARSession hit-test gagal", async () => {
-  console.warn = jest.fn();
-
-  const fakeSession = {
-    requestReferenceSpace: jest.fn().mockResolvedValue({}),
-    requestHitTestSource: jest.fn().mockRejectedValue("fail"),
-  };
-
-  arCore.initARSession(fakeSession);
-
-  await flush(); 
-
-  expect(console.warn).toHaveBeenCalled();
-});
-});
-
 
 describe("EXTRA COVERAGE", () => {
   test("handleTouch kena UI (harus return)", () => {
@@ -726,16 +760,48 @@ describe("EXTRA COVERAGE", () => {
   });
 
   test("placeModel trigger setMode cursor", () => {
-  jest.useFakeTimers();
+    jest.useFakeTimers();
 
-  arCore._setState({
-    lastHitPos: { x: 1, y: 1, z: 1 },
+    arCore._setState({
+      lastHitPos: { x: 1, y: 1, z: 1 },
+    });
+
+    arCore.placeModel();
+
+    jest.runAllTimers();
+
+    expect(true).toBe(true);
   });
 
-  arCore.placeModel();
+  test("registerOrgan child bukan mesh", () => {
+    const el = document.createElement("div");
+    el.dataset.title = "Test";
+    el.dataset.description = "Desc";
 
-  jest.runAllTimers();
+    el.object3D = {
+      traverse: (fn) => fn({ isMesh: false }),
+    };
 
-  expect(true).toBe(true);
-});
+    arCore.registerOrgan(el);
+
+    expect(arCore.meshToOrgan.size).toBe(0);
+  });
+
+  test("reset rot tanpa model", () => {
+    arCore._setState({ modelPlaced: false });
+
+    document.getElementById("btn-reset-rot").click();
+
+    expect(true).toBe(true);
+  });
+
+  test("scale slider saat model belum ditempatkan", () => {
+    arCore._setState({ modelPlaced: false });
+
+    const slider = document.getElementById("scale-slider");
+    slider.value = "3";
+    slider.dispatchEvent(new Event("input"));
+
+    expect(true).toBe(true);
+  });
 });

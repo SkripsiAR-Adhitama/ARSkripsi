@@ -1,21 +1,10 @@
-/**
- * Unit Test: ar-core.js → handleTouch() & doCursorRaycast()
- *
- * Menguji logika touch event pada AR:
- * - handleTouch: memanggil placeModel/showInfo sesuai mode & kondisi
- * - doCursorRaycast: mengelola kursor hit state berdasarkan raycast
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// ─── Mock fungsi yang bergantung pada Three.js ────────────────────────────────
 const mockPlaceModel = jest.fn();
 const mockShowInfo = jest.fn();
 const mockRaycastOrgan = jest.fn();
 
-// ─── State global AR (seperti di ar-core.js) ──────────────────────────────────
 let isARActive;
 let MODE;
 let hoveredOrgan;
@@ -65,7 +54,6 @@ function doCursorRaycast() {
   }
 }
 
-// ─── Helper: buat fake TouchEvent ─────────────────────────────────────────────
 function createTouchEvent(x = 100, y = 200) {
   return {
     changedTouches: [{ clientX: x, clientY: y }],
@@ -73,10 +61,6 @@ function createTouchEvent(x = 100, y = 200) {
   };
 }
 
-// ─── Helper: mock document.elementFromPoint ───────────────────────────────────
-// jest.spyOn tidak bisa dipakai karena jsdom tidak mendaftarkan
-// elementFromPoint sebagai property yang enumerable/configurable.
-// Solusi: assign langsung sebagai jest.fn() ke document.
 function mockElementFromPoint(returnValue) {
   document.elementFromPoint = jest.fn().mockReturnValue(returnValue);
 }
@@ -93,7 +77,6 @@ describe("handleTouch()", () => {
     htmlCursor = document.getElementById("html-cursor");
     arUI = document.getElementById("ar-ui");
 
-    // Default: touch jatuh di luar arUI
     mockElementFromPoint(document.body);
 
     mockPlaceModel.mockClear();
@@ -105,8 +88,7 @@ describe("handleTouch()", () => {
     jest.useRealTimers();
   });
 
-  // ─── AR tidak aktif ───────────────────────────────────────────────────────────
-
+  
   test("tidak melakukan apa-apa jika isARActive = false", () => {
     isARActive = false;
     const evt = createTouchEvent();
@@ -114,8 +96,6 @@ describe("handleTouch()", () => {
     expect(mockPlaceModel).not.toHaveBeenCalled();
     expect(evt.preventDefault).not.toHaveBeenCalled();
   });
-
-  // ─── Touch pada elemen UI (diabaikan) ─────────────────────────────────────────
 
   test("touch pada elemen di dalam arUI diabaikan (tidak trigger placeModel)", () => {
     const btnBack = document.getElementById("btn-back");
@@ -126,8 +106,6 @@ describe("handleTouch()", () => {
 
     expect(mockPlaceModel).not.toHaveBeenCalled();
   });
-
-  // ─── Mode "placement" ─────────────────────────────────────────────────────────
 
   test("mode placement: memanggil placeModel saat touch di luar UI", () => {
     mockElementFromPoint(document.body);
@@ -142,8 +120,6 @@ describe("handleTouch()", () => {
     handleTouch(evt);
     expect(evt.preventDefault).toHaveBeenCalled();
   });
-
-  // ─── Mode "cursor" + hoveredOrgan ada ────────────────────────────────────────
 
   test("mode cursor + hoveredOrgan: memanggil showInfo dengan data organ", () => {
     mockElementFromPoint(document.body);
@@ -163,12 +139,10 @@ describe("handleTouch()", () => {
 
     handleTouch(createTouchEvent());
 
-    expect(htmlCursor.classList.contains("hit")).toBe(false); // langsung hilang
+    expect(htmlCursor.classList.contains("hit")).toBe(false);
     jest.advanceTimersByTime(100);
-    expect(htmlCursor.classList.contains("hit")).toBe(true);  // muncul lagi
+    expect(htmlCursor.classList.contains("hit")).toBe(true);  
   });
-
-  // ─── Mode "cursor" + hoveredOrgan kosong (raycast manual) ────────────────────
 
   test("mode cursor + tidak ada hoveredOrgan: raycastOrgan dipanggil dengan NDC yang benar", () => {
     mockElementFromPoint(document.body);
@@ -176,8 +150,6 @@ describe("handleTouch()", () => {
     hoveredOrgan = null;
     mockRaycastOrgan.mockReturnValue(null);
 
-    // clientX=512, innerWidth=1024 → ndcX = (512/1024)*2-1 = 0
-    // clientY=384, innerHeight=768 → ndcY = -(384/768)*2+1 = 0
     Object.defineProperty(window, "innerWidth",  { value: 1024, writable: true });
     Object.defineProperty(window, "innerHeight", { value: 768,  writable: true });
 
@@ -209,8 +181,6 @@ describe("handleTouch()", () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
-
 describe("doCursorRaycast()", () => {
   beforeEach(() => {
     setupARDom();
@@ -234,9 +204,9 @@ describe("doCursorRaycast()", () => {
 
   test("raycast kena organ yang sama: class 'hit' tidak ditambah ulang (idempoten)", () => {
     mockRaycastOrgan.mockReturnValue({ title: "Lambung", desc: "..." });
-    lastHoverInfo = "Lambung"; // sudah hovered sebelumnya
+    lastHoverInfo = "Lambung"; 
     doCursorRaycast();
-    // title sama → blok if tidak masuk → class tidak diubah
+    
     expect(htmlCursor.classList.contains("hit")).toBe(false);
   });
 

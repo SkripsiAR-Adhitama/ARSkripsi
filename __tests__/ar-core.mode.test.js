@@ -1,17 +1,6 @@
-/**
- * Unit Test: ar-core.js → setMode()
- *
- * Menguji fungsi setMode yang mengubah mode AR antara:
- * - "placement" : mode menempatkan organ (reticle aktif, cursor nonaktif)
- * - "cursor"    : mode inspeksi organ (crosshair aktif, reticle nonaktif)
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// Implementasi setMode sesuai source ar-core.js
-// (export dari ar-core.js atau definisikan ulang di sini)
 let MODE;
 let reticleEl;
 let modeBadge;
@@ -20,7 +9,6 @@ let placementHint;
 let infoTitle;
 let infoDesc;
 
-// Global AR_SYSTEM_NAME (seperti di HTML)
 global.AR_SYSTEM_NAME = "Pernapasan";
 
 function setMode(mode) {
@@ -65,7 +53,6 @@ describe("setMode()", () => {
     jest.useRealTimers();
   });
 
-  // ─── Mode "placement" ─────────────────────────────────────────────────────────
 
   test("mode placement: MODE diset ke 'placement'", () => {
     setMode("placement");
@@ -83,7 +70,7 @@ describe("setMode()", () => {
   });
 
   test("mode placement: htmlCursor kehilangan class 'active'", () => {
-    htmlCursor.classList.add("active"); // set dulu
+    htmlCursor.classList.add("active");
     setMode("placement");
     expect(htmlCursor.classList.contains("active")).toBe(false);
   });
@@ -107,7 +94,6 @@ describe("setMode()", () => {
     expect(modeBadge.classList.contains("show")).toBe(false);
   });
 
-  // ─── Mode "cursor" ────────────────────────────────────────────────────────────
 
   test("mode cursor: MODE diset ke 'cursor'", () => {
     setMode("cursor");
@@ -151,8 +137,6 @@ describe("setMode()", () => {
     jest.advanceTimersByTime(3000);
     expect(modeBadge.classList.contains("show")).toBe(false);
   });
-
-  // ─── Transisi antar mode ──────────────────────────────────────────────────────
 
   test("bisa beralih dari placement ke cursor dan kembali ke placement", () => {
     setMode("placement");

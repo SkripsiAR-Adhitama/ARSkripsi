@@ -6,7 +6,6 @@ describe("showModal()", () => {
   beforeEach(async () => {
     setupARDom();
 
-    // mock AFRAME
     global.AFRAME = {
       THREE: {
         Color: class {},
@@ -52,7 +51,6 @@ describe("showModal()", () => {
 
     jest.resetModules();
 
-    // import setelah mock
     const module = await import("../public/AR/Pages/ar-core");
     showModal = module.showModal;
 

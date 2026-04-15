@@ -15,8 +15,7 @@ describe("TriviaItem Component", () => {
     jest.clearAllMocks();
   });
 
-  // ─── Rendering Dasar ─────────────────────────────────────────────────────────
-
+  
   test("menampilkan teks pertanyaan", () => {
     render(<TriviaItem {...defaultProps} />);
     expect(
@@ -27,7 +26,6 @@ describe("TriviaItem Component", () => {
   test("menampilkan semua 4 pilihan jawaban", () => {
     render(<TriviaItem {...defaultProps} />);
     const buttons = screen.getAllByRole("button");
-    // 4 jawaban + 1 tombol Lanjut
     const answerButtons = buttons.filter((b) => b.textContent !== "Lanjut ➡");
     expect(answerButtons).toHaveLength(4);
   });
@@ -40,15 +38,12 @@ describe("TriviaItem Component", () => {
     expect(screen.getByText("Bilik Kanan")).toBeInTheDocument();
   });
 
-  // ─── Sebelum jawaban dipilih ──────────────────────────────────────────────────
-
+  
   test("tombol 'Lanjut' ter-disable sebelum memilih jawaban", () => {
     render(<TriviaItem {...defaultProps} />);
     const nextBtn = screen.getByText(/Lanjut/i);
     expect(nextBtn).toBeDisabled();
   });
-
-  // ─── Setelah jawaban dipilih ──────────────────────────────────────────────────
 
   test("memanggil onAnswerSelected dengan true saat jawaban benar diklik", () => {
     render(<TriviaItem {...defaultProps} />);
@@ -72,14 +67,11 @@ describe("TriviaItem Component", () => {
   test("tombol jawaban ter-disable setelah memilih (tidak bisa ganti jawaban)", () => {
     render(<TriviaItem {...defaultProps} />);
     fireEvent.click(screen.getByText("Bilik Kiri"));
-    // Semua tombol jawaban harus disabled
     const answerButtons = screen
       .getAllByRole("button")
       .filter((b) => b.textContent !== "Lanjut ➡");
     answerButtons.forEach((btn) => expect(btn).toBeDisabled());
   });
-
-  // ─── Kelas CSS setelah jawaban dipilih ───────────────────────────────────────
 
   test("jawaban benar yang dipilih mendapat class --correct", () => {
     render(<TriviaItem {...defaultProps} />);
@@ -95,11 +87,9 @@ describe("TriviaItem Component", () => {
     expect(wrongBtn.className).toContain("trivia-item__button--incorrect");
   });
 
-  // ─── Tombol Lanjut ────────────────────────────────────────────────────────────
-
   test("klik 'Lanjut' memanggil onNextClick", () => {
     render(<TriviaItem {...defaultProps} />);
-    fireEvent.click(screen.getByText("Bilik Kiri")); // pilih dulu
+    fireEvent.click(screen.getByText("Bilik Kiri"));
     fireEvent.click(screen.getByText(/Lanjut/i));
     expect(defaultProps.onNextClick).toHaveBeenCalledTimes(1);
   });

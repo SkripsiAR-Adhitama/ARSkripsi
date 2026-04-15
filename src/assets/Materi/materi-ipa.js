@@ -321,8 +321,8 @@ let materiIpa = [
 
   {
     category: "Peredaran",
-    name: "Ventrikel",
-    pengertian: "Ruang jantung bagian bawah yang memompa darah keluar.",
+    name: "Bilik (Ventrikel)",
+    pengertian: "Ruang jantung bagian bawah yang terdiri dari kiri dan kanan yang memompa darah keluar.",
     caraKerja: [
       "Ventrikel kanan memompa darah kotor ke paru-paru.",
       "Ventrikel kiri memompa darah bersih ke seluruh tubuh.",
@@ -334,7 +334,7 @@ let materiIpa = [
       "Bekerja berirama dengan atrium."
     ],
     gangguan: [
-      "Gagal Jantung Ventrikel: Ketidakmampuan memompa darah secara cukup.",
+      "Gagal Jantung Ventrikel: Ketidakmampuan memompa darah secara cukup sehingga distribusi darah terganggu.",
       "Hipertrofi Ventrikel: Penebalan otot bilik jantung yang mengganggu fungsi."
     ],
     url_ar: "peredaran",
@@ -342,8 +342,8 @@ let materiIpa = [
   },
   {
     category: "Peredaran",
-    name: "Atrium",
-    pengertian: "Ruang jantung bagian atas yang menerima darah masuk.",
+    name: "Serambi (Atrium)",
+    pengertian: "Ruang jantung bagian atas yang terdiri dari kiri dan kanan untuk menerima darah masuk.",
     caraKerja: [
       "Menerima darah dari vena seluruh tubuh dan paru-paru.",
       "Mendorong darah turun menuju ventrikel.",

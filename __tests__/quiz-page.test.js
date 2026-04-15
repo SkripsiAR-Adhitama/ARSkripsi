@@ -9,7 +9,6 @@ import {
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import QuizPage from "../src/quiz/quiz-page";
 
-// 🔹 Mock Game Component
 jest.mock("../src/quiz/game", () => {
   const React = require("react");
   return function MockGame({ playerName, numQuestions, onGameFinish }) {
@@ -24,7 +23,6 @@ jest.mock("../src/quiz/game", () => {
   };
 });
 
-// 🔹 Helper render
 const renderQuizPage = (state = {}) =>
   render(
     <MemoryRouter initialEntries={[{ pathname: "/halaman-kuis", state }]}>
@@ -35,7 +33,6 @@ const renderQuizPage = (state = {}) =>
   );
 
 describe("QuizPage Component", () => {
-  // ─── STATE TEST ─────────────────────────────────────────
 
   test("meneruskan playerName dari location.state ke Game", () => {
     renderQuizPage({ playerName: "Rudi", numQuestions: 5 });
@@ -57,16 +54,13 @@ describe("QuizPage Component", () => {
     expect(screen.getByText(/20 soal/)).toBeInTheDocument();
   });
 
-  // ─── MODAL AWAL ─────────────────────────────────────────
-
+  
   test("modal tidak tampil saat awal render", () => {
     renderQuizPage();
     expect(
       screen.queryByText(/Selesaikan kuis/i)
     ).not.toBeInTheDocument();
   });
-
-  // ─── GAME FINISH ────────────────────────────────────────
 
   test("isFinished aktif setelah klik selesai", () => {
     renderQuizPage();
@@ -76,8 +70,6 @@ describe("QuizPage Component", () => {
       screen.queryByText(/Selesaikan kuis/i)
     ).not.toBeInTheDocument();
   });
-
-  // ─── BEFOREUNLOAD ───────────────────────────────────────
 
   test("beforeunload listener ditambahkan", () => {
     const spy = jest.spyOn(window, "addEventListener");
@@ -119,12 +111,10 @@ describe("QuizPage Component", () => {
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  // ─── POPSTATE (BACK BUTTON) ─────────────────────────────
-
   test("modal muncul saat tekan back", async () => {
     renderQuizPage();
 
-    await waitFor(() => {}); // tunggu useEffect
+    await waitFor(() => {});
 
     act(() => {
       window.dispatchEvent(new PopStateEvent("popstate"));

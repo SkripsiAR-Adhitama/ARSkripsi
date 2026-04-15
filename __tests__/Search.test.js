@@ -33,13 +33,9 @@ describe('Pengujian Komponen Search (Whitebox)', () => {
       </MemoryRouter>
     );
 
-    // Di Search.jsx, kategori di-render di dalam elemen <ul>
     const tags = container.querySelectorAll('ul');
     
-    // Indeks 2 adalah "Pencernaan" (0:All, 1:Pernapasan, 2:Pencernaan)
-    // Kita cek apakah class-nya mengandung kata 'activeTag'
     expect(tags[2].className).toMatch(/activeTag/);
-    // Cek juga yang lain harusnya 'inactiveTag'
     expect(tags[0].className).toMatch(/inactiveTag/);
   });
 
@@ -53,7 +49,6 @@ describe('Pengujian Komponen Search (Whitebox)', () => {
     const categoryButton = screen.getByText('Peredaran');
     fireEvent.click(categoryButton);
 
-    // Memastikan logika callback dari props berjalan
     expect(mockOnCategoryChange).toHaveBeenCalledWith('Peredaran');
   });
 });

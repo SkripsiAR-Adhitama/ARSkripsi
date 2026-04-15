@@ -1,17 +1,6 @@
-/**
- * Unit Test: ar-core.js → Scale Slider & Rotation Slider
- *
- * Menguji kontrol skala dan rotasi model 3D AR:
- * - Scale slider: mengubah ukuran model
- * - Rotation slider: mengubah rotasi sumbu Y model
- * - Reset rotation: mengembalikan rotasi ke 0
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// ─── State global (sesuai ar-core.js) ────────────────────────────────────────
 let currentScale;
 let currentRotY;
 let modelPlaced;
@@ -20,7 +9,6 @@ let modelGroup;
 let scaleSlider, scaleValue;
 let rotSlider, rotDisplay;
 
-// ─── Handler sesuai source ar-core.js ────────────────────────────────────────
 function onScaleInput(e) {
   e.stopPropagation();
   currentScale = parseFloat(scaleSlider.value);
@@ -70,7 +58,6 @@ describe("Scale Slider", () => {
     fakeEvent.stopPropagation.mockClear();
   });
 
-  // ─── Perubahan nilai currentScale ────────────────────────────────────────────
 
   test("currentScale diperbarui sesuai nilai slider", () => {
     scaleSlider.value = "2.5";
@@ -90,16 +77,12 @@ describe("Scale Slider", () => {
     expect(scaleValue.textContent).toBe("1.5");
   });
 
-  // ─── Model belum ditempatkan ──────────────────────────────────────────────────
-
   test("modelGroup.setAttribute TIDAK dipanggil jika modelPlaced = false", () => {
     modelPlaced = false;
     scaleSlider.value = "2";
     onScaleInput(fakeEvent);
     expect(modelGroup.setAttribute).not.toHaveBeenCalled();
   });
-
-  // ─── Model sudah ditempatkan ──────────────────────────────────────────────────
 
   test("modelGroup scale di-set saat modelPlaced = true", () => {
     modelPlaced = true;
@@ -132,7 +115,6 @@ describe("Scale Slider", () => {
     expect(call[1]).toBe("3.5 3.5 3.5");
   });
 
-  // ─── stopPropagation ──────────────────────────────────────────────────────────
 
   test("event.stopPropagation dipanggil untuk mencegah bubbling ke A-Frame", () => {
     scaleSlider.value = "1";
@@ -154,7 +136,6 @@ describe("Rotation Slider", () => {
     fakeEvent.stopPropagation.mockClear();
   });
 
-  // ─── Perubahan currentRotY ────────────────────────────────────────────────────
 
   test("currentRotY diperbarui sesuai nilai slider", () => {
     rotSlider.value = "180";
@@ -180,8 +161,6 @@ describe("Rotation Slider", () => {
     expect(rotDisplay.textContent).toBe("360°");
   });
 
-  // ─── Efek pada model ──────────────────────────────────────────────────────────
-
   test("modelGroup.setAttribute TIDAK dipanggil jika modelPlaced = false", () => {
     modelPlaced = false;
     rotSlider.value = "90";
@@ -204,8 +183,6 @@ describe("Rotation Slider", () => {
     expect(call[1]).toMatch(/^0 270 0$/);
   });
 
-  // ─── stopPropagation ──────────────────────────────────────────────────────────
-
   test("event.stopPropagation dipanggil", () => {
     rotSlider.value = "30";
     onRotInput(fakeEvent);
@@ -220,7 +197,7 @@ describe("Reset Rotation (btn-reset-rot)", () => {
     rotSlider = document.getElementById("rotation-slider");
     rotDisplay = document.getElementById("rotation-display");
 
-    currentRotY = 90; // Sudah dirotasi
+    currentRotY = 90;
     rotSlider.value = "90";
     modelPlaced = false;
     fakeEvent.stopPropagation.mockClear();

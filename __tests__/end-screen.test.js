@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import EndScreen from "../src/quiz/end-screen";
 
-// Helper: render EndScreen di dalam MemoryRouter (karena pakai useNavigate)
 const renderEndScreen = (props = {}) => {
   const defaultProps = {
     playerName: "Budi",
@@ -24,7 +23,6 @@ const renderEndScreen = (props = {}) => {
 };
 
 describe("EndScreen Component", () => {
-  // ─── Rendering Dasar ─────────────────────────────────────────────────────────
 
   test("menampilkan judul 'KUIS SELESAI!'", () => {
     renderEndScreen();
@@ -51,8 +49,6 @@ describe("EndScreen Component", () => {
     expect(screen.getByText("46")).toBeInTheDocument();
   });
 
-  // ─── Badge ───────────────────────────────────────────────────────────────────
-
   test("finalScore >= 90 → badge Quiz Master", () => {
     renderEndScreen({ finalScore: 95 });
     expect(screen.getByText("Quiz Master")).toBeInTheDocument();
@@ -73,7 +69,6 @@ describe("EndScreen Component", () => {
     expect(screen.getByText("Beginner")).toBeInTheDocument();
   });
 
-  // ─── Game Over karena nyawa habis ────────────────────────────────────────────
 
   test("menampilkan ikon 💀 jika remainingLives = 0", () => {
     renderEndScreen({ remainingLives: 0 });
@@ -87,12 +82,9 @@ describe("EndScreen Component", () => {
 
   test("menampilkan 🏆 jika masih ada nyawa tersisa", () => {
     renderEndScreen({ remainingLives: 3 });
-    // Trophy ada di end-main-visual (bukan di badge)
     const trophyEl = document.querySelector(".end-screen__trophy");
     expect(trophyEl).not.toBeNull();
   });
-
-  // ─── Rekor Baru ───────────────────────────────────────────────────────────────
 
   test("menampilkan 'REKOR BARU' jika isNewHighScore = true", () => {
     renderEndScreen({ isNewHighScore: true });
@@ -103,8 +95,6 @@ describe("EndScreen Component", () => {
     renderEndScreen({ isNewHighScore: false });
     expect(screen.queryByText(/REKOR BARU/i)).not.toBeInTheDocument();
   });
-
-  // ─── Tombol ──────────────────────────────────────────────────────────────────
 
   test("tombol 'Main Lagi' memanggil onRetryClick", () => {
     const onRetryClick = jest.fn();

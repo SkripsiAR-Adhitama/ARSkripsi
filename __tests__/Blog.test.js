@@ -3,14 +3,12 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Blog from '../src/Components/Blog';
 
-// ─── MOCK NAVIGATE ─────────────────────────────────────────────
 const mockedUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedUsedNavigate,
 }));
 
-// ─── MOCK DATA ─────────────────────────────────────────────────
 jest.mock('../src/assets/Materi/materi-ipa', () => [
   { 
     name: 'Paru-Paru', 
@@ -32,7 +30,6 @@ jest.mock('../src/assets/Materi/materi-ipa', () => [
 
 describe('Pengujian Komponen Blog (Whitebox)', () => {
 
-  // ─── FIX JSDOM LOCATION ──────────────────────────────────────
   beforeAll(() => {
     delete window.location;
     window.location = {
@@ -41,7 +38,6 @@ describe('Pengujian Komponen Blog (Whitebox)', () => {
     };
   });
 
-  // ─── FILTER TEST ─────────────────────────────────────────────
   test('Harus menampilkan semua materi saat kategori "All"', () => {
     render(
       <MemoryRouter>
@@ -64,7 +60,6 @@ describe('Pengujian Komponen Blog (Whitebox)', () => {
     expect(screen.queryByText('Paru-Paru')).not.toBeInTheDocument();
   });
 
-  // ─── SEARCH TEST ─────────────────────────────────────────────
   test('Harus memfilter berdasarkan search term', () => {
     render(
       <MemoryRouter>
@@ -86,7 +81,6 @@ describe('Pengujian Komponen Blog (Whitebox)', () => {
     expect(screen.getByText(/Tidak ada materi ditemukan/i)).toBeInTheDocument();
   });
 
-  // ─── NAVIGATE TEST ───────────────────────────────────────────
   test('Klik card harus navigate ke detail', () => {
     render(
       <MemoryRouter>
@@ -99,7 +93,6 @@ describe('Pengujian Komponen Blog (Whitebox)', () => {
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/blog-detail/Paru-Paru');
   });
 
-  // ─── AR BUTTON TEST (FIXED) ──────────────────────────────────
   test('Klik tombol AR tidak trigger navigate dan set href', () => {
     render(
       <MemoryRouter>

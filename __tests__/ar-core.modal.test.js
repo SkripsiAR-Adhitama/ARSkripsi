@@ -1,21 +1,6 @@
-/**
- * Unit Test: ar-core.js → showModal()
- *
- * Menguji fungsi showModal yang menampilkan error modal kepada pengguna.
- * Fungsi ini bertanggung jawab untuk:
- * - Mengisi pesan di #modal-message
- * - Menampilkan modal dengan menghapus class "hidden"
- * - Menutup modal saat tombol diklik
- * - Navigasi mundur (history.back) jika shouldGoBack = true
- *
- * @testenv jsdom
- */
 
 import { setupARDom } from "../test-utils/ar-core.setup";
 
-// Fungsi showModal diekstrak / di-export dari ar-core.js
-// untuk unit testing terisolasi.
-// Jika belum di-export, definisikan ulang di sini sesuai source:
 function showModal(message, shouldGoBack = false) {
   const modal = document.getElementById("error-modal");
   const modalMsg = document.getElementById("modal-message");
@@ -42,8 +27,7 @@ describe("showModal()", () => {
     jest.restoreAllMocks();
   });
 
-  // ─── Menampilkan Pesan ────────────────────────────────────────────────────────
-
+  
   test("mengisi #modal-message dengan pesan yang diberikan", () => {
     showModal("WebXR tidak tersedia.");
     const msg = document.getElementById("modal-message");
@@ -52,10 +36,10 @@ describe("showModal()", () => {
 
   test("menghapus class 'hidden' dari modal saat dipanggil", () => {
     const modal = document.getElementById("error-modal");
-    expect(modal.classList.contains("hidden")).toBe(true); // sebelum
+    expect(modal.classList.contains("hidden")).toBe(true); 
 
     showModal("Pesan error");
-    expect(modal.classList.contains("hidden")).toBe(false); // sesudah
+    expect(modal.classList.contains("hidden")).toBe(false);
   });
 
   test("modal tetap terbuka sebelum tombol diklik", () => {
@@ -64,7 +48,6 @@ describe("showModal()", () => {
     expect(modal.classList.contains("hidden")).toBe(false);
   });
 
-  // ─── Menutup Modal ────────────────────────────────────────────────────────────
 
   test("klik tombol 'MENGERTI' menutup modal (menambah class 'hidden')", () => {
     showModal("Pesan error");
@@ -73,7 +56,6 @@ describe("showModal()", () => {
     expect(modal.classList.contains("hidden")).toBe(true);
   });
 
-  // ─── shouldGoBack = false (default) ──────────────────────────────────────────
 
   test("history.back TIDAK dipanggil jika shouldGoBack = false", () => {
     showModal("Pesan", false);
@@ -87,7 +69,6 @@ describe("showModal()", () => {
     expect(window.history.back).not.toHaveBeenCalled();
   });
 
-  // ─── shouldGoBack = true ──────────────────────────────────────────────────────
 
   test("history.back dipanggil setelah tutup modal jika shouldGoBack = true", () => {
     showModal("Error kritis", true);
@@ -95,7 +76,6 @@ describe("showModal()", () => {
     expect(window.history.back).toHaveBeenCalledTimes(1);
   });
 
-  // ─── Pesan yang berbeda ───────────────────────────────────────────────────────
 
   test("pesan modal diperbarui jika showModal dipanggil dua kali", () => {
     showModal("Pesan pertama");

@@ -277,7 +277,7 @@ document.getElementById("btn-back").addEventListener("click", (e) => {
   }
 });
 
-// Control Skala
+// Kontrol Skala
 scaleSlider.addEventListener("input", (e) => {
   e.stopPropagation();
   currentScale = parseFloat(scaleSlider.value);

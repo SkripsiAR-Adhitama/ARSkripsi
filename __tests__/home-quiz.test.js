@@ -3,19 +3,17 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import HomeQuiz from "../src/quiz/home-quiz";
 
-// Mock useNavigate
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => mockNavigate,
 }));
 
-// Helper render
 const renderHomeQuiz = () =>
   render(
     <MemoryRouter>
       <HomeQuiz />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
 describe("HomeQuiz Component", () => {
@@ -23,8 +21,6 @@ describe("HomeQuiz Component", () => {
     jest.clearAllMocks();
     localStorage.clear();
   });
-
-  // ─── Rendering Dasar ─────────────────────────────────────────────────────────
 
   test("menampilkan judul 'Halaman Kuis'", () => {
     renderHomeQuiz();
@@ -41,8 +37,6 @@ describe("HomeQuiz Component", () => {
     expect(screen.getByText(/High Score : 0/i)).toBeInTheDocument();
   });
 
-  // ─── High Score dari localStorage ────────────────────────────────────────────
-
   test("membaca high score dari localStorage", () => {
     localStorage.setItem("quizHighScore", "80");
     renderHomeQuiz();
@@ -55,13 +49,29 @@ describe("HomeQuiz Component", () => {
     expect(screen.getByText("Quiz Master")).toBeInTheDocument();
   });
 
+  test("badge Expert (>=80)", () => {
+    localStorage.setItem("quizHighScore", "85");
+    renderHomeQuiz();
+    expect(screen.getByText("Expert")).toBeInTheDocument();
+  });
+
+  test("badge Learner (>=70)", () => {
+    localStorage.setItem("quizHighScore", "75");
+    renderHomeQuiz();
+    expect(screen.getByText("Learner")).toBeInTheDocument();
+  });
+
+  test("badge Beginner (<70)", () => {
+    localStorage.setItem("quizHighScore", "60");
+    renderHomeQuiz();
+    expect(screen.getByText("Beginner")).toBeInTheDocument();
+  });
+
   test("tidak menampilkan badge jika highScore = 0", () => {
     renderHomeQuiz();
     expect(screen.queryByText("Quiz Master")).not.toBeInTheDocument();
     expect(screen.queryByText("Beginner")).not.toBeInTheDocument();
   });
-
-  // ─── Validasi Nama ────────────────────────────────────────────────────────────
 
   test("menampilkan peringatan jika nama kosong dan klik Mulai", () => {
     renderHomeQuiz();
@@ -85,8 +95,6 @@ describe("HomeQuiz Component", () => {
     expect(screen.queryByText(/Nama Belum Diisi/i)).not.toBeInTheDocument();
   });
 
-  // ─── Navigasi ke halaman kuis ────────────────────────────────────────────────
-
   test("navigate dipanggil dengan state yang benar saat Mulai Kuis", () => {
     renderHomeQuiz();
     fireEvent.change(screen.getByPlaceholderText(/Masukkan nama/i), {
@@ -97,7 +105,7 @@ describe("HomeQuiz Component", () => {
       "halaman-kuis",
       expect.objectContaining({
         state: expect.objectContaining({ playerName: "Doni" }),
-      })
+      }),
     );
   });
 
@@ -110,8 +118,6 @@ describe("HomeQuiz Component", () => {
     const callArg = mockNavigate.mock.calls[0][1];
     expect(callArg.state.playerName).toBe("Rina");
   });
-
-  // ─── Reset High Score ────────────────────────────────────────────────────────
 
   test("klik Reset High Score membuka modal konfirmasi", () => {
     renderHomeQuiz();
@@ -138,11 +144,51 @@ describe("HomeQuiz Component", () => {
     expect(screen.getByText(/High Score : 60/i)).toBeInTheDocument();
   });
 
-  // ─── Info Panel ──────────────────────────────────────────────────────────────
-
   test("klik tombol info menampilkan panel Level Penilaian", () => {
     renderHomeQuiz();
-    fireEvent.click(screen.getByRole("button", { name: "" })); // Info icon button
+    fireEvent.click(screen.getByRole("button", { name: "" }));
     expect(screen.getByText("Level Penilaian")).toBeInTheDocument();
+  });
+
+  test("tidak crash jika localStorage kosong", () => {
+    localStorage.removeItem("quizHighScore");
+    renderHomeQuiz();
+    expect(screen.getByText(/High Score : 0/i)).toBeInTheDocument();
+  });
+
+  test("klik di luar info panel menutup info", async () => {
+    renderHomeQuiz();
+
+    fireEvent.click(screen.getByRole("button", { name: "" }));
+
+    fireEvent.mouseDown(document.body);
+
+    await waitFor(() => {
+      expect(screen.queryByText("Level Penilaian")).not.toBeInTheDocument();
+    });
+  });
+
+  test("klik di dalam info panel tidak menutup", () => {
+    renderHomeQuiz();
+
+    fireEvent.click(screen.getByRole("button", { name: "" }));
+
+    const panel = screen.getByText("Level Penilaian");
+
+    fireEvent.mouseDown(panel);
+
+    expect(screen.getByText("Level Penilaian")).toBeInTheDocument();
+  });
+
+  test("nama hanya spasi tetap dianggap kosong", () => {
+    renderHomeQuiz();
+
+    fireEvent.change(screen.getByPlaceholderText(/Masukkan nama/i), {
+      target: { value: "   " },
+    });
+
+    fireEvent.click(screen.getByText("Mulai Kuis"));
+
+    expect(screen.getByText(/Nama Belum Diisi/i)).toBeInTheDocument();
   });
 });

@@ -1,7 +1,6 @@
 import shuffle from "../src/quiz/arrays/shuffle";
 
 describe("shuffle()", () => {
-  // ─── Output Shape ───────────────────────────────────────────────────────────
 
   test("mengembalikan array dengan panjang yang sama", () => {
     const input = [1, 2, 3, 4, 5];
@@ -22,7 +21,6 @@ describe("shuffle()", () => {
     expect(result.sort()).toEqual(input.sort());
   });
 
-  // ─── Edge Cases ──────────────────────────────────────────────────────────────
 
   test("array kosong mengembalikan array kosong", () => {
     expect(shuffle([])).toEqual([]);
@@ -40,11 +38,9 @@ describe("shuffle()", () => {
     expect(result).toContain("y");
   });
 
-  // ─── Randomness (Statistical) ────────────────────────────────────────────────
 
   test("shuffle menghasilkan urutan yang berbeda (probabilistik)", () => {
     const input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    // Shuffle 10 kali; setidaknya satu hasil harus berbeda dari urutan asli
     const results = Array.from({ length: 10 }, () => shuffle(input));
     const allSame = results.every(
       (r) => JSON.stringify(r) === JSON.stringify(input)
