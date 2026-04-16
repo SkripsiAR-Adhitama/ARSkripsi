@@ -68,63 +68,44 @@ function showModal(message, shouldGoBack = false) {
 }
 
 async function startAR() {
-    if (!navigator.xr) {
+  if (!navigator.xr) {
     showModal("WebXR tidak tersedia. Pastikan browser anda kompatibel. Lihat di: https://caniuse.com/?search=webxr");
     return;
   }
 
-  function showModal(message, shouldGoBack = false) {
-  const modal = document.getElementById("error-modal");
-  const modalMsg = document.getElementById("modal-message");
-  const modalBtn = document.getElementById("btn-modal-close");
-
-  modalMsg.textContent = message;
-  modal.classList.remove("hidden");
-
-  modalBtn.onclick = () => {
-    modal.classList.add("hidden");
-    if (shouldGoBack) {
-      window.history.back();
-    }
-  };
-}
   const ok = await navigator.xr
     .isSessionSupported("immersive-ar")
     .catch(() => false);
 
-    if (!ok) {
+  if (!ok) {
     showModal("AR tidak didukung perangkat ini. Pastikan browser dan perangkat kompatibel.");
     return;
-   }
+  }
 
   const init = {
     requiredFeatures: [],
     optionalFeatures: ["hit-test", "dom-overlay", "local-floor"],
     domOverlay: { root: arUI },
   };
-  
 
   try {
-
-    
     const session = await navigator.xr.requestSession("immersive-ar", init);
     const enabledFeatures = session.enabledFeatures ?? [];
 
     if (!enabledFeatures.includes("hit-test")) {
-      showModal("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
       session.end();
-      window.history.back();
+      showModal("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices", true);
       return;
     }
+
     activeSession = session;
     session.addEventListener("end", onSessionEnd);
     scene.renderer.xr.enabled = true;
     await scene.renderer.xr.setSession(session);
     initARSession(session);
-    } catch (e) {
-    showModal("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices");
-    window.history.back();
-    return;
+
+  } catch (e) {
+    showModal("Perangkat ini tidak mendukung fitur AR penuh. Pastikan perangkat Anda terdaftar di: https://developers.google.com/ar/devices", true);
   }
 }
 
